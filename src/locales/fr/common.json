@@ -1284,8 +1284,8 @@
       "unfreezeAmount": "Unfreeze amount",
       "address": "Address",
       "votes": "Votes ({{number}})",
-      "votesAddress": "<0>{{votes}}</0> to <2>{{name}}</2>",
-      "validators": "Validators",
+      "votesAddress": "<0>{{votes}}</0> to <0>{{name}}</0>",
+      "validators": "Validateurs",
       "delegated": "Delegated ({{amount}})",
       "delegatedTo": "Delegated to",
       "delegatedAmount": "Delegated amount",
@@ -1300,7 +1300,12 @@
       "rewardAmount": "Amount collected",
       "memo": "Memo",
       "assetId": "Asset ID",
-      "rewards": "Earned rewards"
+      "rewards": "Earned rewards",
+      "bondedAmount": "Montant lié",
+      "unbondedAmount": "Montant délié",
+      "palletMethod": "Méthode",
+      "transferAmount": "Montant transféré",
+      "validatorsCount": "Validateurs ({{number}})"
     },
     "multipleAddresses": "Why multiple addresses?"
   },
