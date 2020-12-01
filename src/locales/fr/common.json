@@ -2974,6 +2974,29 @@
       "MEMO_RETURN": "Memo Return"
     }
   },
+  "polkadot": {
+    "lockedBalance": "Actifs liés au staking",
+    "unlockingBalance": "Actifs en cours de débloquage",
+    "unlockedBalance": "Actifs déliés",
+    "info": {
+      "available": {
+        "title": "DOT disponibles",
+        "description": "Ce montant est disponible."
+      },
+      "locked": {
+        "title": "Actifs liés",
+        "description": "Les actifs liés peuvent être utilisés pour obtenir des récompenses en nominant des validateurs."
+      },
+      "unlocking": {
+        "title": "Actifs en cours de débloquage",
+        "description": "Les actifs déliés restent verrouillés pendant 28 jours avant d'être disponibles."
+      },
+      "unlocked": {
+        "title": "Actifs déliés",
+        "description": "Des actifs déliés peuvent maintenant être récupérés via une transaction."
+      }
+    }
+  },
   "delegation": {
     "overdelegated": "Overdelegated",
     "delegationSendWarnDesc": "The amount to be sent will be deducted from your delegated account.",
