@@ -2569,6 +2569,29 @@
       "MEMO_RETURN": "Memo Return"
     }
   },
+  "polkadot": {
+    "lockedBalance": "Bonded balance",
+    "unlockingBalance": "Unbonding balance",
+    "unlockedBalance": "Unbonded balance",
+    "info": {
+      "available": {
+        "title": "DOT available",
+        "description": "This amount can be sent anytime."
+      },
+      "locked": {
+        "title": "Bonded assets",
+        "description": "Bonded assets can be used to nominate validators and earn rewards."
+      },
+      "unlocking": {
+        "title": "Unbonding assets",
+        "description": "Unbonding assets stay locked during 28 days before being available for withdrawal."
+      },
+      "unlocked": {
+        "title": "Unbonded assets",
+        "description": "Unbonded assets can now be withdrawn with a transaction."
+      }
+    }
+  },
   "delegation": {
     "overdelegated": "Overdelegated",
     "delegationSendWarnDesc": "The amount to be sent will be deducted from your delegated account.",
