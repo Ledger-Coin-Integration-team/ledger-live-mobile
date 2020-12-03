@@ -2995,6 +2995,10 @@
       "unlocked": {
         "title": "Unbonded assets",
         "description": "Unbonded assets can now be withdrawn with a transaction."
+      },
+      "electionOpen": {
+        "title": "Validators election ongoing",
+        "description": "New validators are currently being elected. During this phase all staking operations are not available for at most 15 minutes."
       }
     },
     "nomination": {
