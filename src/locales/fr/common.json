@@ -3020,6 +3020,34 @@
         "title": "Actifs déliés",
         "description": "Des actifs déliés peuvent maintenant être récupérés via une transaction."
       }
+    },
+    "nomination": {
+      "emptyState": {
+        "title": "Obtenez des récompenses",
+        "description": "Vous pouvez gagner des récompenses DOT en liant vos actifs et en nommant des validateurs.",
+        "info": "Comment fonctionne la nomination",
+        "cta": "Obtenez des récompenses"
+      },
+      "header": "Nominations",
+      "update": "Changer les validateurs",
+      "nominate": "Nominer",
+      "chill": "Arrêter la nomination",
+      "status": "Statut",
+      "totalStake": "Participation totale",
+      "commission": "Commission",
+      "amount": "Montant",
+      "active": "Active",
+      "inactive": "Inactif",
+      "waiting": "En attente",
+      "elected": "Élu",
+      "nominators": "Nominateurs",
+      "nominatorsCount": "{{nominatorsCount}} nominateurs",
+      "oversubscribed": "Sursouscrit ({{nominatorsCount}})"
+    },
+    "unlockings": {
+      "header": "Actifs en débloquage",
+      "withdrawUnbonded": "Récupérer",
+      "rebond": "Lier à nouveau"
     }
   },
   "delegation": {
