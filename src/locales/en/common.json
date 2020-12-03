@@ -3017,6 +3017,25 @@
       "header": "Unbondings",
       "withdrawUnbonded": "Withdraw Unbonded",
       "rebond": "Rebond"
+    },
+    "manage": {
+      "title": "Manage assets",
+      "bond": {
+        "title": "Bond",
+        "description": "Lock assets bonded for staking and start earning rewards after nominating validators."
+      },
+      "unbond": {
+        "title": "Unbond",
+        "description": "Unlock DOT to have them back in your available balance. You will no longer earn rewards for those assets."
+      },
+      "nominate": {
+        "title": "Nominate",
+        "description": "Choose up to 16 validators to be elected to start earning rewards."
+      },
+      "chill": {
+        "title": "Chill",
+        "description": "Stop nominating validators and earning rewards."
+      }
     }
   },
   "delegation": {
