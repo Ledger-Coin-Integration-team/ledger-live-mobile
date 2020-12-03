@@ -2996,6 +2996,34 @@
         "title": "Unbonded assets",
         "description": "Unbonded assets can now be withdrawn with a transaction."
       }
+    },
+    "nomination": {
+      "emptyState": {
+        "title": "Earn rewards",
+        "description": "You can earn DOT rewards by bonding your assets and nominating validators.",
+        "info": "How nomination works",
+        "cta": "Earn rewards"
+      },
+      "header": "Nominations",
+      "update": "Change validators",
+      "nominate": "Nominate",
+      "chill": "Stop nominating",
+      "status": "Status",
+      "totalStake": "Total Stake",
+      "commission": "Commission",
+      "amount": "Amount",
+      "active": "Active",
+      "inactive": "Inactive",
+      "waiting": "Waiting",
+      "elected": "Elected",
+      "nominators": "Nominators",
+      "nominatorsCount": "{{nominatorsCount}} nominators",
+      "oversubscribed": "Oversubscribed ({{nominatorsCount}})"
+    },
+    "unlockings": {
+      "header": "Unbondings",
+      "withdrawUnbonded": "Withdraw Unbonded",
+      "rebond": "Rebond"
     }
   },
   "delegation": {
