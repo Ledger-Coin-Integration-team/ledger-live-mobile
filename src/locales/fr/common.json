@@ -1709,6 +1709,10 @@
       "unlocked": {
         "title": "Actifs déliés",
         "description": "Des actifs déliés peuvent maintenant être récupérés via une transaction."
+      },
+      "electionOpen": {
+        "title": "Élection des validateurs en cours",
+        "description": "DE nouveaux validateurs sont en cours d'élection. Pendant cette phase toutes les opérations de Staking sont indisponibles pendant 15 minutes au plus."
       }
     },
     "nomination": {
