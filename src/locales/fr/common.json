@@ -3037,6 +3037,25 @@
       "header": "Actifs en débloquage",
       "withdrawUnbonded": "Récupérer",
       "rebond": "Lier à nouveau"
+    },
+    "manage": {
+      "title": "Gérer les actifs",
+      "bond": {
+        "title": "Lier",
+        "description": "Verrouillez les actifs pour participer à la nomination de validateurs et gagner des récompenses."
+      },
+      "unbond": {
+        "title": "Délier",
+        "description": "Déverrouillez vos DOT pour les retrouver dans votre solde disponible. Vous ne gagnerez plus de récompenses grâce à ces actifs."
+      },
+      "nominate": {
+        "title": "Nominer",
+        "description": "Choississez jusqu'à 16 validateurs à élire et générer des récompenses."
+      },
+      "chill": {
+        "title": "Ne plus nominer",
+        "description": "Arrêtez de nominer des validateurs et cessez d'en recevoir des récompenses."
+      }
     }
   },
   "delegation": {
