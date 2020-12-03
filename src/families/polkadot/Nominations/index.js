@@ -26,6 +26,7 @@ import IlluRewards from "../../../icons/images/Rewards";
 import { urls } from "../../../config/urls";
 import AccountSectionLabel from "../../../components/AccountSectionLabel";
 import FirstLetterIcon from "../../../components/FirstLetterIcon";
+import WarningBox from "../../../components/WarningBox";
 
 import NominationDrawer from "../components/NominationDrawer";
 import { NominateAction, RebondAction } from "./Actions";
@@ -76,7 +77,7 @@ export default function Nominations({ account }: Props) {
   const unlockingsWithoutUnlocked = useMemo(
     () =>
       unlockings?.filter(({ completionDate }) =>
-        isAfter(completionDate, new Date()),
+        isAfter(completionDate, new Date(Date.now())),
       ) ?? [],
     [unlockings],
   );
@@ -197,6 +198,9 @@ export default function Nominations({ account }: Props) {
         )}
         data={drawerInfo}
       />
+      {electionOpen && (
+        <WarningBox>{t("polkadot.info.electionOpen.description")}</WarningBox>
+      )}
       {!hasNominations ? (
         <AccountDelegationInfo
           title={t("polkadot.nomination.emptyState.title")}
