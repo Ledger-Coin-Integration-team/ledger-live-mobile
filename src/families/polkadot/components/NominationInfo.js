@@ -1,7 +1,6 @@
 // @flow
 import React from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
-import { Trans } from "react-i18next";
 import colors from "../../../colors";
 import LText from "../../../components/LText";
 
@@ -11,20 +10,16 @@ type Props = {
   onPress: (address: string) => void,
 };
 
-export default function NominationInfo({
-  address,
-  identity,
-  onPress,
-}: Props) {
+export default function NominationInfo({ address, identity, onPress }: Props) {
   return (
     <View style={styles.wrapper}>
-      {identity ?
+      {identity ? (
         <LText style={styles.greyText}>
           <LText semiBold style={styles.text}>
             {identity}
           </LText>
         </LText>
-      : null }
+      ) : null}
 
       <TouchableOpacity onPress={() => onPress(address)}>
         <LText style={styles.greyText}>{address}</LText>
