@@ -2633,6 +2633,10 @@
         "title": "Unbond",
         "description": "Unlock DOT to have them back in your available balance. You will no longer earn rewards for those assets."
       },
+      "withdrawUnbonded": {
+        "title": "Withdraw Unbonded",
+        "description": "Transfer your unbonded assets back to your available balnce after a 28-day timelock period."
+      },
       "nominate": {
         "title": "Nominate",
         "description": "Choose up to 16 validators to be elected to start earning rewards."
