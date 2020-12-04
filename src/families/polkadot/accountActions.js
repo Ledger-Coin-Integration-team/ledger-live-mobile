@@ -10,9 +10,11 @@ import {
 } from "@ledgerhq/live-common/lib/families/polkadot/logic";
 import { getCurrentPolkadotPreloadData } from "@ledgerhq/live-common/lib/families/polkadot/preload";
 
-import FreezeIcon from "../../icons/Freeze";
-import UnfreezeIcon from "../../icons/Unfreeze";
-import VoteIcon from "../../icons/Vote";
+import BondIcon from "../../icons/Plus";
+import UnbondIcon from "../../icons/Withdraw";
+import WithdrawIcon from "../../icons/Receive";
+import NominateIcon from "../../icons/Vote";
+import ChillIcon from "../../icons/Undelegate";
 import { NavigatorName, ScreenName } from "../../const";
 
 const getActions = ({ account }: { account: Account }) => {
@@ -45,7 +47,7 @@ const getActions = ({ account }: { account: Account }) => {
       ],
       label: <Trans i18nKey="polkadot.manage.bond.title" />,
       description: <Trans i18nKey="polkadot.manage.bond.description" />,
-      Icon: FreezeIcon,
+      Icon: BondIcon,
     },
     {
       disabled: !unbondingEnabled,
@@ -58,7 +60,22 @@ const getActions = ({ account }: { account: Account }) => {
       ],
       label: <Trans i18nKey="polkadot.manage.unbond.title" />,
       description: <Trans i18nKey="polkadot.manage.unbond.description" />,
-      Icon: UnfreezeIcon,
+      Icon: UnbondIcon,
+    },
+    {
+      disabled: !chillEnabled,
+      navigationParams: [
+        NavigatorName.PolkadotSimpleOperationFlow,
+        {
+          screen: ScreenName.PolkadotSimpleOperationStarted,
+          params: { mode: "withdrawUnbonded", accountId },
+        },
+      ],
+      label: <Trans i18nKey="polkadot.manage.withdrawUnbonded.title" />,
+      description: (
+        <Trans i18nKey="polkadot.manage.withdrawUnbonded.description" />
+      ),
+      Icon: WithdrawIcon,
     },
     {
       disabled: !nominationEnabled,
@@ -71,7 +88,7 @@ const getActions = ({ account }: { account: Account }) => {
       ],
       label: <Trans i18nKey="polkadot.manage.nominate.title" />,
       description: <Trans i18nKey="polkadot.manage.nominate.description" />,
-      Icon: VoteIcon,
+      Icon: NominateIcon,
     },
     {
       disabled: !chillEnabled,
@@ -84,7 +101,7 @@ const getActions = ({ account }: { account: Account }) => {
       ],
       label: <Trans i18nKey="polkadot.manage.chill.title" />,
       description: <Trans i18nKey="polkadot.manage.chill.description" />,
-      Icon: VoteIcon,
+      Icon: ChillIcon,
     },
   ];
 };

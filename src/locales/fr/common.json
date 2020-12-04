@@ -3036,6 +3036,10 @@
         "title": "Délier",
         "description": "Déverrouillez vos DOT pour les retrouver dans votre solde disponible. Vous ne gagnerez plus de récompenses grâce à ces actifs."
       },
+      "withdrawUnbonded": {
+        "title": "Récupérer actifs déliés",
+        "description": "Transferez vos actifs déliés vers votre solde disponible après une période de vérrouillage de 28 jours."
+      },
       "nominate": {
         "title": "Nominer",
         "description": "Choississez jusqu'à 16 validateurs à élire et générer des récompenses."
