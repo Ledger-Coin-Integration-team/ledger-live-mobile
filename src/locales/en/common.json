@@ -3178,6 +3178,34 @@
           }
         }
       }
+    },
+    "simpleOperation": {
+      "modes": {
+        "withdrawUnbonded": {
+          "title": "Withdraw unbonded",
+          "description": "After a 28-day timelock you can withdraw unbonded assets.",
+          "info": "You will fully get back your unbonded assets as available balance."
+        },
+        "chill": {
+          "title": "Stop nominating",
+          "description": "You can stop nominating all your validators and stop receiving rewards.",
+          "info": "Bonded assets will stay untouched and will be locked for a 28-day timelock period if you unbonds them."
+        }
+      },
+      "stepperHeader": {
+        "info": "Info",
+        "selectDevice": "Select device",
+        "connectDevice": "Connect device",
+        "stepRange": "Step {{currentStep}} of {{totalSteps}}"
+      },
+      "steps": {
+        "validation": {
+          "success": {
+            "title": "Transaction sent",
+            "description": "You will see your operation in history once the network has confirmed the transaction."
+          }
+        }
+      }
     }
   },
   "delegation": {

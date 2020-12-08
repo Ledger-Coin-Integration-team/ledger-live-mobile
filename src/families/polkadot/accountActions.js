@@ -24,16 +24,18 @@ const getActions = ({ account }: { account: Account }) => {
 
   const accountId = account.id;
 
-  const { nominations } = account.polkadotResources || {};
+  const { unlockedBalance, nominations } = account.polkadotResources || {};
 
   const electionOpen =
     staking?.electionClosed !== undefined ? !staking?.electionClosed : false;
+  const hasUnlockedBalance = unlockedBalance && unlockedBalance.gt(0);
 
   const nominationEnabled = !electionOpen && canNominate(account);
   const chillEnabled =
     !electionOpen && canNominate(account) && nominations?.length;
   const bondingEnabled = !electionOpen && canBond(account);
   const unbondingEnabled = !electionOpen && canUnbond(account);
+  const withdrawEnabled = !electionOpen && hasUnlockedBalance;
 
   return [
     {
@@ -63,7 +65,7 @@ const getActions = ({ account }: { account: Account }) => {
       Icon: UnbondIcon,
     },
     {
-      disabled: !chillEnabled,
+      disabled: !withdrawEnabled,
       navigationParams: [
         NavigatorName.PolkadotSimpleOperationFlow,
         {
