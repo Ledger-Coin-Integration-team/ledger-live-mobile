@@ -80,9 +80,9 @@ const getActions = ({ account }: { account: Account }) => {
     {
       disabled: !nominationEnabled,
       navigationParams: [
-        NavigatorName.PolkadotNominationFlow,
+        NavigatorName.PolkadotNominateFlow,
         {
-          screen: ScreenName.PolkadotNominationSelectValidators,
+          screen: ScreenName.PolkadotNominateSelectValidators,
           params: { accountId },
         },
       ],
