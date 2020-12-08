@@ -3133,7 +3133,7 @@
         "validation": {
           "success": {
             "title": "Actifs liés",
-            "description": "Le solde de votre compte sera actualisé dès que le réseau aura confirmé la transaction",
+            "description": "Le solde de votre compte sera actualisé dès que le réseau aura confirmé la transaction.",
             "descriptionNominate": "Vous pourrez nominer des validateurs une fois que le réseau aura confirmé votre transaction.",
             "nominate": "Nominer",
             "later": "Nominer plus tard"
@@ -3161,7 +3161,7 @@
         "validation": {
           "success": {
             "title": "Actifs reliés",
-            "description": "Le solde de votre compte sera actualisé dès que le réseau aura confirmé la transaction"
+            "description": "Le solde de votre compte sera actualisé dès que le réseau aura confirmé la transaction."
           }
         }
       }
@@ -3183,6 +3183,35 @@
           "success": {
             "title": "Actifs déliés",
             "description": "Ces actifs pourront être récupérés dans 28 jours."
+          }
+        }
+      }
+    },
+    "simpleOperation": {
+      "modes": {
+        "withdrawUnbonded": {
+          "title": "Récupérer actifs",
+          "description": "Après une période de 28 jours vous pouvez récupérer vos actifs déliés.",
+          "info": "Vous récupérerez l'intégralité des actifs déliés dans votre solde disponible."
+
+        },
+        "chill": {
+          "title": "Ne plus nominer",
+          "description": "Vous pouvez stopper la nomination de tous vos validateurs et arrêter de toucher des récompenses.",
+          "info": "Cependant, vos actifs liés resteront intacts et seront verrouillés pendant 28 jours si vous les déliez."
+        }
+      },
+      "stepperHeader": {
+        "info": "Info",
+        "selectDevice": "Selectionnez votre appareil",
+        "connectDevice": "Connectez votre appareil",
+        "stepRange": "Étape {{currentStep}} sur {{totalSteps}}"
+      },
+      "steps": {
+        "validation": {
+          "success": {
+            "title": "Transaction diffusée",
+            "description": "Vous pourrez retrouver cette opération dans votre historique dès que le réseau aura confirmé la transaction."
           }
         }
       }

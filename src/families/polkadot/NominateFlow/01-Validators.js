@@ -10,10 +10,7 @@ import { useSelector } from "react-redux";
 import type { Transaction } from "@ledgerhq/live-common/lib/families/polkadot/types";
 
 import { getAccountBridge } from "@ledgerhq/live-common/lib/bridge";
-import {
-  getMainAccount,
-  getAccountUnit,
-} from "@ledgerhq/live-common/lib/account";
+import { getMainAccount } from "@ledgerhq/live-common/lib/account";
 import {
   getDefaultExplorerView,
   getAddressExplorer,
@@ -91,8 +88,6 @@ function NominateSelectValidator({ navigation, route }: Props) {
     transaction && transaction.validators,
     "transaction and validators required",
   );
-
-  const unit = getAccountUnit(account);
 
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -193,16 +188,15 @@ function NominateSelectValidator({ navigation, route }: Props) {
 
       return (
         <ValidatorItem
+          item={item}
           disabled={disabled}
           selected={selected}
-          unit={unit}
-          item={item}
           onSelect={onSelect}
           onOpenExplorer={onOpenExplorer}
         />
       );
     },
-    [validators, unit, onSelect, onOpenExplorer],
+    [validators, onSelect, onOpenExplorer],
   );
 
   const error = status && status.errors && Object.values(status.errors)[0];
