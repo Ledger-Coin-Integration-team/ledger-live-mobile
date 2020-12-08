@@ -2645,6 +2645,52 @@
         "title": "Chill",
         "description": "Stop nominating validators and earning rewards."
       }
+    },
+    "bond": {
+      "rewardDestination": {
+        "label": "Reward Destination",
+        "stash": "Available balance",
+        "stashDescription": "The rewards will be transferred to the current account as available balance.",
+        "staked": "Bonded balance",
+        "stakedDescription": "The rewards will be transferred to the current account as bonded balance."
+      },
+      "stepperHeader": {
+        "starter": "Earn rewards",
+        "amount": "Amount to bond",
+        "selectDevice": "Select device",
+        "connectDevice": "Connect device",
+        "stepRange": "Step {{currentStep}} of {{totalSteps}}"
+      },
+      "steps": {
+        "starter": {
+          "description": "You may earn rewards by bonding your DOT assets and nominating validators.",
+          "bullet": [
+            "You keep ownership of bonded assets",
+            "Nominate using your Ledger device",
+            "Assets will be available 28 days after unbonding"
+          ],
+          "help": "How nomination works",
+          "warning": "Choose your validator wisely: Part of your bonded assets may be irrevocably lost if the validator does not behave appropriately."
+        },
+        "amount": {
+          "availableLabel": "Available",
+          "maxLabel": "Bond Max",
+          "info": "Once assets are bonded they can be unbonded any time, but they will be locked for 28-days."
+        },
+        "validation": {
+          "success": {
+            "title": "Assets bonded",
+            "description": "Your account balance will update once the network has confirmed the transaction.",
+            "descriptionNominate": "You will be able to nominate validators once the network has confirmed your transaction.",
+            "nominate": "Nominate",
+            "later": "Nominate later"
+          },
+          "pending": {
+            "title": "Transaction under validation",
+            "description": "You have to wait a short time for the network to have handled your transaction."
+          }
+        }
+      }
     }
   },
   "delegation": {
@@ -2793,7 +2839,6 @@
       "tabTitle": "History"
     }
   },
-
   "banner": {
     "exchangeBuyCrypto": {
       "title": "BUY CRYPTO",

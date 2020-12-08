@@ -1765,6 +1765,52 @@
         "title": "Ne plus nominer",
         "description": "Arrêtez de nominer des validateurs et cessez d'en recevoir des récompenses."
       }
+    },
+    "bond": {
+      "rewardDestination": {
+        "label": "Destination des récompenses",
+        "stash": "Balance disponible",
+        "stashDescription": "Les récompenses seront versées sur le compte actuel en tant que balance disponible.",
+        "staked": "Balance liée",
+        "stakedDescription": "Les récompenses seront versées sur le compte actuel en tant que balance liée au staking."
+      },
+      "stepperHeader": {
+        "starter": "Obtenez des récompenses",
+        "amount": "Montant à lier",
+        "selectDevice": "Selectionnez votre appareil",
+        "connectDevice": "Connectez votre appareil",
+        "stepRange": "Étape {{currentStep}} sur {{totalSteps}}"
+      },
+      "steps": {
+        "starter": {
+          "description": "Vous pouvez obtenir des récompenses en liant vos DOT puis en nommant des validateurs.",
+          "bullet": [
+            "Vous gardez la propriété des actifs liés",
+            "Nominez avec votre appareil Ledger",
+            "Les actifs seront disponibles 28 jours après avoir délié vos actifs."
+          ],
+          "help": "Comment fonctionne la nomination",
+          "warning": "Choisissez vos validateurs judicieusement: Une partie de vos actifs liés peut être perdue si un validateur ne se comporte pas correctement."
+        },
+        "amount": {
+          "availableLabel": "Disponible",
+          "maxLabel": "Lier Max",
+          "info": "Une fois les actifs liés ils peuvent être déliés à n'importe quel moment, mais seront bloqués pendant une période de 28 jours."
+        },
+        "validation": {
+          "success": {
+            "title": "Actifs liés",
+            "description": "Le solde de votre compte sera actualisé dès que le réseau aura confirmé la transaction",
+            "descriptionNominate": "Vous pourrez nominer des validateurs une fois que le réseau aura confirmé votre transaction.",
+            "nominate": "Nominer",
+            "later": "Nominer plus tard"
+          },
+          "pending": {
+            "title": "Transaction en cours de validation",
+            "description": "Vous devez attendre un petit moment que le réseau ait validé votre transaction."
+          }
+        }
+      }
     }
   },
   "delegation": {
