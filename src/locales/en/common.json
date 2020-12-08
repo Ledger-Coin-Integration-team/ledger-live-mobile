@@ -3113,6 +3113,48 @@
           }
         }
       }
+    },
+    "rebond": {
+      "stepperHeader": {
+        "amount": "Amount to rebond",
+        "selectDevice": "Select device",
+        "connectDevice": "Connect device",
+        "stepRange": "Step {{currentStep}} of {{totalSteps}}"
+      },
+      "steps": {
+        "amount": {
+          "availableLabel": "Unlocking",
+          "maxLabel": "Rebond Max",
+          "info": "Rebonded assets will be immediately added to bonded balance."
+        },
+        "validation": {
+          "success": {
+            "title": "Assets rebonded",
+            "description": "Your account balance will update once the network has confirmed the transaction."
+          }
+        }
+      }
+    },
+    "unbond": {
+      "stepperHeader": {
+        "amount": "Amount to unbond",
+        "selectDevice": "Select device",
+        "connectDevice": "Connect device",
+        "stepRange": "Step {{currentStep}} of {{totalSteps}}"
+      },
+      "steps": {
+        "amount": {
+          "availableLabel": "Unlockable",
+          "maxLabel": "Unbond Max",
+          "info": "Unbonded assets can be withdrawn after a 28-day timelock period."
+        },
+        "validation": {
+          "success": {
+            "title": "Assets unbonded",
+            "description": "Unbonded assets can be withdrawn in 28-days."
+          }
+        }
+      }
     }
   },
   "delegation": {
