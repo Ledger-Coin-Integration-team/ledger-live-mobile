@@ -200,11 +200,11 @@ export const OperationDetailsPalletMethod = ({
 };
 
 type OperationDetailsValidatorsProps = {
-  validators: Array<String>,
+  validators: string[],
   account: Account,
 };
 
-function OperationDetailsValidators({
+export function OperationDetailsValidators({
   validators,
   account,
 }: OperationDetailsValidatorsProps) {
