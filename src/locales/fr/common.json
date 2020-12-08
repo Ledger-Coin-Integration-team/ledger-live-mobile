@@ -3096,6 +3096,48 @@
           }
         }
       }
+    },
+    "rebond": {
+      "stepperHeader": {
+        "amount": "Montant à relier",
+        "selectDevice": "Selectionnez votre appareil",
+        "connectDevice": "Connectez votre appareil",
+        "stepRange": "Étape {{currentStep}} sur {{totalSteps}}"
+      },
+      "steps": {
+        "amount": {
+          "availableLabel": "En débloquage",
+          "maxLabel": "Relier Max",
+          "info": "Les actifs reliés seront immédiatement ajoutés à la balance liée au staking."
+        },
+        "validation": {
+          "success": {
+            "title": "Actifs reliés",
+            "description": "Le solde de votre compte sera actualisé dès que le réseau aura confirmé la transaction"
+          }
+        }
+      }
+    },
+    "unbond": {
+      "stepperHeader": {
+        "amount": "Montant à délier",
+        "selectDevice": "Selectionnez votre appareil",
+        "connectDevice": "Connectez votre appareil",
+        "stepRange": "Étape {{currentStep}} sur {{totalSteps}}"
+      },
+      "steps": {
+        "amount": {
+          "availableLabel": "Débloquable",
+          "maxLabel": "Délier Max",
+          "info": "Les actifs déliés pourront être récupérés après une période de 28 jours."
+        },
+        "validation": {
+          "success": {
+            "title": "Actifs déliés",
+            "description": "Ces actifs pourront être récupérés dans 28 jours."
+          }
+        }
+      }
     }
   },
   "delegation": {
