@@ -3017,7 +3017,7 @@
       "amount": "Montant",
       "active": "Active",
       "inactive": "Inactif",
-      "waiting": "En attente",
+      "waiting": "Non élu",
       "elected": "Élu",
       "nominators": "Nominateurs",
       "nominatorsCount": "{{nominatorsCount}} nominateurs",
@@ -3049,6 +3049,29 @@
       "chill": {
         "title": "Ne plus nominer",
         "description": "Arrêtez de nominer des validateurs et cessez d'en recevoir des récompenses."
+      }
+    },
+    "nominate": {
+      "stepperHeader": {
+        "validators": "Validateurs à nominer",
+        "selectDevice": "Selectionnez votre appareil",
+        "connectDevice": "Connectez votre appareil",
+        "stepRange": "Étape {{currentStep}} sur {{totalSteps}}"
+      },
+      "steps": {
+        "validators": {
+          "myNominations": "Mes nominations",
+          "electedValidators": "Validateurs élus",
+          "waitingValidators": "Validateurs non élus",
+          "noResultsFound": "Aucun validateur trouvé correspondant à <0>{{search}}</0>",
+          "selected": "{{selected}} sur {{total}} selectionnés"
+        },
+        "validation": {
+          "success": {
+            "title": "Validateurs nominés",
+            "description": "Vous toucherez des récompenses quand vos validateurs seront élus et qu'une partie de vos actifs liés leur sera affectée."
+          }
+        }
       }
     },
     "bond": {
@@ -3092,7 +3115,7 @@
           },
           "pending": {
             "title": "Transaction en cours de validation",
-            "description": "Vous devez attendre un petit moment que le réseau ait validé votre transaction."
+            "description": "Vous devez attendre un petit moment avant de pouvoir nominer."
           }
         }
       }
