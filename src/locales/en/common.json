@@ -2612,7 +2612,7 @@
       "amount": "Amount",
       "active": "Active",
       "inactive": "Inactive",
-      "waiting": "Waiting",
+      "waiting": "Not Elected",
       "elected": "Elected",
       "nominators": "Nominators",
       "nominatorsCount": "{{nominatorsCount}} nominators",
@@ -2644,6 +2644,29 @@
       "chill": {
         "title": "Chill",
         "description": "Stop nominating validators and earning rewards."
+      }
+    },
+    "nominate": {
+      "stepperHeader": {
+        "validators": "Validators to nominate",
+        "selectDevice": "Select device",
+        "connectDevice": "Connect device",
+        "stepRange": "Step {{currentStep}} of {{totalSteps}}"
+      },
+      "steps": {
+        "validators": {
+          "myNominations": "My nominations",
+          "electedValidators": "Elected validators",
+          "waitingValidators": "Not elected validators",
+          "noResultsFound": "No validators found for <0>{{search}}</0>",
+          "selected": "{{selected}} out of {{total}} selected"
+        },
+        "validation": {
+          "success": {
+            "title": "Validators nominated",
+            "description": "You will start earning rewards when your validators are elected and your bonded assets are part of their stake."
+          }
+        }
       }
     },
     "bond": {
@@ -2687,7 +2710,7 @@
           },
           "pending": {
             "title": "Transaction under validation",
-            "description": "You have to wait a short time for the network to have handled your transaction."
+            "description": "You have to wait a short time before being able to nominate"
           }
         }
       }
