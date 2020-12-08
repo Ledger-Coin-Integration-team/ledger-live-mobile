@@ -104,8 +104,8 @@ export default function Nominations({ account }: Props) {
   const onEarnRewards = useCallback(() => {
     isStash(account)
       ? onNavigate({
-          route: NavigatorName.PolkadotNominationFlow,
-          screen: ScreenName.PolkadotNominationSelectValidators,
+          route: NavigatorName.PolkadotNominateFlow,
+          screen: ScreenName.PolkadotNominateSelectValidators,
         })
       : onNavigate({
           route: NavigatorName.PolkadotBondFlow,
@@ -115,8 +115,8 @@ export default function Nominations({ account }: Props) {
 
   const onNominate = useCallback(() => {
     onNavigate({
-      route: NavigatorName.PolkadotNominationFlow,
-      screen: ScreenName.PolkadotNominationSelectValidators,
+      route: NavigatorName.PolkadotNominateFlow,
+      screen: ScreenName.PolkadotNominateSelectValidators,
     });
   }, [onNavigate]);
 
