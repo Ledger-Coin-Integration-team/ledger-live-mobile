@@ -1,9 +1,9 @@
 // @flow
 import React, { useCallback } from "react";
 import { View, StyleSheet, Linking } from "react-native";
-import type { AccountLike } from "@ledgerhq/live-common/lib/types";
+import type { AccountLike, Transaction } from "@ledgerhq/live-common/lib/types";
 import { Trans } from "react-i18next";
-import type { Transaction } from "@ledgerhq/live-common/lib/families/polkadot/types";
+
 import {
   getAccountUnit,
   getAccountCurrency,
@@ -26,7 +26,7 @@ export default function PolkadotFeeRow({ account, transaction }: Props) {
     Linking.openURL(urls.feesMoreInfo);
   }, []);
 
-  const fees = transaction.fees;
+  const fees = transaction.fees ? transaction.fees : null;
   const unit = getAccountUnit(account);
   const currency = getAccountCurrency(account);
 
@@ -41,18 +41,16 @@ export default function PolkadotFeeRow({ account, transaction }: Props) {
       }
     >
       <View style={styles.wrapper}>
-        <View style={styles.accountContainer}>
+        <LText style={styles.valueText}>
+          {fees ? <CurrencyUnitValue unit={unit} value={fees} /> : " "}
+        </LText>
+        <LText style={styles.countervalue}>
           {fees ? (
-            <LText style={styles.valueText}>
-              <CurrencyUnitValue unit={unit} value={fees} />
-            </LText>
-          ) : null}
-        </View>
-        {fees ? (
-          <LText style={styles.countervalue}>
             <CounterValue before="≈ " value={fees} currency={currency} />
-          </LText>
-        ) : null}
+          ) : (
+            " "
+          )}
+        </LText>
       </View>
     </SummaryRow>
   );
@@ -60,16 +58,9 @@ export default function PolkadotFeeRow({ account, transaction }: Props) {
 
 const styles = StyleSheet.create({
   wrapper: {
+    flexDirection: "column",
     alignItems: "flex-end",
-  },
-  accountContainer: {
     flex: 1,
-    flexDirection: "row",
-  },
-  summaryRowText: {
-    fontSize: 16,
-    textAlign: "right",
-    color: colors.darkBlue,
   },
   countervalue: {
     fontSize: 12,
