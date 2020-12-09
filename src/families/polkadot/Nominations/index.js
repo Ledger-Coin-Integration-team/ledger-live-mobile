@@ -30,6 +30,7 @@ import AccountSectionLabel from "../../../components/AccountSectionLabel";
 import FirstLetterIcon from "../../../components/FirstLetterIcon";
 import WarningBox from "../../../components/WarningBox";
 
+import CollapsibleList from "../components/CollapsibleList";
 import NominationDrawer from "../components/NominationDrawer";
 import { NominateAction, RebondAction } from "./Actions";
 import { getDrawerInfo } from "./drawerInfo";
@@ -60,13 +61,28 @@ export default function Nominations({ account }: Props) {
   const [nomination, setNomination] = useState<?PolkadotNomination>();
 
   const mappedNominations = useMemo(() => {
-    return nominations?.map(nomination => {
-      const validator = validators.find(v => v.address === nomination.address);
-      return {
-        nomination,
-        validator,
-      };
-    });
+    const all =
+      nominations?.map(nomination => {
+        const validator = validators.find(
+          v => v.address === nomination.address,
+        );
+        return {
+          nomination,
+          validator,
+        };
+      }) || [];
+
+    return all.reduce(
+      (sections, mapped) => {
+        if (mapped.nomination.status === "active") {
+          sections.uncollapsed.push(mapped);
+        } else {
+          sections.collapsed.push(mapped);
+        }
+        return sections;
+      },
+      { uncollapsed: [], collapsed: [] },
+    );
   }, [nominations, validators]);
 
   const mappedNomination = useMemo(() => {
@@ -80,13 +96,20 @@ export default function Nominations({ account }: Props) {
     return null;
   }, [nomination, validators]);
 
-  const unlockingsWithoutUnlocked = useMemo(
-    () =>
+  const mappedUnlockings = useMemo(() => {
+    const now = new Date(Date.now());
+    const withoutUnlocked =
       unlockings?.filter(({ completionDate }) =>
-        isAfter(completionDate, new Date(Date.now())),
-      ) ?? [],
-    [unlockings],
-  );
+        isAfter(completionDate, now),
+      ) ?? [];
+
+    const [firstRow, ...otherRows] =
+      unlockedBalance && unlockedBalance.gt(0)
+        ? [{ amount: unlockedBalance, completionDate: now }, ...withoutUnlocked]
+        : withoutUnlocked;
+
+    return { uncollapsed: firstRow ? [firstRow] : [], collapsed: otherRows };
+  }, [unlockings, unlockedBalance]);
 
   const onNavigate = useCallback(
     ({
@@ -188,6 +211,57 @@ export default function Nominations({ account }: Props) {
   const rebondEnabled = !electionOpen && !!hasUnlockings;
   const withdrawEnabled = !electionOpen && hasUnlockedBalance;
 
+  const renderNomination = useCallback(
+    ({ nomination, validator }, i, isLast) => (
+      <View key={nomination.address}>
+        <NominationRow
+          nomination={nomination}
+          validator={validator}
+          account={account}
+          onPress={() => setNomination(nomination)}
+          isLast={isLast}
+        />
+      </View>
+    ),
+    [account],
+  );
+
+  const renderShowInactiveNominations = useCallback(
+    collapsed =>
+      collapsed
+        ? t("polkadot.nomination.showInactiveNominations", {
+            count: mappedNominations.collapsed.length,
+          })
+        : t("polkadot.nomination.hideInactiveNominations"),
+    [t, mappedNominations],
+  );
+
+  const renderUnlocking = useCallback(
+    (unlocking, i, isLast) => (
+      <View key={`unlocking_${i}`}>
+        <UnlockingRow
+          amount={unlocking.amount}
+          completionDate={unlocking.completionDate}
+          account={account}
+          onWithdraw={onWithdraw}
+          disabled={!withdrawEnabled}
+          isLast={isLast}
+        />
+      </View>
+    ),
+    [account, onWithdraw, withdrawEnabled],
+  );
+
+  const renderShowAllUnlockings = useCallback(
+    collapsed =>
+      collapsed
+        ? t("polkadot.nomination.showAllUnlockings", {
+            count: mappedUnlockings.collapsed.length,
+          })
+        : t("polkadot.nomination.hideAllUnlockings"),
+    [t, mappedUnlockings],
+  );
+
   if (hasExternalController(account)) {
     return (
       <ExternalControllerUnsupportedWarning
@@ -258,17 +332,18 @@ export default function Nominations({ account }: Props) {
               />
             }
           />
-          {mappedNominations?.map(({ nomination, validator }, i) => (
-            <View key={nomination.address} style={styles.nominationsWrapper}>
-              <NominationRow
-                nomination={nomination}
-                validator={validator}
-                account={account}
-                onPress={() => setNomination(nomination)}
-                isLast={i === (mappedNominations?.length || 0) - 1}
-              />
-            </View>
-          ))}
+          <CollapsibleList
+            uncollapsedItems={mappedNominations.uncollapsed}
+            collapsedItems={mappedNominations.collapsed}
+            renderItem={renderNomination}
+            renderShowMore={renderShowInactiveNominations}
+          >
+            {!mappedNominations.uncollapsed.length && (
+              <WarningBox onLearnMore={onLearnMore}>
+                {t("polkadot.nomination.noActiveNominations")}
+              </WarningBox>
+            )}
+          </CollapsibleList>
         </View>
       )}
 
@@ -280,27 +355,12 @@ export default function Nominations({ account }: Props) {
               <RebondAction disabled={!rebondEnabled} onPress={onRebond} />
             }
           />
-          {hasUnlockedBalance ? (
-            <View style={styles.nominationsWrapper}>
-              <UnlockingRow
-                amount={unlockedBalance}
-                account={account}
-                onWithdraw={onWithdraw}
-                disabled={!withdrawEnabled}
-                isLast={unlockingsWithoutUnlocked.length === 0}
-              />
-            </View>
-          ) : null}
-          {unlockingsWithoutUnlocked?.map((unlocking, i) => (
-            <View key={`unlocking_${i}`} style={styles.nominationsWrapper}>
-              <UnlockingRow
-                amount={unlocking.amount}
-                completionDate={unlocking.completionDate}
-                account={account}
-                isLast={i === unlockingsWithoutUnlocked.length - 1}
-              />
-            </View>
-          ))}
+          <CollapsibleList
+            uncollapsedItems={mappedUnlockings.uncollapsed}
+            collapsedItems={mappedUnlockings.collapsed}
+            renderItem={renderUnlocking}
+            renderShowMore={renderShowAllUnlockings}
+          />
         </View>
       ) : null}
     </View>
@@ -320,10 +380,6 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     backgroundColor: colors.white,
     borderRadius: 4,
-  },
-  nominationsWrapper: {
-    borderRadius: 4,
-    backgroundColor: colors.white,
   },
   wrapper: {
     marginBottom: 16,
