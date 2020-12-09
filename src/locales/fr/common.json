@@ -3022,7 +3022,7 @@
       },
       "electionOpen": {
         "title": "Élection des validateurs en cours",
-        "description": "DE nouveaux validateurs sont en cours d'élection. Pendant cette phase toutes les opérations de Staking sont indisponibles pendant 15 minutes au plus."
+        "description": "De nouveaux validateurs sont en cours d'élection. Pendant cette phase toutes les opérations de Staking sont indisponibles pendant 15 minutes au plus."
       }
     },
     "nomination": {
@@ -3046,7 +3046,9 @@
       "elected": "Élu",
       "nominators": "Nominateurs",
       "nominatorsCount": "{{nominatorsCount}} nominateurs",
-      "oversubscribed": "Sursouscrit ({{nominatorsCount}})"
+      "oversubscribed": "Sursouscrit ({{nominatorsCount}})",
+      "externalControllerUnsupported": "<0>Ce compte est contrôlé par un autre compte ayant l'adresse <0><0>{{address}}</0></0></0><1>Les opérations de Staking sur un compte de réserve externe n'est pas supporté par Ledger Live. Merci d'utiliser un porte-feuille alternatif tel que Polkadot.js.</1>",
+      "externalStashUnsupported": "<0>Ce compte contrôle un autre compte de réserve ayant l'adresse <0><0>{{address}}</0></0></0><1>Les opérations de Staking sur un compte de réserve externe n'est pas supporté par Ledger Live. Merci d'utiliser un porte-feuille alternatif tel que Polkadot.js.</1>"
     },
     "unlockings": {
       "header": "Actifs en débloquage",
