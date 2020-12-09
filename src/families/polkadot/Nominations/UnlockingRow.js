@@ -1,6 +1,7 @@
 // @flow
 import { BigNumber } from "bignumber.js";
-import React from "react";
+import isBefore from "date-fns/isBefore";
+import React, { useMemo } from "react";
 import { View, StyleSheet } from "react-native";
 import type { Account } from "@ledgerhq/live-common/lib/types";
 import {
@@ -35,6 +36,11 @@ export default function UnlockingRow({
   const unit = getAccountUnit(account);
   const currency = getAccountCurrency(account);
 
+  const isUnlocked = useMemo(
+    () => completionDate && isBefore(completionDate, new Date(Date.now())),
+    [completionDate],
+  );
+
   return (
     <View
       style={[
@@ -58,7 +64,7 @@ export default function UnlockingRow({
           </LText>
         </View>
       ) : null}
-      {onWithdraw ? (
+      {isUnlocked && onWithdraw ? (
         <View style={styles.dateWrapper}>
           <WithdrawAction onPress={onWithdraw} disabled={disabled} />
         </View>
