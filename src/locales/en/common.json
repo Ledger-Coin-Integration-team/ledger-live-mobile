@@ -3011,7 +3011,9 @@
       "elected": "Elected",
       "nominators": "Nominators",
       "nominatorsCount": "{{nominatorsCount}} nominators",
-      "oversubscribed": "Oversubscribed ({{nominatorsCount}})"
+      "oversubscribed": "Oversubscribed ({{nominatorsCount}})",
+      "externalControllerUnsupported": "<0>This account is controlled by another account with address: <0><0>{{address}}</0></0></0><1>Staking operations on Stash controlled by an external account are not supported in Ledger Live. Please use an alternative wallet like Polkadot.js.</1>",
+      "externalStashUnsupported": "<0>This account controls an external Stash account with address: <0><0>{{address}}</0></0></0><1>Staking operations on external Stash are not supported in Ledger Live. Please use an alternative wallet like Polkadot.js.</1>"
     },
     "unlockings": {
       "header": "Unbondings",
