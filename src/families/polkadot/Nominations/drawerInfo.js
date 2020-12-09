@@ -58,7 +58,7 @@ export function getDrawerInfo({
       Component: (
         <Touchable
           onPress={() => onOpenExplorer(nomination.address)}
-          event="DelegationOpenExplorer"
+          event="NominationOpenExplorer"
         >
           <LText
             numberOfLines={1}

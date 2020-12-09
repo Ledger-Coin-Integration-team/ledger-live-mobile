@@ -7,6 +7,8 @@ import {
   canNominate,
   canBond,
   canUnbond,
+  hasExternalController,
+  hasExternalStash,
 } from "@ledgerhq/live-common/lib/families/polkadot/logic";
 import { getCurrentPolkadotPreloadData } from "@ledgerhq/live-common/lib/families/polkadot/preload";
 
@@ -19,6 +21,10 @@ import { NavigatorName, ScreenName } from "../../const";
 
 const getActions = ({ account }: { account: Account }) => {
   if (!account.polkadotResources) return null;
+
+  if (hasExternalController(account) || hasExternalStash(account)) {
+    return null;
+  }
 
   const { staking } = getCurrentPolkadotPreloadData();
 

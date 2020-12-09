@@ -15,6 +15,8 @@ import type { Account } from "@ledgerhq/live-common/lib/types";
 import {
   canNominate,
   isStash,
+  hasExternalController,
+  hasExternalStash,
 } from "@ledgerhq/live-common/lib/families/polkadot/logic";
 import { usePolkadotPreloadData } from "@ledgerhq/live-common/lib/families/polkadot/react";
 import type { PolkadotNomination } from "@ledgerhq/live-common/lib/families/polkadot/types";
@@ -33,6 +35,10 @@ import { NominateAction, RebondAction } from "./Actions";
 import { getDrawerInfo } from "./drawerInfo";
 import NominationRow from "./NominationRow";
 import UnlockingRow from "./UnlockingRow";
+import {
+  ExternalControllerUnsupportedWarning,
+  ExternalStashUnsupportedWarning,
+} from "./UnsupportedWarning";
 
 type Props = {
   account: Account,
@@ -152,6 +158,10 @@ export default function Nominations({ account }: Props) {
     [account.currency],
   );
 
+  const onLearnMore = useCallback(() => {
+    Linking.openURL(urls.polkadotStaking);
+  }, []);
+
   const drawerInfo = useMemo(
     () =>
       mappedNomination
@@ -177,6 +187,25 @@ export default function Nominations({ account }: Props) {
   const nominateEnabled = !electionOpen && canNominate(account);
   const rebondEnabled = !electionOpen && !!hasUnlockings;
   const withdrawEnabled = !electionOpen && hasUnlockedBalance;
+
+  if (hasExternalController(account)) {
+    return (
+      <ExternalControllerUnsupportedWarning
+        address={polkadotResources?.controller}
+        onOpenExplorer={onOpenExplorer}
+        onLearnMore={onLearnMore}
+      />
+    );
+  }
+  if (hasExternalStash(account)) {
+    return (
+      <ExternalStashUnsupportedWarning
+        address={polkadotResources?.stash}
+        onOpenExplorer={onOpenExplorer}
+        onLearnMore={onLearnMore}
+      />
+    );
+  }
 
   return (
     <View style={styles.root}>
