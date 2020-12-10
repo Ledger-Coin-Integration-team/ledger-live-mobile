@@ -124,7 +124,7 @@ function OperationDetailsExtra({
         </>
       );
     }
-    case "REWARD": {
+    case "REWARD_PAYOUT": {
       return (
         <>
           <OperationDetailsPalletMethod palletMethod={extra.palletMethod} />
