@@ -669,7 +669,13 @@
       "VOTE": "Voted",
       "FREEZE": "Frozen",
       "UNFREEZE": "Unfrozen",
-      "REWARD": "Claimed reward"
+      "REWARD": "Claimed reward",
+      "BOND": "Lié",
+      "UNBOND": "Délié",
+      "SLASH": "Sabrage",
+      "WITHDRAW_UNBONDED": "Retrait",
+      "NOMINATE": "Nomination",
+      "CHILL": "Fin de nomination"
     }
   },
   "operationDetails": {
