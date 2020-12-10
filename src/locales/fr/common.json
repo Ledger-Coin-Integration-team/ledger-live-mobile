@@ -1253,7 +1253,13 @@
       "CLOSE_ACCOUNT": "Close account",
       "SUPPLY": "Deposited",
       "REDEEM": "Withdrawn",
-      "APPROVE": "Enabled"
+      "APPROVE": "Enabled",
+      "BOND": "Lié",
+      "UNBOND": "Délié",
+      "SLASH": "Sabrage",
+      "WITHDRAW_UNBONDED": "Retrait",
+      "NOMINATE": "Nomination",
+      "CHILL": "Fin de nomination"
     }
   },
   "operationDetails": {
