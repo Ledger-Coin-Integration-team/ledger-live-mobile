@@ -2604,22 +2604,22 @@
         "cta": "Earn rewards"
       },
       "header": "Nominations",
-      "update": "Change validators",
+      "update": "Nominate",
       "nominate": "Nominate",
-      "chill": "Stop nominating",
+      "chill": "Clear nominations",
       "status": "Status",
       "totalStake": "Total Stake",
       "commission": "Commission",
       "amount": "Amount",
       "active": "Active",
       "inactive": "Inactive",
-      "waiting": "Not Elected",
+      "waiting": "Unelected",
       "elected": "Elected",
       "nominators": "Nominators",
       "nominatorsCount": "{{nominatorsCount}} nominators",
       "oversubscribed": "Oversubscribed ({{nominatorsCount}})",
-      "externalControllerUnsupported": "<0>This account is controlled by another account with address: <0><0>{{address}}</0></0></0><1>Staking operations on Stash controlled by an external account are not supported in Ledger Live. Please use an alternative wallet like Polkadot.js.</1>",
-      "externalStashUnsupported": "<0>This account controls an external Stash account with address: <0><0>{{address}}</0></0></0><1>Staking operations on external Stash are not supported in Ledger Live. Please use an alternative wallet like Polkadot.js.</1>",
+      "externalControllerUnsupported": "<0>This account is controlled by another account with address: <0><0>{{address}}</0></0></0><1>Staking operations on a Stash controlled by an external account are not supported in Ledger Live. Please use an alternative wallet like Polkadot.js.</1>",
+      "externalStashUnsupported": "<0>This account controls an external Stash account with address: <0><0>{{address}}</0></0></0><1>Staking operations on an external Stash are not supported in Ledger Live. Please use an alternative wallet like Polkadot.js.</1>",
       "showInactiveNominations": "Show inactive nominations ({{count}})",
       "hideInactiveNominations": "Hide inactive nominations",
       "noActiveNominations": "There are no active nominations.",
@@ -2639,19 +2639,19 @@
       },
       "unbond": {
         "title": "Unbond",
-        "description": "Unlock DOT to have them back in your available balance. You will no longer earn rewards for those assets."
+        "description": "Request unlocking DOT to have them back in your available balance. You will no longer earn rewards for these assets."
       },
       "withdrawUnbonded": {
         "title": "Withdraw Unbonded",
-        "description": "Transfer your unbonded assets back to your available balnce after a 28-day timelock period."
+        "description": "Transfer your unbonded assets back to your available balnce after a 28-days timelock period."
       },
       "nominate": {
         "title": "Nominate",
-        "description": "Choose up to 16 validators to be elected to start earning rewards."
+        "description": "Choose up to 16 validators to start earning rewards."
       },
       "chill": {
-        "title": "Chill",
-        "description": "Stop nominating validators and earning rewards."
+        "title": "Clear nominations",
+        "description": "Remove all your nominations and stop earning rewards."
       }
     },
     "nominate": {
@@ -2665,13 +2665,13 @@
         "validators": {
           "myNominations": "My nominations",
           "electedValidators": "Elected validators",
-          "waitingValidators": "Not elected validators",
+          "waitingValidators": "Unelected validators",
           "noResultsFound": "No validators found for <0>{{search}}</0>",
           "selected": "{{selected}} out of {{total}} selected"
         },
         "validation": {
           "success": {
-            "title": "Validators nominated",
+            "title": "Transaction broadcasted successfully",
             "description": "You will start earning rewards when your validators are elected and your bonded assets are part of their stake."
           }
         }
@@ -2681,9 +2681,9 @@
       "rewardDestination": {
         "label": "Reward Destination",
         "stash": "Available balance",
-        "stashDescription": "The rewards will be transferred to the current account as available balance.",
+        "stashDescription": "The rewards will be transferred to your available balance.",
         "staked": "Bonded balance",
-        "stakedDescription": "The rewards will be transferred to the current account as bonded balance."
+        "stakedDescription": "The rewards will be transferred to your bonded balance."
       },
       "stepperHeader": {
         "starter": "Earn rewards",
@@ -2701,16 +2701,16 @@
             "Assets will be available 28 days after unbonding"
           ],
           "help": "How nomination works",
-          "warning": "Choose your validator wisely: Part of your bonded assets may be irrevocably lost if the validator does not behave appropriately."
+          "warning": "Choose your validator wisely: part of your bonded assets may be irrevocably lost if the validator does not behave appropriately."
         },
         "amount": {
           "availableLabel": "Available",
-          "maxLabel": "Bond Max",
-          "info": "Once assets are bonded they can be unbonded any time, but they will be locked for 28-days."
+          "maxLabel": "Max",
+          "info": "Once assets are bonded they can be unbonded at any time, but they will be locked for 28 days."
         },
         "validation": {
           "success": {
-            "title": "Assets bonded",
+            "title": "Transaction broadcasted successfully",
             "description": "Your account balance will update once the network has confirmed the transaction.",
             "descriptionNominate": "You will be able to nominate validators once the network has confirmed your transaction.",
             "nominate": "Nominate",
@@ -2732,13 +2732,13 @@
       },
       "steps": {
         "amount": {
-          "availableLabel": "Unlocking",
-          "maxLabel": "Rebond Max",
+          "availableLabel": "Unbonding",
+          "maxLabel": "Max",
           "info": "Rebonded assets will be immediately added to bonded balance."
         },
         "validation": {
           "success": {
-            "title": "Assets rebonded",
+            "title": "Transaction broadcasted successfully",
             "description": "Your account balance will update once the network has confirmed the transaction."
           }
         }
@@ -2753,14 +2753,14 @@
       },
       "steps": {
         "amount": {
-          "availableLabel": "Unlockable",
-          "maxLabel": "Unbond Max",
-          "info": "Unbonded assets can be withdrawn after a 28-day timelock period."
+          "availableLabel": "Bonded",
+          "maxLabel": "Max",
+          "info": "Unbonded assets can be withdrawn after a 28-days timelock period."
         },
         "validation": {
           "success": {
-            "title": "Assets unbonded",
-            "description": "Unbonded assets can be withdrawn in 28-days."
+            "title": "Transaction broadcasted successfully",
+            "description": "Unbonded assets can be withdrawn after 28 days."
           }
         }
       }
@@ -2769,13 +2769,13 @@
       "modes": {
         "withdrawUnbonded": {
           "title": "Withdraw unbonded",
-          "description": "After a 28-day timelock you can withdraw unbonded assets.",
+          "description": "After a 28-days timelock you can withdraw unbonded assets.",
           "info": "You will fully get back your unbonded assets as available balance."
         },
         "chill": {
-          "title": "Stop nominating",
+          "title": "Clear nominations",
           "description": "You can stop nominating all your validators and stop receiving rewards.",
-          "info": "Bonded assets will stay untouched and will be locked for a 28-day timelock period if you unbonds them."
+          "info": "Bonded assets will stay untouched and will be locked for a 28-days timelock period if you unbond them."
         }
       },
       "stepperHeader": {
@@ -2787,7 +2787,7 @@
       "steps": {
         "validation": {
           "success": {
-            "title": "Transaction sent",
+            "title": "Transaction broadcasted successfully",
             "description": "You will see your operation in history once the network has confirmed the transaction."
           }
         }
