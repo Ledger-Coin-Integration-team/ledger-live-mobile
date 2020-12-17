@@ -2643,7 +2643,7 @@
       },
       "withdrawUnbonded": {
         "title": "Withdraw Unbonded",
-        "description": "Transfer your unbonded assets back to your available balnce after a 28-days timelock period."
+        "description": "Transfer your unbonded assets back to your available balnce after a 28-day timelock period."
       },
       "nominate": {
         "title": "Nominate",
@@ -2671,7 +2671,7 @@
         },
         "validation": {
           "success": {
-            "title": "Transaction broadcasted successfully",
+            "title": "You have successfully nominated validators",
             "description": "You will start earning rewards when your validators are elected and your bonded assets are part of their stake."
           }
         }
@@ -2710,7 +2710,7 @@
         },
         "validation": {
           "success": {
-            "title": "Transaction broadcasted successfully",
+            "title": "Assets successfully bonded",
             "description": "Your account balance will update once the network has confirmed the transaction.",
             "descriptionNominate": "You will be able to nominate validators once the network has confirmed your transaction.",
             "nominate": "Nominate",
@@ -2738,7 +2738,7 @@
         },
         "validation": {
           "success": {
-            "title": "Transaction broadcasted successfully",
+            "title": "Assets successfully rebonded",
             "description": "Your account balance will update once the network has confirmed the transaction."
           }
         }
@@ -2755,11 +2755,11 @@
         "amount": {
           "availableLabel": "Bonded",
           "maxLabel": "Max",
-          "info": "Unbonded assets can be withdrawn after a 28-days timelock period."
+          "info": "Unbonded assets can be withdrawn after a 28-day timelock period."
         },
         "validation": {
           "success": {
-            "title": "Transaction broadcasted successfully",
+            "title": "Unbond transaction sent successfully",
             "description": "Unbonded assets can be withdrawn after 28 days."
           }
         }
@@ -2769,13 +2769,13 @@
       "modes": {
         "withdrawUnbonded": {
           "title": "Withdraw unbonded",
-          "description": "After a 28-days timelock you can withdraw unbonded assets.",
+          "description": "After a 28-day timelock you can withdraw unbonded assets.",
           "info": "You will fully get back your unbonded assets as available balance."
         },
         "chill": {
           "title": "Clear nominations",
           "description": "You can stop nominating all your validators and stop receiving rewards.",
-          "info": "Bonded assets will stay untouched and will be locked for a 28-days timelock period if you unbond them."
+          "info": "Bonded assets will stay untouched and will be locked for a 28-day timelock period if you unbond them."
         }
       },
       "stepperHeader": {
@@ -2787,7 +2787,7 @@
       "steps": {
         "validation": {
           "success": {
-            "title": "Transaction broadcasted successfully",
+            "title": "Transaction sent successfully",
             "description": "You will see your operation in history once the network has confirmed the transaction."
           }
         }
