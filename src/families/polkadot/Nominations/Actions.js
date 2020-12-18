@@ -30,7 +30,7 @@ export function NominateAction({ onPress, electionOpen, disabled }: Props) {
         semiBold
         style={[styles.actionColor, disabled ? { color: colors.grey } : {}]}
       >
-        {t("polkadot.nomination.update")}
+        {t("polkadot.nomination.nominate")}
       </LText>
       <InfoModal
         isOpened={!!disabledModalOpen}
