@@ -3026,16 +3026,20 @@
         "cta": "Earn rewards"
       },
       "header": "Nominations",
-      "update": "Change validators",
       "nominate": "Nominate",
-      "chill": "Stop nominating",
+      "chill": "Clear nominations",
       "status": "Status",
       "totalStake": "Total Stake",
       "commission": "Commission",
       "amount": "Amount",
       "active": "Active",
+      "activeInfo": "This validator has been elected and is collecting rewards with some of your bonded assets.",
       "inactive": "Inactive",
-      "waiting": "Not Elected",
+      "inactiveInfo": "This validator has been elected and is not collecting rewards with your stake.",
+      "waiting": "Unelected",
+      "waitingInfo": "This validator has not been elected therefore is not collecting rewards.",
+      "notValidator": "Not a validator",
+      "notValidatorInfo": "This address is no longer a validator",
       "elected": "Elected",
       "nominators": "Nominators",
       "nominatorsCount": "{{nominatorsCount}} nominators",
@@ -3073,8 +3077,8 @@
         "description": "Choose up to 16 validators to be elected to start earning rewards."
       },
       "chill": {
-        "title": "Chill",
-        "description": "Stop nominating validators and earning rewards."
+        "title": "Clear nominations",
+        "description": "Remove all your nominations and stop earning rewards."
       }
     },
     "nominate": {
@@ -3088,9 +3092,10 @@
         "validators": {
           "myNominations": "My nominations",
           "electedValidators": "Elected validators",
-          "waitingValidators": "Not elected validators",
+          "waitingValidators": "Unelected validators",
           "noResultsFound": "No validators found for <0>{{search}}</0>",
-          "selected": "{{selected}} out of {{total}} selected"
+          "selected": "{{selected}} out of {{total}} selected",
+          "notValidatorsRemoved": "You have nominated {{count}} addresses that are no longer validators. They will be automatically removed from your nominate transaction."
         },
         "validation": {
           "success": {
@@ -3140,7 +3145,7 @@
             "later": "Nominate later"
           },
           "pending": {
-            "title": "Transaction under validation",
+            "title": "Transaction is awaiting confirmation",
             "description": "You have to wait a short time before being able to nominate"
           }
         }

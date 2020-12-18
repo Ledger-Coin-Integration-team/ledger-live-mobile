@@ -15,6 +15,8 @@ import Circle from "../../../components/Circle";
 import Touchable from "../../../components/Touchable";
 import LText from "../../../components/LText";
 import CurrencyIcon from "../../../components/CurrencyIcon";
+import IconHelp from "../../../icons/Info";
+
 import { normalize } from "../../../helpers/normalizeSize";
 
 const { height } = getWindowDimensions();
@@ -93,6 +95,8 @@ export default function NominationDrawer({
 
 type FieldType = {
   label: React$Node,
+  info?: React$Node,
+  infoType?: "info" | "warning",
   Component: React$Node,
 };
 
@@ -100,18 +104,38 @@ type DataFieldProps = FieldType & {
   isLast: boolean,
 };
 
-function DataField({ label, Component, isLast }: DataFieldProps) {
+function DataField({
+  label,
+  info,
+  infoType,
+  Component,
+  isLast,
+}: DataFieldProps) {
   return (
-    <View
-      style={[styles.row, styles.fieldRow, isLast ? styles.lastRow : undefined]}
-    >
-      <View>
+    <View style={[styles.row, isLast ? styles.lastRow : undefined]}>
+      <View style={styles.rowWrapper}>
         <LText numberOfLines={1} semiBold style={styles.labelText}>
           {label}
         </LText>
+        <View style={styles.valueWrapper}>{Component}</View>
       </View>
-
-      <View style={styles.valueWrapper}>{Component}</View>
+      {info ? (
+        <View style={[styles.infoBox]}>
+          <IconHelp
+            color={infoType === "warning" ? colors.orange : colors.live}
+            size={16}
+          />
+          <LText
+            semiBold
+            style={[
+              styles.infoContent,
+              infoType === "warning" && styles.infoWarning,
+            ]}
+          >
+            {info}
+          </LText>
+        </View>
+      ) : null}
     </View>
   );
 }
@@ -131,15 +155,12 @@ export const styles = StyleSheet.create({
     maxHeight: height - normalize(425),
     paddingHorizontal: 16,
   },
-  text: {
-    color: colors.darkBlue,
-  },
-  row: {
+  rowWrapper: {
     flexDirection: "row",
     alignItems: "flex-start",
-  },
-  fieldRow: {
     justifyContent: "space-between",
+  },
+  row: {
     borderBottomColor: colors.lightFog,
     borderBottomWidth: 1,
     paddingVertical: 16,
@@ -155,5 +176,19 @@ export const styles = StyleSheet.create({
   valueWrapper: {
     width: "50%",
     alignItems: "flex-end",
+  },
+  infoBox: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 10,
+  },
+  infoContent: {
+    color: colors.live,
+    flex: 1,
+    marginLeft: 10,
+    alignItems: "center",
+  },
+  infoWarning: {
+    color: colors.orange,
   },
 });
