@@ -29,8 +29,10 @@ import { ScreenName } from "../../../const";
 import Button from "../../../components/Button";
 import SelectValidatorSearchBox from "../../tron/VoteFlow/01-SelectValidator/SearchBox";
 import LText from "../../../components/LText";
-import Check from "../../../icons/Check";
+import WarningBox from "../../../components/WarningBox";
+import TranslatedError from "../../../components/TranslatedError";
 
+import Check from "../../../icons/Check";
 import SendRowsFee from "../SendRowsFee";
 import ValidatorItem from "./ValidatorItem";
 
@@ -70,7 +72,9 @@ function NominateSelectValidator({ navigation, route }: Props) {
 
       const initialValidators = (
         mainAccount.polkadotResources?.nominations || []
-      ).map(nominations => nominations.address);
+      )
+        .filter(nomination => !!nomination.status)
+        .map(nomination => nomination.address);
 
       return {
         account,
@@ -98,6 +102,15 @@ function NominateSelectValidator({ navigation, route }: Props) {
   const nominations = useMemo(() => polkadotResources.nominations || [], [
     polkadotResources.nominations,
   ]);
+
+  // Addresses that are no longer validators
+  const nonValidators = useMemo(
+    () =>
+      (polkadotResources.nominations || [])
+        .filter(nomination => !nomination.status)
+        .map(nomination => nomination.address),
+    [polkadotResources.nominations],
+  );
 
   const { validators: polkadotValidators } = usePolkadotPreloadData();
   const sorted = useSortedValidators(
@@ -199,11 +212,23 @@ function NominateSelectValidator({ navigation, route }: Props) {
     [validators, onSelect, onOpenExplorer],
   );
 
-  const error = status && status.errors && Object.values(status.errors)[0];
+  const error = status?.errors?.staking;
+  const warning = status?.warnings?.staking;
   const maxSelected = validators.length === MAX_NOMINATIONS;
+
+  const shouldDisplayError =
+    !nominations.length && !validators.length ? false : error || warning;
 
   return (
     <SafeAreaView style={styles.root}>
+      {nonValidators.length ? (
+        <WarningBox>
+          <Trans
+            i18nKey="polkadot.nominate.steps.validators.notValidatorsRemoved"
+            values={{ count: nonValidators.length }}
+          />
+        </WarningBox>
+      ) : null}
       <SelectValidatorSearchBox
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
@@ -234,14 +259,25 @@ function NominateSelectValidator({ navigation, route }: Props) {
         <View style={styles.paddingBottom}>
           <View style={styles.labelContainer}>
             {maxSelected && <Check size={16} color={colors.success} />}
-            <LText style={[styles.selected, maxSelected && styles.success]}>
-              <Trans
-                i18nKey="polkadot.nominate.steps.validators.selected"
-                values={{
-                  selected: validators.length,
-                  total: MAX_NOMINATIONS,
-                }}
-              />
+            <LText
+              style={[
+                styles.selected,
+                maxSelected && styles.success,
+                warning && styles.warning,
+                error && styles.error,
+              ]}
+            >
+              {shouldDisplayError ? (
+                <TranslatedError error={error || warning} />
+              ) : (
+                <Trans
+                  i18nKey="polkadot.nominate.steps.validators.selected"
+                  values={{
+                    selected: validators.length,
+                    total: MAX_NOMINATIONS,
+                  }}
+                />
+              )}
             </LText>
           </View>
         </View>
@@ -300,14 +336,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   selected: {
-    fontSize: 16,
+    fontSize: 12,
     textAlign: "center",
-    lineHeight: 16,
-    paddingHorizontal: 10,
+    lineHeight: 12,
+    paddingHorizontal: 6,
   },
   textCenter: { textAlign: "center" },
   error: {
     color: colors.alert,
+  },
+  warning: {
+    color: colors.orange,
   },
   success: {
     color: colors.success,

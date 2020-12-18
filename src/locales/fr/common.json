@@ -3007,16 +3007,20 @@
         "cta": "Obtenez des récompenses"
       },
       "header": "Nominations",
-      "update": "Changer les validateurs",
       "nominate": "Nominer",
-      "chill": "Arrêter la nomination",
+      "chill": "Ne plus nominer",
       "status": "Statut",
       "totalStake": "Participation totale",
       "commission": "Commission",
       "amount": "Montant",
-      "active": "Active",
+      "active": "Actif",
+      "activeInfo": "Ce validateur a été élu et collecte des récompenses grâce à une partie de vos actifs liés.",
       "inactive": "Inactif",
+      "inactiveInfo": "Ce validateur a été élu mais ne collecte aucune récompense grâce à vos actifs liés.",
       "waiting": "Non élu",
+      "waitingInfo": "Ce validateur n'a pas été élu et ne collecte donc aucune récompense.",
+      "notValidator": "Non validateur",
+      "notValidatorInfo": "Cette addresse a cessé d'être validateur",
       "elected": "Élu",
       "nominators": "Nominateurs",
       "nominatorsCount": "{{nominatorsCount}} nominateurs",
@@ -3063,7 +3067,8 @@
         "validators": "Validateurs à nominer",
         "selectDevice": "Selectionnez votre appareil",
         "connectDevice": "Connectez votre appareil",
-        "stepRange": "Étape {{currentStep}} sur {{totalSteps}}"
+        "stepRange": "Étape {{currentStep}} sur {{totalSteps}}",
+        "notValidatorsRemoved": "Vous avez {{count}} adresses nominées qui ne sont plus des validateurs. Elles seront automatiquement supprimées de votre transaction de nomination."
       },
       "steps": {
         "validators": {
@@ -3121,7 +3126,7 @@
             "later": "Nominer plus tard"
           },
           "pending": {
-            "title": "Transaction en cours de validation",
+            "title": "Transaction en cours de confirmation",
             "description": "Vous devez attendre un petit moment avant de pouvoir nominer."
           }
         }
