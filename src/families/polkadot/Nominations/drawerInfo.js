@@ -45,7 +45,7 @@ export function getDrawerInfo({
                 numberOfLines={1}
                 semiBold
                 ellipsizeMode="middle"
-                style={[styles.valueText]}
+                style={styles.valueText}
               >
                 {validator?.identity}
               </LText>
@@ -72,32 +72,44 @@ export function getDrawerInfo({
       ),
     },
     {
-      label: t("polkadot.nomination.commission"),
-      Component: (
-        <LText
-          numberOfLines={1}
-          semiBold
-          ellipsizeMode="middle"
-          style={[styles.valueText]}
-        >
-          {formattedCommission}
-        </LText>
-      ),
-    },
-    {
       label: t("polkadot.nomination.status"),
+      info: t(`polkadot.nomination.${nomination.status || "notValidator"}Info`),
+      infoType: nomination.status ? "info" : "warning",
       Component: (
         <LText
           numberOfLines={1}
           semiBold
           ellipsizeMode="middle"
-          style={[styles.valueText]}
+          style={[
+            styles.valueText,
+            !nomination.status && styles.statusNotValidator,
+            nomination.status === "active" && styles.statusActive,
+            nomination.status === "inactive" && styles.statusInactive,
+            nomination.status === "waiting" && styles.statusWaiting,
+          ]}
         >
-          {t(`polkadot.nomination.${nomination.status}`)}
+          {t(`polkadot.nomination.${nomination.status || "notValidator"}`)}
         </LText>
       ),
     },
-    ...(nomination.status !== "waiting"
+    ...(nomination.status
+      ? [
+          {
+            label: t("polkadot.nomination.commission"),
+            Component: (
+              <LText
+                numberOfLines={1}
+                semiBold
+                ellipsizeMode="middle"
+                style={styles.valueText}
+              >
+                {formattedCommission}
+              </LText>
+            ),
+          },
+        ]
+      : []),
+    ...(nomination.status === "active" || nomination.status === "inactive"
       ? [
           {
             label: t("polkadot.nomination.nominators"),
@@ -128,7 +140,7 @@ export function getDrawerInfo({
                 numberOfLines={1}
                 semiBold
                 ellipsizeMode="middle"
-                style={[styles.valueText]}
+                style={styles.valueText}
               >
                 <View style={styles.column}>
                   <LText semiBold>
@@ -154,7 +166,7 @@ export function getDrawerInfo({
                 numberOfLines={1}
                 semiBold
                 ellipsizeMode="middle"
-                style={[styles.valueText]}
+                style={styles.valueText}
               >
                 <View style={styles.column}>
                   <LText semiBold>
@@ -195,4 +207,12 @@ const styles = StyleSheet.create({
   valueTextTouchable: {
     color: colors.live,
   },
+  statusNotValidator: {
+    color: colors.orange,
+  },
+  statusActive: {
+    color: colors.success,
+  },
+  statusInactive: {},
+  statusWaiting: {},
 });
