@@ -13,11 +13,11 @@ import {
 } from "@ledgerhq/live-common/lib/families/polkadot/logic";
 import { getCurrentPolkadotPreloadData } from "@ledgerhq/live-common/lib/families/polkadot/preload";
 
-import BondIcon from "../../icons/Plus";
-import UnbondIcon from "../../icons/Withdraw";
-import WithdrawIcon from "../../icons/Receive";
+import BondIcon from "../../icons/LinkIcon";
+import UnbondIcon from "../../icons/Undelegate";
+import WithdrawUnbondedIcon from "../../icons/Exchange";
 import NominateIcon from "../../icons/Vote";
-import ChillIcon from "../../icons/Undelegate";
+import ChillIcon from "../../icons/Ban";
 import { NavigatorName, ScreenName } from "../../const";
 
 const getActions = ({ account }: { account: Account }) => {
@@ -89,7 +89,7 @@ const getActions = ({ account }: { account: Account }) => {
       description: (
         <Trans i18nKey="polkadot.manage.withdrawUnbonded.description" />
       ),
-      Icon: WithdrawIcon,
+      Icon: WithdrawUnbondedIcon,
     },
     {
       disabled: !nominationEnabled,
