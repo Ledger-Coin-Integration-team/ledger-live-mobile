@@ -9,6 +9,7 @@ import {
   canUnbond,
   hasExternalController,
   hasExternalStash,
+  hasPendingBond,
 } from "@ledgerhq/live-common/lib/families/polkadot/logic";
 import { getCurrentPolkadotPreloadData } from "@ledgerhq/live-common/lib/families/polkadot/preload";
 
@@ -22,26 +23,31 @@ import { NavigatorName, ScreenName } from "../../const";
 const getActions = ({ account }: { account: Account }) => {
   if (!account.polkadotResources) return null;
 
-  if (hasExternalController(account) || hasExternalStash(account)) {
-    return null;
-  }
-
   const { staking } = getCurrentPolkadotPreloadData();
 
   const accountId = account.id;
 
-  const { unlockedBalance, nominations } = account.polkadotResources || {};
+  const { unlockedBalance, lockedBalance, nominations } =
+    account.polkadotResources || {};
 
   const electionOpen =
     staking?.electionClosed !== undefined ? !staking?.electionClosed : false;
   const hasUnlockedBalance = unlockedBalance && unlockedBalance.gt(0);
+  const hasBondedBalance = lockedBalance && lockedBalance.gt(0);
+  const hasPendingBondOperation = hasPendingBond(account) || true;
 
   const nominationEnabled = !electionOpen && canNominate(account);
   const chillEnabled =
     !electionOpen && canNominate(account) && nominations?.length;
-  const bondingEnabled = !electionOpen && canBond(account);
+  const bondingEnabled =
+    (!electionOpen && !hasBondedBalance && !hasPendingBondOperation) ||
+    (hasBondedBalance && canBond(account));
   const unbondingEnabled = !electionOpen && canUnbond(account);
   const withdrawEnabled = !electionOpen && hasUnlockedBalance;
+
+  if (hasExternalController(account) || hasExternalStash(account)) {
+    return null;
+  }
 
   return [
     {
