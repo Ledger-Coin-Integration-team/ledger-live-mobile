@@ -15,9 +15,9 @@ import InfoModal from "../../modals/Info";
 import type { ModalInfo } from "../../modals/Info";
 import CurrencyUnitValue from "../../components/CurrencyUnitValue";
 import InfoItem from "../../components/BalanceSummaryInfoItem";
-import FreezeIcon from "../../icons/Freeze";
-import ClockIcon from "../../icons/Clock";
-import UnfreezeIcon from "../../icons/Unfreeze";
+import BondedIcon from "../../icons/LinkIcon";
+import UnbondingIcon from "../../icons/Clock";
+import Unbonded from "../../icons/Undelegate";
 
 type Props = {
   account: Account,
@@ -156,21 +156,21 @@ function useInfo(): { [key: InfoName]: ModalInfo[] } {
     ],
     locked: [
       {
-        Icon: () => <FreezeIcon color={colors.darkBlue} size={18} />,
+        Icon: () => <BondedIcon color={colors.darkBlue} size={18} />,
         title: t("polkadot.info.locked.title"),
         description: t("polkadot.info.locked.description"),
       },
     ],
     unlocking: [
       {
-        Icon: () => <ClockIcon color={colors.darkBlue} size={18} />,
+        Icon: () => <UnbondingIcon color={colors.darkBlue} size={18} />,
         title: t("polkadot.info.unlocking.title"),
         description: t("polkadot.info.unlocking.description"),
       },
     ],
     unlocked: [
       {
-        Icon: () => <UnfreezeIcon color={colors.darkBlue} size={18} />,
+        Icon: () => <Unbonded color={colors.darkBlue} size={18} />,
         title: t("polkadot.info.unlocked.title"),
         description: t("polkadot.info.unlocked.description"),
       },
