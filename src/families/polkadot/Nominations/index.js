@@ -17,6 +17,7 @@ import {
   isStash,
   hasExternalController,
   hasExternalStash,
+  hasPendingBond,
 } from "@ledgerhq/live-common/lib/families/polkadot/logic";
 import { usePolkadotPreloadData } from "@ledgerhq/live-common/lib/families/polkadot/react";
 import type { PolkadotNomination } from "@ledgerhq/live-common/lib/families/polkadot/types";
@@ -206,10 +207,13 @@ export default function Nominations({ account }: Props) {
   const hasUnlockedBalance = unlockedBalance && unlockedBalance.gt(0);
   const hasNominations = nominations && nominations?.length > 0;
   const hasUnlockings = unlockings && unlockings.length > 0;
+  const hasPendingBondOperation = hasPendingBond(account);
 
   const nominateEnabled = !electionOpen && canNominate(account);
   const rebondEnabled = !electionOpen && !!hasUnlockings;
   const withdrawEnabled = !electionOpen && hasUnlockedBalance;
+  const earnRewardsEnabled =
+    !electionOpen && !hasBondedBalance && !hasPendingBondOperation;
 
   const renderNomination = useCallback(
     ({ nomination, validator }, i, isLast) => (
@@ -304,6 +308,11 @@ export default function Nominations({ account }: Props) {
       {electionOpen && (
         <WarningBox>{t("polkadot.info.electionOpen.description")}</WarningBox>
       )}
+      {!hasBondedBalance && hasPendingBondOperation && (
+        <WarningBox>
+          {t("polkadot.nomination.hasPendingBondOperation")}
+        </WarningBox>
+      )}
       {!hasNominations ? (
         <AccountDelegationInfo
           title={t("polkadot.nomination.emptyState.title")}
@@ -314,10 +323,11 @@ export default function Nominations({ account }: Props) {
           infoUrl={urls.polkadotStaking}
           infoTitle={t("polkadot.nomination.emptyState.info")}
           onPress={onEarnRewards}
+          disabled={!(earnRewardsEnabled || nominateEnabled)}
           ctaTitle={
-            hasBondedBalance
-              ? t("polkadot.nomination.nominate")
-              : t("polkadot.nomination.emptyState.cta")
+            !hasBondedBalance && !hasPendingBondOperation
+              ? t("polkadot.nomination.emptyState.cta")
+              : t("polkadot.nomination.nominate")
           }
         />
       ) : (
