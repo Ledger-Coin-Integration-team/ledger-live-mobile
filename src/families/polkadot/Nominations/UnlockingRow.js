@@ -57,7 +57,7 @@ export default function UnlockingRow({
           <CounterValue currency={currency} value={amount} withPlaceholder />
         </LText>
       </View>
-      {completionDate ? (
+      {!isUnlocked && completionDate ? (
         <View style={styles.dateWrapper}>
           <LText numberOfLines={1} semiBold>
             <DateFromNow date={new Date(completionDate).getTime()} />
