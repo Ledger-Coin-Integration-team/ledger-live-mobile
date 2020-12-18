@@ -2604,7 +2604,6 @@
         "cta": "Earn rewards"
       },
       "header": "Nominations",
-      "update": "Nominate",
       "nominate": "Nominate",
       "chill": "Clear nominations",
       "status": "Status",
@@ -2612,12 +2611,18 @@
       "commission": "Commission",
       "amount": "Amount",
       "active": "Active",
+      "activeInfo": "This validator has been elected and is collecting rewards with some of your bonded assets.",
       "inactive": "Inactive",
+      "inactiveInfo": "This validator has been elected and is not collecting rewards with your stake.",
       "waiting": "Unelected",
+      "waitingInfo": "This validator has not been elected therefore is not collecting rewards.",
+      "notValidator": "Not a validator",
+      "notValidatorInfo": "This address is no longer a validator",
       "elected": "Elected",
       "nominators": "Nominators",
       "nominatorsCount": "{{nominatorsCount}} nominators",
       "oversubscribed": "Oversubscribed ({{nominatorsCount}})",
+      "hasPendingBondOperation": "A bond operation is still pending confirmation",
       "externalControllerUnsupported": "<0>This account is controlled by another account with address: <0><0>{{address}}</0></0></0><1>Staking operations on a Stash controlled by an external account are not supported in Ledger Live. Please use an alternative wallet like Polkadot.js.</1>",
       "externalStashUnsupported": "<0>This account controls an external Stash account with address: <0><0>{{address}}</0></0></0><1>Staking operations on an external Stash are not supported in Ledger Live. Please use an alternative wallet like Polkadot.js.</1>",
       "showInactiveNominations": "Show inactive nominations ({{count}})",
@@ -2667,7 +2672,8 @@
           "electedValidators": "Elected validators",
           "waitingValidators": "Unelected validators",
           "noResultsFound": "No validators found for <0>{{search}}</0>",
-          "selected": "{{selected}} out of {{total}} selected"
+          "selected": "{{selected}} out of {{total}} selected",
+          "notValidatorsRemoved": "You have nominated {{count}} addresses that are no longer validators. They will be automatically removed from your nominate transaction."
         },
         "validation": {
           "success": {
@@ -2717,7 +2723,7 @@
             "later": "Nominate later"
           },
           "pending": {
-            "title": "Transaction under validation",
+            "title": "Transaction is awaiting confirmation",
             "description": "You have to wait a short time before being able to nominate"
           }
         }

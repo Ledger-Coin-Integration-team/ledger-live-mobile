@@ -17,7 +17,9 @@ import type {
   Operation,
   Currency,
   Unit,
+  OperationType,
 } from "@ledgerhq/live-common/lib/types";
+
 import { useSelector } from "react-redux";
 import LText from "../../components/LText";
 import CurrencyUnitValue from "../../components/CurrencyUnitValue";
@@ -25,6 +27,15 @@ import CounterValue from "../../components/CounterValue";
 import Section from "../../screens/OperationDetails/Section";
 import colors from "../../colors";
 import { discreetModeSelector } from "../../reducers/settings";
+
+import BondIcon from "../../icons/LinkIcon";
+import UnbondIcon from "../../icons/Undelegate";
+import WithdrawUnbondedIcon from "../../icons/Exchange";
+import RewardIcon from "../../icons/ClaimReward";
+import NominateIcon from "../../icons/Vote";
+import ChillIcon from "../../icons/Ban";
+
+import OperationStatusWrapper from "../../icons/OperationStatusIcon/Wrapper";
 
 import NominationInfo from "./components/NominationInfo";
 
@@ -232,7 +243,7 @@ export function OperationDetailsValidators({
 
   return (
     <Section
-      title={t("operationDetails.extra.validators", {
+      title={t("operationDetails.extra.validatorsCount", {
         number: validators.length,
       })}
     >
@@ -347,6 +358,28 @@ const NominateAmountCell = ({ operation }: Props) => {
   ) : null;
 };
 
+const createOperationIcon = Icon => ({
+  confirmed,
+  failed,
+  size = 24,
+  type,
+}: {
+  confirmed?: boolean,
+  failed?: boolean,
+  size?: number,
+  type: OperationType,
+}) => {
+  return (
+    <OperationStatusWrapper
+      size={size}
+      Icon={Icon}
+      confirmed={confirmed}
+      failed={failed}
+      type={type}
+    />
+  );
+};
+
 const styles = StyleSheet.create({
   amountText: {
     color: colors.grey,
@@ -368,8 +401,18 @@ const amountCell = {
   NOMINATE: NominateAmountCell,
 };
 
+const operationStatusIcon = {
+  BOND: createOperationIcon(BondIcon),
+  UNBOND: createOperationIcon(UnbondIcon),
+  CHILL: createOperationIcon(ChillIcon),
+  NOMINATE: createOperationIcon(NominateIcon),
+  WITHDRAW_UNBONDED: createOperationIcon(WithdrawUnbondedIcon),
+  REWARD_PAYOUT: createOperationIcon(RewardIcon),
+};
+
 export default {
   getURLWhatIsThis,
   OperationDetailsExtra,
   amountCell,
+  operationStatusIcon,
 };

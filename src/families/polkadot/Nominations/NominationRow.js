@@ -78,6 +78,11 @@ export default function NominationRow({
               {t("polkadot.nomination.waiting")}
             </LText>
           )}
+          {!status && (
+            <LText style={styles.statusNotValidator} numberOfLines={1}>
+              {t("polkadot.nomination.notValidator")}
+            </LText>
+          )}
           <View style={styles.seeMore}>
             <LText style={styles.seeMoreText}>{t("common.seeMore")}</LText>
             <ArrowRight color={colors.live} size={14} />
@@ -85,7 +90,7 @@ export default function NominationRow({
         </View>
       </View>
 
-      {status !== "waiting" ? (
+      {status === "active" || status === "inactive" ? (
         <View style={styles.rightWrapper}>
           <LText semiBold>
             {" "}
@@ -150,6 +155,9 @@ const styles = StyleSheet.create({
   },
   statusWaiting: {
     color: colors.grey,
+  },
+  statusNotValidator: {
+    color: colors.orange,
   },
   seeMore: {
     flexDirection: "row",
