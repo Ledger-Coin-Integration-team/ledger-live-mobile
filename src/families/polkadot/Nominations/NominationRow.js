@@ -2,6 +2,8 @@
 import React from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { useTranslation } from "react-i18next";
+import { Polkadot as PolkadotIdenticon } from "@polkadot/reactnative-identicon/icons";
+
 import type {
   PolkadotNomination,
   PolkadotValidator,
@@ -16,7 +18,6 @@ import CurrencyUnitValue from "../../../components/CurrencyUnitValue";
 import CounterValue from "../../../components/CounterValue";
 import colors from "../../../colors";
 import LText from "../../../components/LText";
-import FirstLetterIcon from "../../../components/FirstLetterIcon";
 import ArrowRight from "../../../icons/ArrowRight";
 
 type Props = {
@@ -54,7 +55,7 @@ export default function NominationRow({
       onPress={() => onPress(nomination)}
     >
       <View style={styles.icon}>
-        <FirstLetterIcon label={name} />
+        <PolkadotIdenticon address={address} size={32} />
       </View>
 
       <View style={styles.nameWrapper}>
@@ -129,8 +130,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: 36,
     height: 36,
-    borderRadius: 5,
-    backgroundColor: colors.lightLive,
     marginRight: 12,
   },
   nameWrapper: {
