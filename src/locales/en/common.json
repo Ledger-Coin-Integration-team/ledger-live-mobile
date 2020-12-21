@@ -538,7 +538,7 @@
       "title": "Some selected addresses are not validators"
     },
     "PolkadotLowBondedBalance": {
-      "title": "All unlockable assets will be unbonded if remaining < 1 DOT"
+      "title": "All bonded assets will be unbonded if < 1 DOT"
     },
     "PolkadotNoUnlockedBalance": {
       "title": "You have no unbonded assets"
