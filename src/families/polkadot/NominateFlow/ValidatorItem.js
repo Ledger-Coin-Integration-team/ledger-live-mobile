@@ -2,13 +2,13 @@
 import React, { memo, useCallback, useMemo } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { Trans } from "react-i18next";
+import { Polkadot as PolkadotIdenticon } from "@polkadot/reactnative-identicon/icons";
 
 import type { PolkadotValidator } from "@ledgerhq/live-common/lib/families/polkadot/types";
 
 import colors from "../../../colors";
 import CheckBox from "../../../components/CheckBox";
 import LText from "../../../components/LText";
-import FirstLetterIcon from "../../../components/FirstLetterIcon";
 import Touchable from "../../../components/Touchable";
 
 type Props = {
@@ -42,15 +42,16 @@ function Item({ item, selected, disabled, onSelect, onOpenExplorer }: Props) {
     [commission],
   );
   return (
-    <View style={[styles.wrapper, disabled ? styles.disabledWrapper : {}]}>
+    <View style={[styles.wrapper, isDisabled ? styles.disabledWrapper : {}]}>
       <Touchable
         style={[styles.iconWrapper]}
         onPress={() => onOpenExplorer(address)}
         event="PolkadotNominateSelectValidatorsOpenExplorer"
       >
-        <FirstLetterIcon
+        <PolkadotIdenticon
           style={isDisabled ? styles.disabledWrapper : {}}
-          label={identity || address || ""}
+          address={address}
+          size={32}
         />
       </Touchable>
 
@@ -122,8 +123,6 @@ const styles = StyleSheet.create({
     width: 36,
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 5,
-    backgroundColor: colors.lightLive,
     marginRight: 12,
   },
   nameWrapper: {
@@ -137,6 +136,7 @@ const styles = StyleSheet.create({
   },
   disabledWrapper: {
     backgroundColor: colors.lightGrey,
+    opacity: 0.5,
   },
   disabledText: {
     color: colors.grey,
