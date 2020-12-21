@@ -5,6 +5,7 @@ import React, { useCallback, useState, useMemo } from "react";
 import { View, StyleSheet, Linking } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
+import { Polkadot as PolkadotIdenticon } from "@polkadot/reactnative-identicon/icons";
 
 import { getMainAccount } from "@ledgerhq/live-common/lib/account";
 import {
@@ -28,7 +29,6 @@ import AccountDelegationInfo from "../../../components/AccountDelegationInfo";
 import IlluRewards from "../../../icons/images/Rewards";
 import { urls } from "../../../config/urls";
 import AccountSectionLabel from "../../../components/AccountSectionLabel";
-import FirstLetterIcon from "../../../components/FirstLetterIcon";
 import WarningBox from "../../../components/WarningBox";
 
 import CollapsibleList from "../components/CollapsibleList";
@@ -291,18 +291,14 @@ export default function Nominations({ account }: Props) {
         isOpen={drawerInfo && drawerInfo.length > 0}
         onClose={onCloseDrawer}
         account={account}
-        ValidatorImage={({ size }) => (
-          <FirstLetterIcon
-            label={
-              mappedNomination?.validator?.identity ||
-              mappedNomination?.nomination.address ||
-              ""
-            }
-            round
-            size={size}
-            fontSize={24}
-          />
-        )}
+        ValidatorImage={({ size }) =>
+          mappedNomination?.nomination.address ? (
+            <PolkadotIdenticon
+              address={mappedNomination?.nomination.address}
+              size={size}
+            />
+          ) : null
+        }
         data={drawerInfo}
       />
       {electionOpen && (
