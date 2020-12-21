@@ -532,7 +532,7 @@
       "title": "Certaines adresses selectionnées ne sont pas des validateurs"
     },
     "PolkadotLowBondedBalance": {
-      "title": "Tous les actifs débloquables seront déliés si il reste < 1 DOT"
+      "title": "Tous les actifs liés seront déliés si < 1 DOT"
     },
     "PolkadotNoUnlockedBalance": {
       "title": "Vous n'avez aucun actif délié"
