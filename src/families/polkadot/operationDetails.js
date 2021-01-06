@@ -30,10 +30,10 @@ import { discreetModeSelector } from "../../reducers/settings";
 
 import BondIcon from "../../icons/LinkIcon";
 import UnbondIcon from "../../icons/Undelegate";
-import WithdrawUnbondedIcon from "../../icons/Exchange";
+import WithdrawUnbondedIcon from "../../icons/Coins";
 import RewardIcon from "../../icons/ClaimReward";
 import NominateIcon from "../../icons/Vote";
-import ChillIcon from "../../icons/Ban";
+import ChillIcon from "../../icons/VoteNay";
 
 import OperationStatusWrapper from "../../icons/OperationStatusIcon/Wrapper";
 

@@ -15,9 +15,9 @@ import { getCurrentPolkadotPreloadData } from "@ledgerhq/live-common/lib/familie
 
 import BondIcon from "../../icons/LinkIcon";
 import UnbondIcon from "../../icons/Undelegate";
-import WithdrawUnbondedIcon from "../../icons/Exchange";
+import WithdrawUnbondedIcon from "../../icons/Coins";
 import NominateIcon from "../../icons/Vote";
-import ChillIcon from "../../icons/Ban";
+import ChillIcon from "../../icons/VoteNay";
 import { NavigatorName, ScreenName } from "../../const";
 
 const getActions = ({ account }: { account: Account }) => {
