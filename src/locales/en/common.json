@@ -3095,7 +3095,8 @@
           "waitingValidators": "Unelected validators",
           "noResultsFound": "No validators found for <0>{{search}}</0>",
           "selected": "{{selected}} out of {{total}} selected",
-          "notValidatorsRemoved": "You have nominated {{count}} addresses who are no longer validators. They will automatically be removed from your nominate transaction."
+          "notValidatorsRemoved": "You have nominated {{count}} addresses who are no longer validators. They will automatically be removed from your nominate transaction.",
+          "maybeChill": "Clear nominations instead"
         },
         "validation": {
           "success": {
