@@ -3115,7 +3115,9 @@
           "electedValidators": "Validateurs élus",
           "waitingValidators": "Validateurs non élus",
           "noResultsFound": "Aucun validateur trouvé correspondant à <0>{{search}}</0>",
-          "selected": "{{selected}} sur {{total}} selectionnés"
+          "selected": "{{selected}} sur {{total}} selectionnés",
+          "notValidatorsRemoved": "Vous avez {{count}} adresses nominées qui ne sont plus des validateurs. Elles seront automatiquement supprimées de votre transaction de nomination.",
+          "maybeChill": "Ne plus nominer plutôt"
         },
         "validation": {
           "success": {

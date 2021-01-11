@@ -1,7 +1,13 @@
 // @flow
 import invariant from "invariant";
 import React, { useCallback, useState, useMemo } from "react";
-import { View, StyleSheet, SectionList, Linking } from "react-native";
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  SectionList,
+  Linking,
+} from "react-native";
 
 import SafeAreaView from "react-native-safe-area-view";
 import { Trans } from "react-i18next";
@@ -17,6 +23,7 @@ import {
 } from "@ledgerhq/live-common/lib/explorers";
 import useBridgeTransaction from "@ledgerhq/live-common/lib/bridge/useBridgeTransaction";
 import { MAX_NOMINATIONS } from "@ledgerhq/live-common/lib/families/polkadot/logic";
+import { PolkadotValidatorsRequired } from "@ledgerhq/live-common/lib/families/polkadot/errors";
 
 import {
   usePolkadotPreloadData,
@@ -25,7 +32,7 @@ import {
 
 import { accountScreenSelector } from "../../../reducers/accounts";
 import colors from "../../../colors";
-import { ScreenName } from "../../../const";
+import { NavigatorName, ScreenName } from "../../../const";
 import Button from "../../../components/Button";
 import SelectValidatorSearchBox from "../../tron/VoteFlow/01-SelectValidator/SearchBox";
 import LText from "../../../components/LText";
@@ -35,6 +42,14 @@ import TranslatedError from "../../../components/TranslatedError";
 import Check from "../../../icons/Check";
 import SendRowsFee from "../SendRowsFee";
 import ValidatorItem from "./ValidatorItem";
+
+// returns the first error
+function getStatusError(status, type = "errors"): ?Error {
+  if (!status || !status[type]) return null;
+  const firstKey = Object.keys(status[type])[0];
+
+  return firstKey ? status[type][firstKey] : null;
+}
 
 type RouteParams = {
   accountId: string,
@@ -193,6 +208,14 @@ function NominateSelectValidator({ navigation, route }: Props) {
     [mainAccount.currency],
   );
 
+  const onGoToChill = useCallback(() => {
+    navigation.dangerouslyGetParent().pop();
+    navigation.navigate(NavigatorName.PolkadotSimpleOperationFlow, {
+      screen: ScreenName.PolkadotSimpleOperationStarted,
+      params: { mode: "chill", accountId: mainAccount.id },
+    });
+  }, [navigation, mainAccount]);
+
   const renderItem = useCallback(
     ({ item }) => {
       const selected = validators.indexOf(item.address) > -1;
@@ -212,12 +235,12 @@ function NominateSelectValidator({ navigation, route }: Props) {
     [validators, onSelect, onOpenExplorer],
   );
 
-  const error = status?.errors?.staking;
-  const warning = status?.warnings?.staking;
+  const error = getStatusError(status, "errors");
+  const warning = getStatusError(status, "warning");
   const maxSelected = validators.length === MAX_NOMINATIONS;
-
-  const shouldDisplayError =
-    !nominations.length && !validators.length ? false : error || warning;
+  const maybeChill = error instanceof PolkadotValidatorsRequired;
+  const ignoreError =
+    error instanceof PolkadotValidatorsRequired && !nominations.length; // Do not show error on first nominate
 
   return (
     <SafeAreaView style={styles.root}>
@@ -258,27 +281,40 @@ function NominateSelectValidator({ navigation, route }: Props) {
       <View style={styles.footer}>
         <View style={styles.paddingBottom}>
           <View style={styles.labelContainer}>
-            {maxSelected && <Check size={16} color={colors.success} />}
-            <LText
-              style={[
-                styles.selected,
-                maxSelected && styles.success,
-                warning && styles.warning,
-                error && styles.error,
-              ]}
-            >
-              {shouldDisplayError ? (
-                <TranslatedError error={error || warning} />
-              ) : (
-                <Trans
-                  i18nKey="polkadot.nominate.steps.validators.selected"
-                  values={{
-                    selected: validators.length,
-                    total: MAX_NOMINATIONS,
-                  }}
-                />
-              )}
-            </LText>
+            {!ignoreError && maybeChill ? (
+              <TouchableOpacity onPress={onGoToChill}>
+                <LText
+                  semiBold
+                  style={[styles.footerMessage, styles.actionColor]}
+                >
+                  <Trans i18nKey="polkadot.nominate.steps.validators.maybeChill" />
+                </LText>
+              </TouchableOpacity>
+            ) : (
+              <>
+                {maxSelected && <Check size={12} color={colors.success} />}
+                <LText
+                  style={[
+                    styles.footerMessage,
+                    maxSelected && styles.success,
+                    !ignoreError && warning && styles.warning,
+                    !ignoreError && error && styles.error,
+                  ]}
+                >
+                  {!ignoreError && (error || warning) ? (
+                    <TranslatedError error={error || warning} />
+                  ) : (
+                    <Trans
+                      i18nKey="polkadot.nominate.steps.validators.selected"
+                      values={{
+                        selected: validators.length,
+                        total: MAX_NOMINATIONS,
+                      }}
+                    />
+                  )}
+                </LText>
+              </>
+            )}
           </View>
         </View>
         <SendRowsFee
@@ -335,7 +371,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  selected: {
+  footerMessage: {
     fontSize: 12,
     textAlign: "center",
     lineHeight: 12,
@@ -353,6 +389,9 @@ const styles = StyleSheet.create({
   },
   paddingBottom: {
     paddingBottom: 8,
+  },
+  actionColor: {
+    color: colors.live,
   },
 });
 
