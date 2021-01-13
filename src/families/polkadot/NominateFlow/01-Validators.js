@@ -10,10 +10,14 @@ import {
 } from "react-native";
 
 import SafeAreaView from "react-native-safe-area-view";
-import { Trans } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import { Polkadot as PolkadotIdenticon } from "@polkadot/reactnative-identicon/icons";
 
-import type { Transaction } from "@ledgerhq/live-common/lib/families/polkadot/types";
+import type {
+  Transaction,
+  PolkadotValidator,
+} from "@ledgerhq/live-common/lib/families/polkadot/types";
 
 import { getAccountBridge } from "@ledgerhq/live-common/lib/bridge";
 import { getMainAccount } from "@ledgerhq/live-common/lib/account";
@@ -38,10 +42,12 @@ import SelectValidatorSearchBox from "../../tron/VoteFlow/01-SelectValidator/Sea
 import LText from "../../../components/LText";
 import WarningBox from "../../../components/WarningBox";
 import TranslatedError from "../../../components/TranslatedError";
-
 import Check from "../../../icons/Check";
+
+import NominationDrawer from "../components/NominationDrawer";
 import SendRowsFee from "../SendRowsFee";
 import ValidatorItem from "./ValidatorItem";
+import { getDrawerInfo } from "./drawerInfo";
 
 // returns the first error
 function getStatusError(status, type = "errors"): ?Error {
@@ -63,12 +69,15 @@ type Props = {
 };
 
 function NominateSelectValidator({ navigation, route }: Props) {
+  const { t } = useTranslation();
   const { account, parentAccount } = useSelector(accountScreenSelector(route));
 
   invariant(account, "account required");
 
   const mainAccount = getMainAccount(account, parentAccount);
   const bridge = getAccountBridge(account, parentAccount);
+
+  const [drawerValidator, setDrawerValidator] = useState<?PolkadotValidator>();
 
   const { polkadotResources } = mainAccount;
 
@@ -127,7 +136,10 @@ function NominateSelectValidator({ navigation, route }: Props) {
     [polkadotResources.nominations],
   );
 
-  const { validators: polkadotValidators } = usePolkadotPreloadData();
+  const { staking, validators: polkadotValidators } = usePolkadotPreloadData();
+  const maxNominatorRewardedPerValidator =
+    staking?.maxNominatorRewardedPerValidator || 300;
+
   const sorted = useSortedValidators(
     searchQuery,
     polkadotValidators,
@@ -177,6 +189,7 @@ function NominateSelectValidator({ navigation, route }: Props) {
   );
 
   const onNext = useCallback(() => {
+    setDrawerValidator();
     navigation.navigate(ScreenName.PolkadotNominateSelectDevice, {
       ...route.params,
       transaction,
@@ -186,6 +199,7 @@ function NominateSelectValidator({ navigation, route }: Props) {
 
   const onSelect = useCallback(
     (validator, selected) => {
+      setDrawerValidator();
       const newValidators = selected
         ? validators.filter(v => v !== validator.address)
         : [...validators, validator.address];
@@ -208,13 +222,47 @@ function NominateSelectValidator({ navigation, route }: Props) {
     [mainAccount.currency],
   );
 
+  const onOpenDrawer = useCallback(
+    address => {
+      const validator = polkadotValidators.find(v => v.address === address);
+
+      setDrawerValidator(validator);
+    },
+    [polkadotValidators],
+  );
+
+  const onCloseDrawer = useCallback(() => {
+    setDrawerValidator();
+  }, []);
+
   const onGoToChill = useCallback(() => {
+    setDrawerValidator();
     navigation.dangerouslyGetParent().pop();
     navigation.navigate(NavigatorName.PolkadotSimpleOperationFlow, {
       screen: ScreenName.PolkadotSimpleOperationStarted,
       params: { mode: "chill", accountId: mainAccount.id },
     });
   }, [navigation, mainAccount]);
+
+  const drawerInfo = useMemo(
+    () =>
+      drawerValidator
+        ? getDrawerInfo({
+            t,
+            account,
+            onOpenExplorer,
+            maxNominatorRewardedPerValidator,
+            validator: drawerValidator,
+          })
+        : [],
+    [
+      drawerValidator,
+      t,
+      account,
+      maxNominatorRewardedPerValidator,
+      onOpenExplorer,
+    ],
+  );
 
   const renderItem = useCallback(
     ({ item }) => {
@@ -228,15 +276,15 @@ function NominateSelectValidator({ navigation, route }: Props) {
           disabled={disabled}
           selected={selected}
           onSelect={onSelect}
-          onOpenExplorer={onOpenExplorer}
+          onClick={onOpenDrawer}
         />
       );
     },
-    [validators, onSelect, onOpenExplorer],
+    [validators, onSelect, onOpenDrawer],
   );
 
   const error = getStatusError(status, "errors");
-  const warning = getStatusError(status, "warning");
+  const warning = getStatusError(status, "warnings");
   const maxSelected = validators.length === MAX_NOMINATIONS;
   const maybeChill = error instanceof PolkadotValidatorsRequired;
   const ignoreError =
@@ -244,6 +292,17 @@ function NominateSelectValidator({ navigation, route }: Props) {
 
   return (
     <SafeAreaView style={styles.root}>
+      <NominationDrawer
+        isOpen={drawerInfo && drawerInfo.length > 0}
+        onClose={onCloseDrawer}
+        account={account}
+        ValidatorImage={({ size }) =>
+          drawerValidator ? (
+            <PolkadotIdenticon address={drawerValidator.address} size={size} />
+          ) : null
+        }
+        data={drawerInfo}
+      />
       {nonValidators.length ? (
         <WarningBox>
           <Trans
