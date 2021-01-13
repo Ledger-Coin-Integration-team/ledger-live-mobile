@@ -28,6 +28,7 @@ type Props = {
   icon?: React$Node,
   ValidatorImage: ComponentType<{ size: number }>,
   data: FieldType[],
+  isNominated?: boolean,
 };
 
 export default function NominationDrawer({
@@ -37,6 +38,7 @@ export default function NominationDrawer({
   ValidatorImage,
   data,
   icon,
+  isNominated,
 }: Props) {
   const currency = getAccountCurrency(account);
   const color = getCurrencyColor(currency);
@@ -61,20 +63,26 @@ export default function NominationDrawer({
           </Circle>
         </Touchable>
 
-        <DelegatingContainer
-          left={
-            icon || (
-              <Circle size={iconWidth} bg={rgba(color, 0.2)}>
-                <CurrencyIcon
-                  size={iconWidth / 2}
-                  currency={currency}
-                  bg={"rgba(0,0,0,0)"}
-                />
-              </Circle>
-            )
-          }
-          right={<ValidatorImage size={iconWidth} />}
-        />
+        {isNominated ? (
+          <DelegatingContainer
+            left={
+              icon || (
+                <Circle size={iconWidth} bg={rgba(color, 0.2)}>
+                  <CurrencyIcon
+                    size={iconWidth / 2}
+                    currency={currency}
+                    bg={"rgba(0,0,0,0)"}
+                  />
+                </Circle>
+              )
+            }
+            right={<ValidatorImage size={iconWidth} />}
+          />
+        ) : (
+          <View style={styles.iconContainer}>
+            <ValidatorImage size={iconWidth} />
+          </View>
+        )}
 
         <ScrollView
           style={styles.scrollSection}
@@ -149,6 +157,12 @@ export const styles = StyleSheet.create({
   closeButton: {
     alignSelf: "flex-end",
     marginRight: 16,
+  },
+  iconContainer: {
+    flexDirection: "row",
+    alignSelf: "center",
+    alignItems: "center",
+    paddingTop: 16,
   },
   scrollSection: {
     maxHeight: height - normalize(425),

@@ -300,6 +300,7 @@ export default function Nominations({ account }: Props) {
           ) : null
         }
         data={drawerInfo}
+        isNominated
       />
       {electionOpen && (
         <WarningBox>{t("polkadot.info.electionOpen.description")}</WarningBox>
