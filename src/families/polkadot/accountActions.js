@@ -40,8 +40,9 @@ const getActions = ({ account }: { account: Account }) => {
   const chillEnabled =
     !electionOpen && canNominate(account) && nominations?.length;
   const bondingEnabled =
-    (!electionOpen && !hasBondedBalance && !hasPendingBondOperation) ||
-    (hasBondedBalance && canBond(account));
+    !electionOpen &&
+    ((!hasBondedBalance && !hasPendingBondOperation) ||
+      (hasBondedBalance && canBond(account)));
   const unbondingEnabled = !electionOpen && canUnbond(account);
   const withdrawEnabled = !electionOpen && hasUnlockedBalance;
 
