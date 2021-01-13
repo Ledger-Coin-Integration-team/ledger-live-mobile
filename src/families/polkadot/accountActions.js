@@ -9,7 +9,7 @@ import {
   canUnbond,
   hasExternalController,
   hasExternalStash,
-  hasPendingBond,
+  hasPendingOperationType,
 } from "@ledgerhq/live-common/lib/families/polkadot/logic";
 import { getCurrentPolkadotPreloadData } from "@ledgerhq/live-common/lib/families/polkadot/preload";
 
@@ -34,7 +34,8 @@ const getActions = ({ account }: { account: Account }) => {
     staking?.electionClosed !== undefined ? !staking?.electionClosed : false;
   const hasUnlockedBalance = unlockedBalance && unlockedBalance.gt(0);
   const hasBondedBalance = lockedBalance && lockedBalance.gt(0);
-  const hasPendingBondOperation = hasPendingBond(account) || true;
+  const hasPendingBondOperation =
+    hasPendingOperationType(account, "BOND") || true;
 
   const nominationEnabled = !electionOpen && canNominate(account);
   const chillEnabled =
