@@ -3148,7 +3148,9 @@
         },
         "amount": {
           "availableLabel": "Available",
-          "maxLabel": "Max",
+          "maxLabel": "Max"
+        },
+        "confirm": {
           "info": "Bonded assets can be unbonded at any time, but unbonding takes 28 days."
         },
         "validation": {
@@ -3176,7 +3178,9 @@
       "steps": {
         "amount": {
           "availableLabel": "Unbonding",
-          "maxLabel": "Max",
+          "maxLabel": "Max"
+        },
+        "confirm": {
           "info": "Rebonded assets are immediately added to the bonded amount."
         },
         "validation": {
@@ -3197,7 +3201,9 @@
       "steps": {
         "amount": {
           "availableLabel": "Bonded",
-          "maxLabel": "Max",
+          "maxLabel": "Max"
+        },
+        "confirm": {
           "info": "Unbonded assets can be withdrawn after the 28-day unbonding period."
         },
         "validation": {
