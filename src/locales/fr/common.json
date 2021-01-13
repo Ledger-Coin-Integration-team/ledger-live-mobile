@@ -3173,7 +3173,9 @@
         },
         "amount": {
           "availableLabel": "Disponible",
-          "maxLabel": "Lier Max",
+          "maxLabel": "Lier Max"
+        },
+        "confirm": {
           "info": "Une fois les actifs liés ils peuvent être déliés à n'importe quel moment, mais seront bloqués pendant une période de 28 jours."
         },
         "validation": {
@@ -3201,7 +3203,9 @@
       "steps": {
         "amount": {
           "availableLabel": "En débloquage",
-          "maxLabel": "Relier Max",
+          "maxLabel": "Relier Max"
+        },
+        "confirm": {
           "info": "Les actifs reliés seront immédiatement ajoutés à la balance liée au staking."
         },
         "validation": {
@@ -3222,7 +3226,9 @@
       "steps": {
         "amount": {
           "availableLabel": "Débloquable",
-          "maxLabel": "Délier Max",
+          "maxLabel": "Délier Max"
+        },
+        "confirm": {
           "info": "Les actifs déliés pourront être récupérés après une période de 28 jours."
         },
         "validation": {
