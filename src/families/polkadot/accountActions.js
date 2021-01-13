@@ -34,8 +34,11 @@ const getActions = ({ account }: { account: Account }) => {
     staking?.electionClosed !== undefined ? !staking?.electionClosed : false;
   const hasUnlockedBalance = unlockedBalance && unlockedBalance.gt(0);
   const hasBondedBalance = lockedBalance && lockedBalance.gt(0);
-  const hasPendingBondOperation =
-    hasPendingOperationType(account, "BOND") || true;
+  const hasPendingBondOperation = hasPendingOperationType(account, "BOND");
+  const hasPendingWithdrawUnbondedOperation = hasPendingOperationType(
+    account,
+    "WITHDRAW_UNBONDED",
+  );
 
   const nominationEnabled = !electionOpen && canNominate(account);
   const chillEnabled =
@@ -45,7 +48,8 @@ const getActions = ({ account }: { account: Account }) => {
     ((!hasBondedBalance && !hasPendingBondOperation) ||
       (hasBondedBalance && canBond(account)));
   const unbondingEnabled = !electionOpen && canUnbond(account);
-  const withdrawEnabled = !electionOpen && hasUnlockedBalance;
+  const withdrawEnabled =
+    !electionOpen && hasUnlockedBalance && !hasPendingWithdrawUnbondedOperation;
 
   if (hasExternalController(account) || hasExternalStash(account)) {
     return null;
