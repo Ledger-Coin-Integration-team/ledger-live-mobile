@@ -208,10 +208,15 @@ export default function Nominations({ account }: Props) {
   const hasNominations = nominations && nominations?.length > 0;
   const hasUnlockings = unlockings && unlockings.length > 0;
   const hasPendingBondOperation = hasPendingOperationType(account, "BOND");
+  const hasPendingWithdrawUnbondedOperation = hasPendingOperationType(
+    account,
+    "WITHDRAW_UNBONDED",
+  );
 
   const nominateEnabled = !electionOpen && canNominate(account);
   const rebondEnabled = !electionOpen && !!hasUnlockings;
-  const withdrawEnabled = !electionOpen && hasUnlockedBalance;
+  const withdrawEnabled =
+    !electionOpen && hasUnlockedBalance && !hasPendingWithdrawUnbondedOperation;
   const earnRewardsEnabled =
     !electionOpen && !hasBondedBalance && !hasPendingBondOperation;
 
