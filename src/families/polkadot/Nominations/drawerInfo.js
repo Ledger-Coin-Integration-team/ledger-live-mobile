@@ -11,6 +11,7 @@ import Touchable from "../../../components/Touchable";
 import LText from "../../../components/LText";
 import CurrencyUnitValue from "../../../components/CurrencyUnitValue";
 import CounterValue from "../../../components/CounterValue";
+import ExternalLink from "../../../icons/ExternalLink";
 
 import NominationDrawer from "../components/NominationDrawer";
 
@@ -67,6 +68,9 @@ export function getDrawerInfo({
             style={[styles.valueText, styles.valueTextTouchable]}
           >
             {nomination.address}
+            <View style={styles.iconContainer}>
+              <ExternalLink size={14} color={colors.live} />
+            </View>
           </LText>
         </Touchable>
       ),
@@ -215,4 +219,7 @@ const styles = StyleSheet.create({
   },
   statusInactive: {},
   statusWaiting: {},
+  iconContainer: {
+    paddingLeft: 6,
+  },
 });

@@ -122,11 +122,10 @@ function DataField({
       {info ? (
         <View style={[styles.infoBox]}>
           <IconHelp
-            color={infoType === "warning" ? colors.orange : colors.live}
+            color={infoType === "warning" ? colors.orange : colors.grey}
             size={16}
           />
           <LText
-            semiBold
             style={[
               styles.infoContent,
               infoType === "warning" && styles.infoWarning,
@@ -183,7 +182,7 @@ export const styles = StyleSheet.create({
     marginTop: 10,
   },
   infoContent: {
-    color: colors.live,
+    color: colors.grey,
     flex: 1,
     marginLeft: 10,
     alignItems: "center",
