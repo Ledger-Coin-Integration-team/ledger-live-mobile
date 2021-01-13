@@ -15,11 +15,11 @@ type Props = {
   item: PolkadotValidator,
   disabled: boolean,
   onSelect: (item: PolkadotValidator, selected: boolean) => void,
-  onOpenExplorer: (address: string) => void,
+  onClick: (address: string) => void,
   selected: boolean,
 };
 
-function Item({ item, selected, disabled, onSelect, onOpenExplorer }: Props) {
+function Item({ item, selected, disabled, onSelect, onClick }: Props) {
   const {
     identity,
     address,
@@ -45,7 +45,7 @@ function Item({ item, selected, disabled, onSelect, onOpenExplorer }: Props) {
     <View style={[styles.wrapper, isDisabled ? styles.disabledWrapper : {}]}>
       <Touchable
         style={[styles.iconWrapper]}
-        onPress={() => onOpenExplorer(address)}
+        onPress={() => onClick(address)}
         event="PolkadotNominateSelectValidatorsOpenExplorer"
       >
         <PolkadotIdenticon
@@ -57,7 +57,7 @@ function Item({ item, selected, disabled, onSelect, onOpenExplorer }: Props) {
 
       <View style={styles.nameWrapper}>
         <Touchable
-          onPress={() => onOpenExplorer(address)}
+          onPress={() => onClick(address)}
           event="PolkadotNominateSelectValidatorsOpenExplorer"
         >
           <LText
