@@ -11,6 +11,7 @@ import Touchable from "../../../components/Touchable";
 import LText from "../../../components/LText";
 import CurrencyUnitValue from "../../../components/CurrencyUnitValue";
 import CounterValue from "../../../components/CounterValue";
+import ExternalLink from "../../../icons/ExternalLink";
 
 import NominationDrawer from "../components/NominationDrawer";
 
@@ -67,6 +68,9 @@ export function getDrawerInfo({
             style={[styles.valueText, styles.valueTextTouchable]}
           >
             {validator.address}
+            <View style={styles.iconContainer}>
+              <ExternalLink size={14} color={colors.live} />
+            </View>
           </LText>
         </Touchable>
       ),
@@ -74,7 +78,6 @@ export function getDrawerInfo({
     {
       label: t("polkadot.nomination.status"),
       info: t(`polkadot.nomination.${validatorStatus}Info`),
-      infoType: validator.isElected ? "info" : "warning",
       Component: (
         <LText
           numberOfLines={1}
@@ -118,6 +121,7 @@ export function getDrawerInfo({
               : t("polkadot.nomination.nominatorsInfo", {
                   count: validator.nominatorsCount,
                 }),
+            infoType: validator.isOversubscribed ? "warning" : "info",
             Component: (
               <LText
                 numberOfLines={1}
@@ -195,4 +199,7 @@ const styles = StyleSheet.create({
     color: colors.success,
   },
   statusWaiting: {},
+  iconContainer: {
+    paddingLeft: 6,
+  },
 });
