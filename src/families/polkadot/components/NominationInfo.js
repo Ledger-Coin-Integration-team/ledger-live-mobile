@@ -1,7 +1,7 @@
 // @flow
+import { useTheme } from "@react-navigation/native";
 import React from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
-import colors from "../../../colors";
 import LText from "../../../components/LText";
 
 type Props = {
@@ -11,18 +11,17 @@ type Props = {
 };
 
 export default function NominationInfo({ address, identity, onPress }: Props) {
+  const { colors } = useTheme();
   return (
-    <View style={styles.wrapper}>
+    <View style={[styles.wrapper, { borderLeftColor: colors.fog }]}>
       {identity ? (
-        <LText style={styles.greyText}>
-          <LText semiBold style={styles.text}>
-            {identity}
-          </LText>
+        <LText color="grey">
+          <LText semiBold>{identity}</LText>
         </LText>
       ) : null}
 
       <TouchableOpacity onPress={() => onPress(address)}>
-        <LText style={styles.greyText}>{address}</LText>
+        <LText color="grey">{address}</LText>
       </TouchableOpacity>
     </View>
   );
@@ -31,12 +30,7 @@ export default function NominationInfo({ address, identity, onPress }: Props) {
 const styles = StyleSheet.create({
   wrapper: {
     borderLeftWidth: 3,
-    borderLeftColor: colors.fog,
     paddingLeft: 16,
     marginBottom: 24,
   },
-  text: {
-    color: colors.darkBlue,
-  },
-  greyText: { color: colors.grey },
 });

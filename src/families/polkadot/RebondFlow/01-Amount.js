@@ -8,8 +8,8 @@ import {
   TouchableWithoutFeedback,
   Switch,
   Keyboard,
+  SafeAreaView,
 } from "react-native";
-import SafeAreaView from "react-native-safe-area-view";
 import { useSelector } from "react-redux";
 import { Trans } from "react-i18next";
 import invariant from "invariant";
@@ -20,8 +20,8 @@ import {
   getMainAccount,
 } from "@ledgerhq/live-common/lib/account";
 import { getAccountBridge } from "@ledgerhq/live-common/lib/bridge";
+import { useTheme } from "@react-navigation/native";
 import { accountScreenSelector } from "../../../reducers/accounts";
-import colors from "../../../colors";
 import { ScreenName } from "../../../const";
 import { TrackScreen } from "../../../analytics";
 import LText from "../../../components/LText";
@@ -35,8 +35,6 @@ import CurrencyInput from "../../../components/CurrencyInput";
 import TranslatedError from "../../../components/TranslatedError";
 import SendRowsFee from "../SendRowsFee";
 
-const forceInset = { bottom: "always" };
-
 type Props = {
   navigation: any,
   route: { params: RouteParams },
@@ -48,6 +46,7 @@ type RouteParams = {
 };
 
 export default function PolkadotRebondAmount({ navigation, route }: Props) {
+  const { colors } = useTheme();
   const { account, parentAccount } = useSelector(accountScreenSelector(route));
   invariant(account, "account is required");
 
@@ -155,7 +154,14 @@ export default function PolkadotRebondAmount({ navigation, route }: Props) {
   return (
     <>
       <TrackScreen category="RebondFlow" name="Amount" />
-      <SafeAreaView style={styles.root} forceInset={forceInset}>
+      <SafeAreaView
+        style={[
+          styles.root,
+          {
+            backgroundColor: colors.background,
+          },
+        ]}
+      >
         <KeyboardView style={styles.container}>
           <TouchableWithoutFeedback onPress={blur}>
             <View style={styles.root}>
@@ -169,11 +175,8 @@ export default function PolkadotRebondAmount({ navigation, route }: Props) {
                   renderRight={
                     <LText
                       semiBold
-                      style={[
-                        styles.currency,
-                        warning && styles.warning,
-                        error && styles.error,
-                      ]}
+                      style={[styles.currency]}
+                      color={warning ? "orange" : error ? "alert" : "grey"}
                     >
                       {unit.code}
                     </LText>
@@ -182,17 +185,15 @@ export default function PolkadotRebondAmount({ navigation, route }: Props) {
                   style={styles.inputContainer}
                   inputStyle={[
                     styles.inputStyle,
-                    warning && styles.warning,
-                    error && styles.error,
+                    warning && { color: colors.orange },
+                    error && { color: colors.alert },
                   ]}
                   hasError={!!error}
                   hasWarning={!!warning}
                 />
                 <LText
-                  style={[
-                    styles.fieldStatus,
-                    error ? styles.error : styles.warning,
-                  ]}
+                  style={[styles.fieldStatus]}
+                  color={warning ? "orange" : error ? "alert" : "darkBlue"}
                   numberOfLines={2}
                 >
                   <TranslatedError error={error || warning} />
@@ -204,7 +205,7 @@ export default function PolkadotRebondAmount({ navigation, route }: Props) {
                     <LText>
                       <Trans i18nKey="polkadot.rebond.steps.amount.availableLabel" />
                     </LText>
-                    <LText semiBold style={styles.availableAmount}>
+                    <LText semiBold>
                       {maxSpendable ? (
                         <CurrencyUnitValue
                           showCode
@@ -280,7 +281,6 @@ export default function PolkadotRebondAmount({ navigation, route }: Props) {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: colors.white,
   },
   topContainer: { paddingHorizontal: 32, flexShrink: 1 },
   container: {
@@ -294,9 +294,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     display: "flex",
     flexGrow: 1,
-  },
-  availableAmount: {
-    color: colors.darkBlue,
   },
   availableRight: {
     alignItems: "center",
@@ -345,30 +342,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   currency: {
-    color: colors.grey,
     fontSize: 32,
   },
   fieldStatus: {
     fontSize: 14,
     textAlign: "center",
-  },
-  error: {
-    color: colors.alert,
-  },
-  warning: {
-    color: colors.orange,
-  },
-  info: {
-    flexShrink: 1,
-    marginTop: 8,
-    padding: 16,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  infoLabel: {
-    color: colors.grey,
-    marginRight: 10,
   },
   switch: {
     opacity: 0.99,

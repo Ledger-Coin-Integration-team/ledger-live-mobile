@@ -6,7 +6,7 @@ import {
   getAccountUnit,
 } from "@ledgerhq/live-common/lib/account";
 
-import colors from "../../../colors";
+import { useTheme } from "@react-navigation/native";
 import Touchable from "../../../components/Touchable";
 import LText from "../../../components/LText";
 import CurrencyUnitValue from "../../../components/CurrencyUnitValue";
@@ -56,24 +56,28 @@ export function getDrawerInfo({
       : []),
     {
       label: t("delegation.validatorAddress"),
-      Component: (
-        <Touchable
-          onPress={() => onOpenExplorer(nomination.address)}
-          event="NominationOpenExplorer"
-        >
-          <LText
-            numberOfLines={1}
-            semiBold
-            ellipsizeMode="middle"
-            style={[styles.valueText, styles.valueTextTouchable]}
+      Component: () => {
+        const { colors } = useTheme();
+        return (
+          <Touchable
+            onPress={() => onOpenExplorer(nomination.address)}
+            event="NominationOpenExplorer"
           >
-            {nomination.address}
-            <View style={styles.iconContainer}>
-              <ExternalLink size={14} color={colors.live} />
-            </View>
-          </LText>
-        </Touchable>
-      ),
+            <LText
+              numberOfLines={1}
+              semiBold
+              ellipsizeMode="middle"
+              style={[styles.valueText]}
+              color="live"
+            >
+              {nomination.address}
+              <View style={styles.iconContainer}>
+                <ExternalLink size={14} color={colors.live} />
+              </View>
+            </LText>
+          </Touchable>
+        );
+      },
     },
     {
       label: t("polkadot.nomination.status"),
@@ -84,13 +88,14 @@ export function getDrawerInfo({
           numberOfLines={1}
           semiBold
           ellipsizeMode="middle"
-          style={[
-            styles.valueText,
-            !nomination.status && styles.statusNotValidator,
-            nomination.status === "active" && styles.statusActive,
-            nomination.status === "inactive" && styles.statusInactive,
-            nomination.status === "waiting" && styles.statusWaiting,
-          ]}
+          style={[styles.valueText]}
+          color={
+            !nomination.status
+              ? "orange"
+              : nomination.status === "active"
+              ? "success"
+              : "darkBlue"
+          }
         >
           {t(`polkadot.nomination.${nomination.status || "notValidator"}`)}
         </LText>
@@ -122,10 +127,8 @@ export function getDrawerInfo({
                 numberOfLines={1}
                 semiBold
                 ellipsizeMode="middle"
-                style={[
-                  styles.valueText,
-                  validator?.isOversubscribed && styles.valueWarning,
-                ]}
+                style={[styles.valueText]}
+                color={validator?.isOversubscribed ? "orange" : "darkBlue"}
               >
                 {validator?.isOversubscribed
                   ? t(`polkadot.nomination.oversubscribed`, {
@@ -151,7 +154,7 @@ export function getDrawerInfo({
                     <CurrencyUnitValue value={totalStake} unit={unit} />
                   </LText>
                   {totalStake ? (
-                    <LText style={styles.valueCounterValue}>
+                    <LText style={styles.valueCounterValue} color="grey">
                       <CounterValue
                         currency={currency}
                         value={totalStake}
@@ -176,7 +179,7 @@ export function getDrawerInfo({
                   <LText semiBold>
                     <CurrencyUnitValue value={amount} unit={unit} />
                   </LText>
-                  <LText style={styles.valueCounterValue}>
+                  <LText style={styles.valueCounterValue} color="grey">
                     <CounterValue
                       currency={currency}
                       value={amount}
@@ -200,25 +203,10 @@ const styles = StyleSheet.create({
   valueText: {
     fontSize: 14,
   },
-  valueWarning: {
-    color: colors.orange,
-  },
   valueCounterValue: {
     fontSize: 14,
-    color: colors.grey,
     flex: 1,
   },
-  valueTextTouchable: {
-    color: colors.live,
-  },
-  statusNotValidator: {
-    color: colors.orange,
-  },
-  statusActive: {
-    color: colors.success,
-  },
-  statusInactive: {},
-  statusWaiting: {},
   iconContainer: {
     paddingLeft: 6,
   },

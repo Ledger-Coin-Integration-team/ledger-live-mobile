@@ -1,10 +1,9 @@
 // @flow
 import React, { useState, useCallback } from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { useTranslation } from "react-i18next";
 import LText from "../../../components/LText";
 import InfoModal from "../../../modals/Info";
-import colors from "../../../colors";
 
 type Props = {
   electionOpen?: boolean,
@@ -26,10 +25,7 @@ export function NominateAction({ onPress, electionOpen, disabled }: Props) {
 
   return (
     <TouchableOpacity onPress={onClick}>
-      <LText
-        semiBold
-        style={[styles.actionColor, disabled ? { color: colors.grey } : {}]}
-      >
+      <LText semiBold color={disabled ? "grey" : "live"}>
         {t("polkadot.nomination.nominate")}
       </LText>
       <InfoModal
@@ -65,10 +61,7 @@ export function RebondAction({ onPress, disabled }: Props) {
 
   return (
     <TouchableOpacity onPress={onClick}>
-      <LText
-        semiBold
-        style={[styles.actionColor, disabled ? { color: colors.grey } : {}]}
-      >
+      <LText semiBold color={disabled ? "grey" : "live"}>
         {t("polkadot.unlockings.rebond")}
       </LText>
       <InfoModal
@@ -99,10 +92,7 @@ export function WithdrawAction({ onPress, disabled }: Props) {
 
   return (
     <TouchableOpacity onPress={onClick}>
-      <LText
-        semiBold
-        style={[styles.actionColor, disabled ? { color: colors.grey } : {}]}
-      >
+      <LText semiBold color={disabled ? "grey" : "live"}>
         {t("polkadot.unlockings.withdrawUnbonded")}
       </LText>
       <InfoModal
@@ -118,13 +108,3 @@ export function WithdrawAction({ onPress, disabled }: Props) {
     </TouchableOpacity>
   );
 }
-
-const styles = StyleSheet.create({
-  root: {
-    padding: 16,
-  },
-  illustration: { alignSelf: "center", marginBottom: 16 },
-  actionColor: {
-    color: colors.live,
-  },
-});
