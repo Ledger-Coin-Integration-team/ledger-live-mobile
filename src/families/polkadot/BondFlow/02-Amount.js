@@ -9,8 +9,8 @@ import {
   Switch,
   Keyboard,
   TouchableOpacity,
+  SafeAreaView,
 } from "react-native";
-import SafeAreaView from "react-native-safe-area-view";
 import { useSelector } from "react-redux";
 import { Trans } from "react-i18next";
 import invariant from "invariant";
@@ -22,8 +22,8 @@ import {
 } from "@ledgerhq/live-common/lib/account";
 import { getAccountBridge } from "@ledgerhq/live-common/lib/bridge";
 import { isFirstBond } from "@ledgerhq/live-common/lib/families/polkadot/logic";
+import { useTheme } from "@react-navigation/native";
 import { accountScreenSelector } from "../../../reducers/accounts";
-import colors from "../../../colors";
 import { ScreenName } from "../../../const";
 import { TrackScreen } from "../../../analytics";
 import LText from "../../../components/LText";
@@ -39,8 +39,6 @@ import TranslatedError from "../../../components/TranslatedError";
 import InfoModal from "../../../modals/Info";
 import Info from "../../../icons/Info";
 import SendRowsFee from "../SendRowsFee";
-
-const forceInset = { bottom: "always" };
 
 const options = [
   {
@@ -79,6 +77,7 @@ type RouteParams = {
 };
 
 export default function PolkadotBondAmount({ navigation, route }: Props) {
+  const { colors } = useTheme();
   const { account, parentAccount } = useSelector(accountScreenSelector(route));
   invariant(account, "account is required");
 
@@ -209,12 +208,14 @@ export default function PolkadotBondAmount({ navigation, route }: Props) {
   return (
     <>
       <TrackScreen category="BondFlow" name="Amount" />
-      <SafeAreaView style={styles.root} forceInset={forceInset}>
+      <SafeAreaView
+        style={[styles.root, { backgroundColor: colors.background }]}
+      >
         <KeyboardView style={styles.container}>
           {firstBond ? (
             <View style={styles.topContainer}>
               <TouchableOpacity onPress={openInfoModal} style={styles.info}>
-                <LText semiBold style={styles.infoLabel}>
+                <LText semiBold style={styles.infoLabel} color="grey">
                   <Trans i18nKey="polkadot.bond.rewardDestination.label" />
                 </LText>
                 <Info size={16} color={colors.grey} />
@@ -227,7 +228,7 @@ export default function PolkadotBondAmount({ navigation, route }: Props) {
             </View>
           ) : null}
           <TouchableWithoutFeedback onPress={blur}>
-            <View style={styles.root}>
+            <View style={[styles.root, { backgroundColor: colors.background }]}>
               <View style={styles.wrapper}>
                 <CurrencyInput
                   editable={!useAllAmount}
@@ -238,11 +239,8 @@ export default function PolkadotBondAmount({ navigation, route }: Props) {
                   renderRight={
                     <LText
                       semiBold
-                      style={[
-                        styles.currency,
-                        warning && styles.warning,
-                        error && styles.error,
-                      ]}
+                      style={[styles.currency]}
+                      color={error ? "alert" : warning ? "orange" : "grey"}
                     >
                       {unit.code}
                     </LText>
@@ -251,17 +249,15 @@ export default function PolkadotBondAmount({ navigation, route }: Props) {
                   style={styles.inputContainer}
                   inputStyle={[
                     styles.inputStyle,
-                    warning && styles.warning,
-                    error && styles.error,
+                    warning && { color: colors.orange },
+                    error && { color: colors.alert },
                   ]}
                   hasError={!!error}
                   hasWarning={!!warning}
                 />
                 <LText
-                  style={[
-                    styles.fieldStatus,
-                    error ? styles.error : styles.warning,
-                  ]}
+                  style={[styles.fieldStatus]}
+                  color={error ? "alert" : warning ? "orange" : "darkBlue"}
                   numberOfLines={2}
                 >
                   <TranslatedError error={error || warning} />
@@ -273,7 +269,7 @@ export default function PolkadotBondAmount({ navigation, route }: Props) {
                     <LText>
                       <Trans i18nKey="polkadot.bond.steps.amount.availableLabel" />
                     </LText>
-                    <LText semiBold style={styles.availableAmount}>
+                    <LText semiBold>
                       {maxSpendable ? (
                         <CurrencyUnitValue
                           showCode
@@ -355,7 +351,6 @@ export default function PolkadotBondAmount({ navigation, route }: Props) {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: colors.white,
   },
   topContainer: { paddingHorizontal: 32, flexShrink: 1 },
   container: {
@@ -369,9 +364,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     display: "flex",
     flexGrow: 1,
-  },
-  availableAmount: {
-    color: colors.darkBlue,
   },
   availableRight: {
     alignItems: "center",
@@ -420,18 +412,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   currency: {
-    color: colors.grey,
     fontSize: 32,
   },
   fieldStatus: {
     fontSize: 14,
     textAlign: "center",
-  },
-  error: {
-    color: colors.alert,
-  },
-  warning: {
-    color: colors.orange,
   },
   info: {
     flexShrink: 1,
@@ -442,7 +427,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   infoLabel: {
-    color: colors.grey,
     marginRight: 10,
   },
   switch: {

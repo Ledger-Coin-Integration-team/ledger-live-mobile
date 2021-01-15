@@ -1,9 +1,14 @@
 // @flow
 import React, { useCallback } from "react";
-import { StyleSheet, ScrollView, View, Linking } from "react-native";
-import SafeAreaView from "react-native-safe-area-view";
+import {
+  StyleSheet,
+  ScrollView,
+  View,
+  Linking,
+  SafeAreaView,
+} from "react-native";
 import { Trans } from "react-i18next";
-import colors from "../../../colors";
+import { useTheme } from "@react-navigation/native";
 import { ScreenName } from "../../../const";
 import { TrackScreen } from "../../../analytics";
 import Button from "../../../components/Button";
@@ -14,8 +19,6 @@ import VerifyAddressDisclaimer from "../../../components/VerifyAddressDisclaimer
 import IlluRewards from "../../../icons/images/Rewards";
 import { urls } from "../../../config/urls";
 
-const forceInset = { bottom: "always" };
-
 type Props = {
   navigation: any,
   route: { params: RouteParams },
@@ -24,6 +27,7 @@ type Props = {
 type RouteParams = {};
 
 export default function PolkadotBondStarted({ navigation, route }: Props) {
+  const { colors } = useTheme();
   const onNext = useCallback(() => {
     navigation.navigate(ScreenName.PolkadotBondAmount, route.params);
   }, [navigation, route.params]);
@@ -37,7 +41,7 @@ export default function PolkadotBondStarted({ navigation, route }: Props) {
   }, []);
 
   return (
-    <SafeAreaView style={styles.root} forceInset={forceInset}>
+    <SafeAreaView style={[styles.root, { backgroundColor: colors.background }]}>
       <ScrollView
         style={styles.scroll}
         contentContainerStyle={styles.scrollContainer}
@@ -61,7 +65,14 @@ export default function PolkadotBondStarted({ navigation, route }: Props) {
             </LText>
           ))}
         />
-        <View style={styles.help}>
+        <View
+          style={[
+            styles.help,
+            {
+              borderColor: colors.live,
+            },
+          ]}
+        >
           <ExternalLink
             event="PolkadotBondStartedHelp"
             onPress={onHelp}
@@ -102,7 +113,6 @@ export default function PolkadotBondStarted({ navigation, route }: Props) {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: colors.white,
   },
   scroll: {
     flex: 1,
@@ -115,13 +125,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     lineHeight: 33,
-    color: colors.darkBlue,
     paddingVertical: 16,
   },
   description: {
     fontSize: 14,
     lineHeight: 21,
-    color: colors.darkBlue,
     textAlign: "center",
     marginVertical: 16,
     paddingHorizontal: 32,
@@ -134,7 +142,6 @@ const styles = StyleSheet.create({
   },
   bulletItem: {
     fontSize: 14,
-    color: colors.black,
   },
   help: {
     marginTop: 32,
@@ -142,12 +149,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderWidth: 1,
-    borderColor: colors.live,
     flexDirection: "row",
-  },
-  helpText: {
-    color: colors.live,
-    fontSize: 14,
   },
   warning: {
     width: "100%",

@@ -2,7 +2,6 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { Trans } from "react-i18next";
-import colors from "../../../colors";
 
 import LText from "../../../components/LText";
 import WarningBox from "../../../components/WarningBox";
@@ -24,7 +23,7 @@ export const ExternalControllerUnsupportedWarning = ({
       <LText style={styles.text}>
         <TouchableOpacity>
           <LText
-            style={styles.address}
+            color="live"
             onPress={() => onOpenExplorer(address)}
             numberOfLines={1}
           />
@@ -51,7 +50,7 @@ export const ExternalStashUnsupportedWarning = ({
       <LText style={styles.text}>
         <TouchableOpacity>
           <LText
-            style={styles.address}
+            color="live"
             onPress={() => onOpenExplorer(address)}
             numberOfLines={1}
           />
@@ -65,8 +64,5 @@ export const ExternalStashUnsupportedWarning = ({
 const styles = StyleSheet.create({
   text: {
     fontSize: 14,
-  },
-  address: {
-    color: colors.live,
   },
 });

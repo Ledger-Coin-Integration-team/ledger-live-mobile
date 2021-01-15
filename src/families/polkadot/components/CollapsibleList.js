@@ -1,10 +1,10 @@
 // @flow
+import { useTheme } from "@react-navigation/native";
 import React, { useState, useCallback } from "react";
 import { View, StyleSheet, Platform } from "react-native";
 
 import Icon from "react-native-vector-icons/dist/FontAwesome";
 
-import colors from "../../../colors";
 import Button from "../../../components/Button";
 
 type Props = {
@@ -22,6 +22,7 @@ const CollapsibleList = ({
   renderItem,
   renderShowMore,
 }: Props) => {
+  const { colors } = useTheme();
   const [collapsed, setCollapsed] = useState(true);
 
   const toggleCollapsed = useCallback(() => {
@@ -33,6 +34,14 @@ const CollapsibleList = ({
       <View
         style={[
           styles.list,
+          {
+            backgroundColor: colors.card,
+            ...Platform.select({
+              ios: {
+                shadowColor: colors.black,
+              },
+            }),
+          },
           !!collapsedItems.length && collapsed && styles.elevated,
         ]}
       >
@@ -47,7 +56,9 @@ const CollapsibleList = ({
                 renderItem(item, i, i === collapsedItems.length - 1),
               )}
             </View>
-            <View style={styles.showMore}>
+            <View
+              style={[styles.showMore, { borderTopColor: colors.lightGrey }]}
+            >
               <Button
                 type="lightSecondary"
                 event="CollapsedListShowMore"
@@ -69,7 +80,20 @@ const CollapsibleList = ({
         ) : null}
       </View>
       {!!collapsed && collapsedItems.length ? (
-        <View style={styles.showMoreIndicator} />
+        <View
+          style={[
+            styles.showMoreIndicator,
+            {
+              backgroundColor: colors.card,
+              borderTopColor: colors.lightGrey,
+              ...Platform.select({
+                ios: {
+                  shadowColor: colors.black,
+                },
+              }),
+            },
+          ]}
+        />
       ) : null}
     </>
   );
@@ -82,14 +106,12 @@ const styles = StyleSheet.create({
   },
   list: {
     zIndex: 2,
-    backgroundColor: colors.white,
     borderRadius: 4,
     ...Platform.select({
       android: {
         elevation: 1,
       },
       ios: {
-        shadowColor: colors.black,
         shadowOpacity: 0.03,
         shadowRadius: 8,
         shadowOffset: {
@@ -114,15 +136,12 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     borderBottomLeftRadius: 4,
     borderBottomRightRadius: 4,
-    backgroundColor: colors.white,
     borderTopWidth: 1,
-    borderTopColor: colors.lightGrey,
     ...Platform.select({
       android: {
         elevation: 1,
       },
       ios: {
-        shadowColor: colors.black,
         shadowOpacity: 0.03,
         shadowRadius: 4,
         shadowOffset: {
@@ -133,7 +152,6 @@ const styles = StyleSheet.create({
   },
   showMore: {
     borderTopWidth: 1,
-    borderTopColor: colors.lightGrey,
   },
   buttonIcon: { paddingLeft: 6 },
 });

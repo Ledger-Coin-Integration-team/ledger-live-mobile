@@ -12,9 +12,9 @@ import {
   getAddressExplorer,
 } from "@ledgerhq/live-common/lib/explorers";
 
+import { useTheme } from "@react-navigation/native";
 import LText from "../../components/LText";
 import { DataRow, HeaderRow } from "../../components/ValidateOnDeviceDataRow";
-import colors from "../../colors";
 import InfoIcon from "../../icons/Info";
 
 import NominationInfo from "./components/NominationInfo";
@@ -72,7 +72,7 @@ function PolkadotValidatorsField({ account, transaction, field }: FieldProps) {
 
 const Info = ({ transaction }: FieldProps) => {
   invariant(transaction.family === "polkadot", "polkadot transaction");
-
+  const { colors } = useTheme();
   const { t } = useTranslation();
 
   switch (transaction.mode) {
@@ -85,6 +85,7 @@ const Info = ({ transaction }: FieldProps) => {
           <LText
             semiBold
             style={[styles.text, styles.infoText]}
+            color="live"
             numberOfLines={3}
           >
             {t(`polkadot.${transaction.mode}.steps.confirm.info`)}
@@ -97,21 +98,25 @@ const Info = ({ transaction }: FieldProps) => {
 };
 
 const EstimatedFees = ({ account, transaction }: FieldProps) => {
+  const { colors } = useTheme();
   return (
-    <View style={styles.feesWrapper}>
+    <View
+      style={[
+        styles.feesWrapper,
+        { borderColor: colors.grey, backgroundColor: colors.lightGrey },
+      ]}
+    >
       <PolkadotFeeRow account={account} transaction={transaction} />
     </View>
   );
 };
 
-const Warning = (props: FieldProps) => {
-  return (
-    <>
-      <EstimatedFees {...props} />
-      <Info {...props} />
-    </>
-  );
-};
+const Warning = (props: FieldProps) => (
+  <>
+    <EstimatedFees {...props} />
+    <Info {...props} />
+  </>
+);
 
 const fieldComponents = {
   "polkadot.validators": PolkadotValidatorsField,
@@ -119,12 +124,10 @@ const fieldComponents = {
 
 const styles = StyleSheet.create({
   text: {
-    color: colors.darkBlue,
     textAlign: "right",
     flex: 1,
   },
   infoText: {
-    color: colors.live,
     textAlign: "left",
     marginLeft: 8,
   },
@@ -134,8 +137,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     borderTopWidth: 1,
     borderStyle: "solid",
-    borderColor: colors.grey,
-    backgroundColor: colors.lightGrey,
   },
 });
 

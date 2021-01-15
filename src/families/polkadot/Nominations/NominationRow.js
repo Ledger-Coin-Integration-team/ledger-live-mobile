@@ -14,9 +14,9 @@ import {
   getAccountUnit,
 } from "@ledgerhq/live-common/lib/account";
 
+import { useTheme } from "@react-navigation/native";
 import CurrencyUnitValue from "../../../components/CurrencyUnitValue";
 import CounterValue from "../../../components/CounterValue";
-import colors from "../../../colors";
 import LText from "../../../components/LText";
 import ArrowRight from "../../../icons/ArrowRight";
 
@@ -35,6 +35,7 @@ export default function NominationRow({
   onPress,
   isLast = false,
 }: Props) {
+  const { colors } = useTheme();
   const { t } = useTranslation();
 
   const { value, address, status } = nomination;
@@ -50,7 +51,9 @@ export default function NominationRow({
       style={[
         styles.row,
         styles.wrapper,
-        !isLast ? styles.borderBottom : undefined,
+        !isLast
+          ? { ...styles.borderBottom, borderBottomColor: colors.lightGrey }
+          : undefined,
       ]}
       onPress={() => onPress(nomination)}
     >
@@ -65,27 +68,29 @@ export default function NominationRow({
 
         <View style={styles.statusWrapper}>
           {status === "active" && (
-            <LText style={styles.statusActive} numberOfLines={1}>
+            <LText color="success" numberOfLines={1}>
               {t("polkadot.nomination.active")}
             </LText>
           )}
           {status === "inactive" && (
-            <LText style={styles.statusInactive} numberOfLines={1}>
+            <LText color="grey" numberOfLines={1}>
               {t("polkadot.nomination.inactive")}
             </LText>
           )}
           {status === "waiting" && (
-            <LText style={styles.statusWaiting} numberOfLines={1}>
+            <LText color="grey" numberOfLines={1}>
               {t("polkadot.nomination.waiting")}
             </LText>
           )}
           {!status && (
-            <LText style={styles.statusNotValidator} numberOfLines={1}>
+            <LText color="orange" numberOfLines={1}>
               {t("polkadot.nomination.notValidator")}
             </LText>
           )}
-          <View style={styles.seeMore}>
-            <LText style={styles.seeMoreText}>{t("common.seeMore")}</LText>
+          <View style={[styles.seeMore, { borderLeftColor: colors.grey }]}>
+            <LText style={styles.seeMoreText} color="live">
+              {t("common.seeMore")}
+            </LText>
             <ArrowRight color={colors.live} size={14} />
           </View>
         </View>
@@ -98,7 +103,7 @@ export default function NominationRow({
             <CurrencyUnitValue value={value} unit={unit} />
           </LText>
 
-          <LText style={styles.counterValue}>
+          <LText color="grey">
             <CounterValue
               currency={currency}
               showCode
@@ -119,7 +124,6 @@ const styles = StyleSheet.create({
   },
   borderBottom: {
     borderBottomWidth: 1,
-    borderBottomColor: colors.lightGrey,
   },
   row: {
     flexDirection: "row",
@@ -142,21 +146,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  counterValue: { color: colors.grey },
   rightWrapper: {
     alignItems: "flex-end",
-  },
-  statusActive: {
-    color: colors.success,
-  },
-  statusInactive: {
-    color: colors.grey,
-  },
-  statusWaiting: {
-    color: colors.grey,
-  },
-  statusNotValidator: {
-    color: colors.orange,
   },
   seeMore: {
     flexDirection: "row",
@@ -164,11 +155,9 @@ const styles = StyleSheet.create({
     marginLeft: 8,
     paddingLeft: 8,
     borderLeftWidth: 1,
-    borderLeftColor: colors.grey,
   },
   seeMoreText: {
     fontSize: 14,
-    color: colors.live,
     textAlignVertical: "top",
   },
 });
