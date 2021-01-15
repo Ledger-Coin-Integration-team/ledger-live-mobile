@@ -23,7 +23,6 @@ import {
 import { usePolkadotPreloadData } from "@ledgerhq/live-common/lib/families/polkadot/react";
 import type { PolkadotNomination } from "@ledgerhq/live-common/lib/families/polkadot/types";
 
-import colors from "../../../colors";
 import { ScreenName, NavigatorName } from "../../../const";
 import AccountDelegationInfo from "../../../components/AccountDelegationInfo";
 import IlluRewards from "../../../icons/images/Rewards";
@@ -384,15 +383,6 @@ const styles = StyleSheet.create({
     margin: 16,
   },
   illustration: { alignSelf: "center", marginBottom: 16 },
-  rewardsWrapper: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignContent: "center",
-    padding: 16,
-    marginBottom: 16,
-    backgroundColor: colors.white,
-    borderRadius: 4,
-  },
   wrapper: {
     marginBottom: 16,
   },

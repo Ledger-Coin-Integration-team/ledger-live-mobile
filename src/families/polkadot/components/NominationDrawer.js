@@ -6,9 +6,10 @@ import { getAccountCurrency } from "@ledgerhq/live-common/lib/account";
 import { getCurrencyColor } from "@ledgerhq/live-common/lib/currencies";
 import type { AccountLike } from "@ledgerhq/live-common/lib/types";
 // TODO move to component
+import { useTheme } from "@react-navigation/native";
 import DelegatingContainer from "../../tezos/DelegatingContainer";
 import Close from "../../../icons/Close";
-import colors, { rgba } from "../../../colors";
+import { rgba } from "../../../colors";
 import getWindowDimensions from "../../../logic/getWindowDimensions";
 import BottomModal from "../../../components/BottomModal";
 import Circle from "../../../components/Circle";
@@ -40,6 +41,7 @@ export default function NominationDrawer({
   icon,
   isNominated,
 }: Props) {
+  const { colors } = useTheme();
   const currency = getAccountCurrency(account);
   const color = getCurrencyColor(currency);
 
@@ -119,10 +121,22 @@ function DataField({
   Component,
   isLast,
 }: DataFieldProps) {
+  const { colors } = useTheme();
   return (
-    <View style={[styles.row, isLast ? styles.lastRow : undefined]}>
+    <View
+      style={[
+        styles.row,
+        { borderBottomColor: colors.lightFog },
+        isLast ? styles.lastRow : undefined,
+      ]}
+    >
       <View style={styles.rowWrapper}>
-        <LText numberOfLines={1} semiBold style={styles.labelText}>
+        <LText
+          numberOfLines={1}
+          semiBold
+          style={styles.labelText}
+          color="smoke"
+        >
           {label}
         </LText>
         <View style={styles.valueWrapper}>{Component}</View>
@@ -134,10 +148,8 @@ function DataField({
             size={16}
           />
           <LText
-            style={[
-              styles.infoContent,
-              infoType === "warning" && styles.infoWarning,
-            ]}
+            style={[styles.infoContent]}
+            color={infoType === "warning" ? "orange" : "grey"}
           >
             {info}
           </LText>
@@ -174,7 +186,6 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   row: {
-    borderBottomColor: colors.lightFog,
     borderBottomWidth: 1,
     paddingVertical: 16,
   },
@@ -184,7 +195,6 @@ export const styles = StyleSheet.create({
   labelText: {
     paddingRight: 8,
     fontSize: 14,
-    color: colors.smoke,
   },
   valueWrapper: {
     width: "50%",
@@ -196,12 +206,8 @@ export const styles = StyleSheet.create({
     marginTop: 10,
   },
   infoContent: {
-    color: colors.grey,
     flex: 1,
     marginLeft: 10,
     alignItems: "center",
-  },
-  infoWarning: {
-    color: colors.orange,
   },
 });
