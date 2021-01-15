@@ -9,9 +9,9 @@ import {
   getAccountUnit,
 } from "@ledgerhq/live-common/lib/account";
 
+import { useTheme } from "@react-navigation/native";
 import CurrencyUnitValue from "../../../components/CurrencyUnitValue";
 import CounterValue from "../../../components/CounterValue";
-import colors from "../../../colors";
 import LText from "../../../components/LText";
 import DateFromNow from "../../../components/DateFromNow";
 import { WithdrawAction } from "./Actions";
@@ -33,6 +33,7 @@ export default function UnlockingRow({
   disabled = false,
   isLast = false,
 }: Props) {
+  const { colors } = useTheme();
   const unit = getAccountUnit(account);
   const currency = getAccountCurrency(account);
 
@@ -46,14 +47,16 @@ export default function UnlockingRow({
       style={[
         styles.row,
         styles.wrapper,
-        !isLast ? styles.borderBottom : undefined,
+        !isLast
+          ? { ...styles.borderBottom, borderBottomColor: colors.lightGrey }
+          : undefined,
       ]}
     >
       <View style={styles.valueWrapper}>
         <LText semiBold>
           <CurrencyUnitValue value={amount} unit={unit} />
         </LText>
-        <LText style={styles.valueCounterValue}>
+        <LText style={styles.valueCounterValue} color="grey">
           <CounterValue currency={currency} value={amount} withPlaceholder />
         </LText>
       </View>
@@ -79,7 +82,6 @@ const styles = StyleSheet.create({
   },
   borderBottom: {
     borderBottomWidth: 1,
-    borderBottomColor: colors.lightGrey,
   },
   row: {
     flexDirection: "row",
@@ -91,7 +93,6 @@ const styles = StyleSheet.create({
   },
   valueCounterValue: {
     fontSize: 14,
-    color: colors.grey,
     flex: 1,
   },
   dateWrapper: {},

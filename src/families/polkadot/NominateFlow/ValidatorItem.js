@@ -6,7 +6,7 @@ import { Polkadot as PolkadotIdenticon } from "@polkadot/reactnative-identicon/i
 
 import type { PolkadotValidator } from "@ledgerhq/live-common/lib/families/polkadot/types";
 
-import colors from "../../../colors";
+import { useTheme } from "@react-navigation/native";
 import CheckBox from "../../../components/CheckBox";
 import LText from "../../../components/LText";
 import Touchable from "../../../components/Touchable";
@@ -20,6 +20,7 @@ type Props = {
 };
 
 function Item({ item, selected, disabled, onSelect, onClick }: Props) {
+  const { colors } = useTheme();
   const {
     identity,
     address,
@@ -42,14 +43,19 @@ function Item({ item, selected, disabled, onSelect, onClick }: Props) {
     [commission],
   );
   return (
-    <View style={[styles.wrapper, isDisabled ? styles.disabledWrapper : {}]}>
+    <View
+      style={[
+        styles.wrapper,
+        isDisabled ? { backgroundColor: colors.lightGrey } : {},
+      ]}
+    >
       <Touchable
         style={[styles.iconWrapper]}
         onPress={() => onClick(address)}
         event="PolkadotNominateSelectValidatorsOpenExplorer"
       >
         <PolkadotIdenticon
-          style={isDisabled ? styles.disabledWrapper : {}}
+          style={isDisabled ? { backgroundColor: colors.lightGrey } : {}}
           address={address}
           size={32}
         />
@@ -62,7 +68,8 @@ function Item({ item, selected, disabled, onSelect, onClick }: Props) {
         >
           <LText
             semiBold
-            style={[styles.nameText, isDisabled ? styles.disabledText : {}]}
+            style={[styles.nameText]}
+            color={isDisabled ? "grey" : "live"}
             numberOfLines={1}
           >
             {identity || address || ""}
@@ -71,10 +78,8 @@ function Item({ item, selected, disabled, onSelect, onClick }: Props) {
 
         {isElected ? (
           <LText
-            style={[
-              styles.valueLabel,
-              isOversubscribed && styles.oversubscribed,
-            ]}
+            style={[styles.valueLabel]}
+            color={isOversubscribed ? "orange" : "grey"}
           >
             {isOversubscribed ? (
               <Trans
@@ -89,7 +94,7 @@ function Item({ item, selected, disabled, onSelect, onClick }: Props) {
             )}
           </LText>
         ) : (
-          <LText style={styles.valueLabel}>
+          <LText style={styles.valueLabel} color="grey">
             <Trans i18nKey="polkadot.nomination.waiting" />
           </LText>
         )}
@@ -100,7 +105,7 @@ function Item({ item, selected, disabled, onSelect, onClick }: Props) {
           {formattedCommission}
         </LText>
 
-        <LText style={styles.valueLabel}>
+        <LText style={styles.valueLabel} color="grey">
           <Trans i18nKey="polkadot.nomination.commission" />
         </LText>
       </View>
@@ -132,14 +137,9 @@ const styles = StyleSheet.create({
   },
   nameText: {
     fontSize: 15,
-    color: colors.live,
   },
   disabledWrapper: {
-    backgroundColor: colors.lightGrey,
     opacity: 0.5,
-  },
-  disabledText: {
-    color: colors.grey,
   },
   valueWrapper: {
     alignItems: "flex-end",
@@ -150,10 +150,6 @@ const styles = StyleSheet.create({
   },
   valueLabel: {
     fontSize: 13,
-    color: colors.grey,
-  },
-  oversubscribed: {
-    color: colors.orange,
   },
 });
 

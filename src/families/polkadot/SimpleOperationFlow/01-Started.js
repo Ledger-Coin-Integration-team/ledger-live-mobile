@@ -1,8 +1,7 @@
 // @flow
 import invariant from "invariant";
 import React, { useCallback, useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
-import SafeAreaView from "react-native-safe-area-view";
+import { StyleSheet, View, SafeAreaView } from "react-native";
 import { Trans } from "react-i18next";
 import { useSelector } from "react-redux";
 
@@ -11,8 +10,8 @@ import { getAccountBridge } from "@ledgerhq/live-common/lib/bridge";
 import { getMainAccount } from "@ledgerhq/live-common/lib/account";
 import useBridgeTransaction from "@ledgerhq/live-common/lib/bridge/useBridgeTransaction";
 
+import { useTheme } from "@react-navigation/native";
 import { accountScreenSelector } from "../../../reducers/accounts";
-import colors from "../../../colors";
 import { ScreenName } from "../../../const";
 import { TrackScreen } from "../../../analytics";
 import Button from "../../../components/Button";
@@ -23,8 +22,6 @@ import GenericErrorBottomModal from "../../../components/GenericErrorBottomModal
 import Info from "../../../icons/Info";
 
 import SendRowsFee from "../SendRowsFee";
-
-const forceInset = { bottom: "always" };
 
 type RouteParams = {
   transaction: Transaction,
@@ -40,6 +37,7 @@ export default function PolkadotSimpleOperationStarted({
   navigation,
   route,
 }: Props) {
+  const { colors } = useTheme();
   const { mode } = route.params;
   const { account, parentAccount } = useSelector(accountScreenSelector(route));
 
@@ -97,7 +95,14 @@ export default function PolkadotSimpleOperationStarted({
 
   return (
     <>
-      <SafeAreaView style={styles.root} forceInset={forceInset}>
+      <SafeAreaView
+        style={[
+          styles.root,
+          {
+            backgroundColor: colors.background,
+          },
+        ]}
+      >
         <View style={styles.container}>
           <TrackScreen category="SimpleOperationFlow" name="Started" />
           <View style={styles.content}>
@@ -111,6 +116,7 @@ export default function PolkadotSimpleOperationStarted({
               <LText
                 semiBold
                 style={[styles.text, styles.infoText]}
+                color="live"
                 numberOfLines={3}
               >
                 <Trans
@@ -167,7 +173,6 @@ export default function PolkadotSimpleOperationStarted({
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: colors.white,
   },
   container: {
     flex: 1,
@@ -183,13 +188,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     lineHeight: 33,
-    color: colors.darkBlue,
     paddingVertical: 16,
   },
   description: {
     fontSize: 14,
     lineHeight: 21,
-    color: colors.darkBlue,
     textAlign: "center",
     marginVertical: 16,
     paddingHorizontal: 32,
@@ -202,12 +205,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   text: {
-    color: colors.darkBlue,
     textAlign: "right",
     flex: 1,
   },
   infoText: {
-    color: colors.live,
     textAlign: "left",
     marginLeft: 8,
   },

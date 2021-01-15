@@ -34,8 +34,8 @@ import {
   useSortedValidators,
 } from "@ledgerhq/live-common/lib/families/polkadot/react";
 
+import { useTheme } from "@react-navigation/native";
 import { accountScreenSelector } from "../../../reducers/accounts";
-import colors from "../../../colors";
 import { NavigatorName, ScreenName } from "../../../const";
 import Button from "../../../components/Button";
 import SelectValidatorSearchBox from "../../tron/VoteFlow/01-SelectValidator/SearchBox";
@@ -69,6 +69,7 @@ type Props = {
 };
 
 function NominateSelectValidator({ navigation, route }: Props) {
+  const { colors } = useTheme();
   const { t } = useTranslation();
   const { account, parentAccount } = useSelector(accountScreenSelector(route));
 
@@ -291,7 +292,7 @@ function NominateSelectValidator({ navigation, route }: Props) {
     error instanceof PolkadotValidatorsRequired && !nominations.length; // Do not show error on first nominate
 
   return (
-    <SafeAreaView style={styles.root}>
+    <SafeAreaView style={[styles.root, { backgroundColor: colors.background }]}>
       <NominationDrawer
         isOpen={drawerInfo && drawerInfo.length > 0}
         onClose={onCloseDrawer}
@@ -333,19 +334,26 @@ function NominateSelectValidator({ navigation, route }: Props) {
         renderItem={renderItem}
         stickySectionHeadersEnabled
         renderSectionHeader={({ section: { title } }) => (
-          <LText style={styles.header}>{title}</LText>
+          <LText
+            style={[styles.header, { backgroundColor: colors.lightFog }]}
+            color="grey"
+          >
+            {title}
+          </LText>
         )}
       />
 
-      <View style={styles.footer}>
+      <View
+        style={[
+          styles.footer,
+          { borderTopColor: colors.lightFog, backgroundColor: colors.white },
+        ]}
+      >
         <View style={styles.paddingBottom}>
           <View style={styles.labelContainer}>
             {!ignoreError && maybeChill ? (
               <TouchableOpacity onPress={onGoToChill}>
-                <LText
-                  semiBold
-                  style={[styles.footerMessage, styles.actionColor]}
-                >
+                <LText semiBold style={[styles.footerMessage]} color="live">
                   <Trans i18nKey="polkadot.nominate.steps.validators.maybeChill" />
                 </LText>
               </TouchableOpacity>
@@ -355,9 +363,9 @@ function NominateSelectValidator({ navigation, route }: Props) {
                 <LText
                   style={[
                     styles.footerMessage,
-                    maxSelected && styles.success,
-                    !ignoreError && warning && styles.warning,
-                    !ignoreError && error && styles.error,
+                    maxSelected && { color: colors.success },
+                    !ignoreError && warning && { color: colors.orange },
+                    !ignoreError && error && { color: colors.alert },
                   ]}
                 >
                   {!ignoreError && (error || warning) ? (
@@ -404,7 +412,6 @@ function NominateSelectValidator({ navigation, route }: Props) {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: colors.white,
   },
   noResult: {
     flex: 1,
@@ -416,14 +423,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     lineHeight: 32,
     fontSize: 14,
-    backgroundColor: colors.lightFog,
-    color: colors.grey,
   },
   footer: {
     borderTopWidth: 1,
-    borderTopColor: colors.lightFog,
     padding: 16,
-    backgroundColor: colors.white,
   },
   labelContainer: {
     flexDirection: "row",
@@ -437,20 +440,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 6,
   },
   textCenter: { textAlign: "center" },
-  error: {
-    color: colors.alert,
-  },
-  warning: {
-    color: colors.orange,
-  },
-  success: {
-    color: colors.success,
-  },
   paddingBottom: {
     paddingBottom: 8,
-  },
-  actionColor: {
-    color: colors.live,
   },
 });
 

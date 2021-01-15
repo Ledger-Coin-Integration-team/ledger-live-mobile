@@ -25,7 +25,6 @@ import LText from "../../components/LText";
 import CurrencyUnitValue from "../../components/CurrencyUnitValue";
 import CounterValue from "../../components/CounterValue";
 import Section from "../../screens/OperationDetails/Section";
-import colors from "../../colors";
 import { discreetModeSelector } from "../../reducers/settings";
 
 import BondIcon from "../../icons/LinkIcon";
@@ -283,7 +282,7 @@ const AmountCell = ({
         />
       </LText>
 
-      <LText numberOfLines={1} style={styles.amountText}>
+      <LText numberOfLines={1} style={styles.amountText} color="grey">
         <CounterValue
           showCode
           date={operation.date}
@@ -368,26 +367,22 @@ const createOperationIcon = Icon => ({
   failed?: boolean,
   size?: number,
   type: OperationType,
-}) => {
-  return (
-    <OperationStatusWrapper
-      size={size}
-      Icon={Icon}
-      confirmed={confirmed}
-      failed={failed}
-      type={type}
-    />
-  );
-};
+}) => (
+  <OperationStatusWrapper
+    size={size}
+    Icon={Icon}
+    confirmed={confirmed}
+    failed={failed}
+    type={type}
+  />
+);
 
 const styles = StyleSheet.create({
   amountText: {
-    color: colors.grey,
     fontSize: 14,
     flex: 1,
   },
   topText: {
-    color: colors.darkBlue,
     fontSize: 14,
     flex: 1,
   },

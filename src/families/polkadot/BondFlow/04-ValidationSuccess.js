@@ -8,9 +8,9 @@ import { getMainAccount } from "@ledgerhq/live-common/lib/account";
 import type { Operation } from "@ledgerhq/live-common/lib/types";
 import { isFirstBond } from "@ledgerhq/live-common/lib/families/polkadot/logic";
 import { usePolkadotBondLoading } from "@ledgerhq/live-common/lib/families/polkadot/react";
+import { useTheme } from "@react-navigation/native";
 import { accountScreenSelector } from "../../../reducers/accounts";
 import { TrackScreen } from "../../../analytics";
-import colors from "../../../colors";
 import { NavigatorName, ScreenName } from "../../../const";
 import PreventNativeBack from "../../../components/PreventNativeBack";
 import ValidateSuccess from "../../../components/ValidateSuccess";
@@ -30,6 +30,7 @@ type RouteParams = {
 };
 
 export default function ValidationSuccess({ navigation, route }: Props) {
+  const { colors } = useTheme();
   const { account, parentAccount } = useSelector(accountScreenSelector(route));
   invariant(account, "account is required");
 
@@ -65,7 +66,7 @@ export default function ValidationSuccess({ navigation, route }: Props) {
   }, [account, route.params, navigation]);
 
   return (
-    <View style={styles.root}>
+    <View style={[styles.root, { backgroundColor: colors.background }]}>
       <TrackScreen category="BondFlow" name="ValidationSuccess" />
       <PreventNativeBack />
       {wasFirstBond.current ? (
@@ -85,7 +86,7 @@ export default function ValidationSuccess({ navigation, route }: Props) {
                   <LText style={styles.label} semiBold>
                     <Trans i18nKey="polkadot.bond.steps.validation.pending.title" />
                   </LText>
-                  <LText style={[styles.label, styles.subLabel]}>
+                  <LText style={[styles.label]} color="grey">
                     <Trans i18nKey="polkadot.bond.steps.validation.pending.description" />
                   </LText>
                 </View>
@@ -133,7 +134,6 @@ export default function ValidationSuccess({ navigation, route }: Props) {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: colors.white,
   },
   button: {
     alignSelf: "stretch",
@@ -146,5 +146,4 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   label: { fontSize: 12 },
-  subLabel: { color: colors.grey },
 });

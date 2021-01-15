@@ -1,10 +1,11 @@
 // @flow
 
-import React from "react";
+import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { createStackNavigator } from "@react-navigation/stack";
+import { useTheme } from "@react-navigation/native";
 import { ScreenName } from "../../../const";
-import { closableStackNavigatorConfig } from "../../../navigation/navigatorConfig";
+import { getStackNavigatorConfig } from "../../../navigation/navigatorConfig";
 import StepHeader from "../../../components/StepHeader";
 
 import Started from "./01-Started";
@@ -19,8 +20,15 @@ const totalSteps = "3";
 function BondFlow() {
   const { t } = useTranslation();
 
+  const { colors } = useTheme();
+
+  const stackNavigatorConfig = useMemo(
+    () => getStackNavigatorConfig(colors, true),
+    [colors],
+  );
+
   return (
-    <Stack.Navigator screenOptions={closableStackNavigatorConfig}>
+    <Stack.Navigator screenOptions={stackNavigatorConfig}>
       <Stack.Screen
         name={ScreenName.PolkadotBondStarted}
         component={Started}

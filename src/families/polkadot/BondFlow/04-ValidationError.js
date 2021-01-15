@@ -1,13 +1,10 @@
 /* @flow */
 import React, { useCallback } from "react";
-import { StyleSheet, Linking } from "react-native";
-import SafeAreaView from "react-native-safe-area-view";
+import { StyleSheet, Linking, SafeAreaView } from "react-native";
+import { useTheme } from "@react-navigation/native";
 import { TrackScreen } from "../../../analytics";
-import colors from "../../../colors";
 import { urls } from "../../../config/urls";
 import ValidateError from "../../../components/ValidateError";
-
-const forceInset = { bottom: "always" };
 
 type Props = {
   navigation: any,
@@ -22,6 +19,7 @@ type RouteParams = {
 };
 
 export default function ValidationError({ navigation, route }: Props) {
+  const { colors } = useTheme();
   const onClose = useCallback(() => {
     navigation.dangerouslyGetParent().pop();
   }, [navigation]);
@@ -35,7 +33,7 @@ export default function ValidationError({ navigation, route }: Props) {
   }, [navigation]);
 
   return (
-    <SafeAreaView style={styles.root} forceInset={forceInset}>
+    <SafeAreaView style={[styles.root, { backgroundColor: colors.background }]}>
       <TrackScreen category="BondFlow" name="ValidationError" />
       <ValidateError
         error={route.params.error}
@@ -50,6 +48,5 @@ export default function ValidationError({ navigation, route }: Props) {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: colors.white,
   },
 });
