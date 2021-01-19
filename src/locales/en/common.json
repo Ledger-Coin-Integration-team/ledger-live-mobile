@@ -1323,6 +1323,7 @@
       "rewards": "Earned rewards",
       "bondedAmount": "Bonded Amount",
       "unbondedAmount": "Unbonded Amount",
+      "withdrawUnbondedAmount": "Withdraw Unbonded Amount",
       "palletMethod": "Method",
       "transferAmount": "Transfer Amount",
       "validatorsCount": "Validators ({{number}})"
