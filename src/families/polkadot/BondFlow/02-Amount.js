@@ -31,13 +31,12 @@ import CurrencyUnitValue from "../../../components/CurrencyUnitValue";
 import Button from "../../../components/Button";
 import ToggleButton from "../../../components/ToggleButton";
 import KeyboardView from "../../../components/KeyboardView";
-import RetryButton from "../../../components/RetryButton";
-import CancelButton from "../../../components/CancelButton";
-import GenericErrorBottomModal from "../../../components/GenericErrorBottomModal";
 import CurrencyInput from "../../../components/CurrencyInput";
 import TranslatedError from "../../../components/TranslatedError";
 import InfoModal from "../../../modals/Info";
 import Info from "../../../icons/Info";
+
+import FlowErrorBottomModal from "../components/FlowErrorBottomModal";
 import SendRowsFee from "../SendRowsFee";
 
 const options = [
@@ -157,22 +156,6 @@ export default function PolkadotBondAmount({ navigation, route }: Props) {
       status,
     });
   }, [account, navigation, transaction, status]);
-
-  const [bridgeErr, setBridgeErr] = useState(bridgeError);
-
-  useEffect(() => setBridgeErr(bridgeError), [bridgeError]);
-
-  const onBridgeErrorCancel = useCallback(() => {
-    setBridgeErr(null);
-    const parent = navigation.dangerouslyGetParent();
-    if (parent) parent.goBack();
-  }, [navigation]);
-
-  const onBridgeErrorRetry = useCallback(() => {
-    setBridgeErr(null);
-    if (!transaction) return;
-    setTransaction(bridge.updateTransaction(transaction, {}));
-  }, [setTransaction, transaction, bridge]);
 
   const blur = useCallback(() => Keyboard.dismiss(), []);
 
@@ -328,21 +311,13 @@ export default function PolkadotBondAmount({ navigation, route }: Props) {
         data={infoModalData}
       />
 
-      <GenericErrorBottomModal
-        error={bridgeErr}
-        onClose={onBridgeErrorRetry}
-        footerButtons={
-          <>
-            <CancelButton
-              containerStyle={styles.button}
-              onPress={onBridgeErrorCancel}
-            />
-            <RetryButton
-              containerStyle={[styles.button, styles.buttonRight]}
-              onPress={onBridgeErrorRetry}
-            />
-          </>
-        }
+      <FlowErrorBottomModal
+        navigation={navigation}
+        transaction={transaction}
+        account={account}
+        parentAccount={parentAccount}
+        setTransaction={setTransaction}
+        bridgeError={bridgeError}
       />
     </>
   );
@@ -388,13 +363,6 @@ const styles = StyleSheet.create({
     alignItems: "stretch",
     justifyContent: "flex-end",
     paddingBottom: 16,
-  },
-  button: {
-    flex: 1,
-    marginHorizontal: 8,
-  },
-  buttonRight: {
-    marginLeft: 8,
   },
   wrapper: {
     flexGrow: 1,

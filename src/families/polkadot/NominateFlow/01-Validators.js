@@ -44,6 +44,7 @@ import WarningBox from "../../../components/WarningBox";
 import TranslatedError from "../../../components/TranslatedError";
 import Check from "../../../icons/Check";
 
+import FlowErrorBottomModal from "../components/FlowErrorBottomModal";
 import NominationDrawer from "../components/NominationDrawer";
 import SendRowsFee from "../SendRowsFee";
 import ValidatorItem from "./ValidatorItem";
@@ -89,6 +90,7 @@ function NominateSelectValidator({ navigation, route }: Props) {
     setTransaction,
     status,
     bridgePending,
+    bridgeError,
   } = useBridgeTransaction(() => {
     const tx = route.params.transaction;
 
@@ -405,6 +407,15 @@ function NominateSelectValidator({ navigation, route }: Props) {
           type="primary"
         />
       </View>
+
+      <FlowErrorBottomModal
+        navigation={navigation}
+        transaction={transaction}
+        account={account}
+        parentAccount={parentAccount}
+        setTransaction={setTransaction}
+        bridgeError={bridgeError}
+      />
     </SafeAreaView>
   );
 }
