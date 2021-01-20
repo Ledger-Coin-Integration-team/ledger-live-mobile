@@ -1,6 +1,6 @@
 // @flow
 import invariant from "invariant";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback } from "react";
 import { StyleSheet, View, SafeAreaView } from "react-native";
 import { Trans } from "react-i18next";
 import { useSelector } from "react-redux";
@@ -16,11 +16,9 @@ import { ScreenName } from "../../../const";
 import { TrackScreen } from "../../../analytics";
 import Button from "../../../components/Button";
 import LText from "../../../components/LText";
-import RetryButton from "../../../components/RetryButton";
-import CancelButton from "../../../components/CancelButton";
-import GenericErrorBottomModal from "../../../components/GenericErrorBottomModal";
 import Info from "../../../icons/Info";
 
+import FlowErrorBottomModal from "../components/FlowErrorBottomModal";
 import SendRowsFee from "../SendRowsFee";
 
 type RouteParams = {
@@ -74,22 +72,6 @@ export default function PolkadotSimpleOperationStarted({
       status,
     });
   }, [account, navigation, transaction, status, mode]);
-
-  const [bridgeErr, setBridgeErr] = useState(bridgeError);
-
-  useEffect(() => setBridgeErr(bridgeError), [bridgeError]);
-
-  const onBridgeErrorCancel = useCallback(() => {
-    setBridgeErr(null);
-    const parent = navigation.dangerouslyGetParent();
-    if (parent) parent.goBack();
-  }, [navigation]);
-
-  const onBridgeErrorRetry = useCallback(() => {
-    setBridgeErr(null);
-    if (!transaction) return;
-    setTransaction(bridge.updateTransaction(transaction, {}));
-  }, [setTransaction, transaction, bridge]);
 
   if (!account || !transaction) return null;
 
@@ -150,21 +132,13 @@ export default function PolkadotSimpleOperationStarted({
         </View>
       </SafeAreaView>
 
-      <GenericErrorBottomModal
-        error={bridgeErr}
-        onClose={onBridgeErrorRetry}
-        footerButtons={
-          <>
-            <CancelButton
-              containerStyle={styles.button}
-              onPress={onBridgeErrorCancel}
-            />
-            <RetryButton
-              containerStyle={[styles.button, styles.buttonRight]}
-              onPress={onBridgeErrorRetry}
-            />
-          </>
-        }
+      <FlowErrorBottomModal
+        navigation={navigation}
+        transaction={transaction}
+        account={account}
+        parentAccount={parentAccount}
+        setTransaction={setTransaction}
+        bridgeError={bridgeError}
       />
     </>
   );
@@ -217,12 +191,5 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginTop: 4,
-  },
-  button: {
-    flex: 1,
-    marginHorizontal: 8,
-  },
-  buttonRight: {
-    marginLeft: 8,
   },
 });
