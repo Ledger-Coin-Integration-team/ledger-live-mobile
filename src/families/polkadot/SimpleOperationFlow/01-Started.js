@@ -4,18 +4,19 @@ import React, { useCallback } from "react";
 import { StyleSheet, View, SafeAreaView } from "react-native";
 import { Trans } from "react-i18next";
 import { useSelector } from "react-redux";
+import { useTheme } from "@react-navigation/native";
 
 import type { Transaction } from "@ledgerhq/live-common/lib/types";
 import { getAccountBridge } from "@ledgerhq/live-common/lib/bridge";
 import { getMainAccount } from "@ledgerhq/live-common/lib/account";
 import useBridgeTransaction from "@ledgerhq/live-common/lib/bridge/useBridgeTransaction";
 
-import { useTheme } from "@react-navigation/native";
 import { accountScreenSelector } from "../../../reducers/accounts";
 import { ScreenName } from "../../../const";
 import { TrackScreen } from "../../../analytics";
 import Button from "../../../components/Button";
 import LText from "../../../components/LText";
+import TranslatedError from "../../../components/TranslatedError";
 import Info from "../../../icons/Info";
 
 import FlowErrorBottomModal from "../components/FlowErrorBottomModal";
@@ -30,6 +31,14 @@ type Props = {
   navigation: any,
   route: { params: RouteParams },
 };
+
+// returns the first error
+function getStatusError(status, type = "errors"): ?Error {
+  if (!status || !status[type]) return null;
+  const firstKey = Object.keys(status[type])[0];
+
+  return firstKey ? status[type][firstKey] : null;
+}
 
 export default function PolkadotSimpleOperationStarted({
   navigation,
@@ -75,6 +84,9 @@ export default function PolkadotSimpleOperationStarted({
 
   if (!account || !transaction) return null;
 
+  const error = getStatusError(status, "errors");
+  const warning = getStatusError(status, "warnings");
+
   return (
     <>
       <SafeAreaView
@@ -109,6 +121,17 @@ export default function PolkadotSimpleOperationStarted({
           </View>
         </View>
         <View style={styles.footer}>
+          {(error || warning) && (
+            <LText
+              style={[
+                styles.footerMessage,
+                warning && { color: colors.orange },
+                error && { color: colors.alert },
+              ]}
+            >
+              <TranslatedError error={error || warning} />
+            </LText>
+          )}
           <SendRowsFee
             account={account}
             parentAccount={parentAccount}
@@ -127,7 +150,7 @@ export default function PolkadotSimpleOperationStarted({
               />
             }
             onPress={onContinue}
-            disabled={!!status.errors.amount || bridgePending}
+            disabled={error || bridgePending}
           />
         </View>
       </SafeAreaView>
@@ -191,5 +214,11 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginTop: 4,
+  },
+  footerMessage: {
+    fontSize: 12,
+    textAlign: "center",
+    lineHeight: 12,
+    paddingHorizontal: 6,
   },
 });
