@@ -134,6 +134,22 @@ function OperationDetailsExtra({
         </>
       );
     }
+    case "WITHDRAW_UNBONDED": {
+      const value = formatCurrencyUnit(
+        account.unit,
+        BigNumber(extra.withdrawUnbondedAmount),
+        { showCode: true, discreet },
+      );
+      return (
+        <>
+          <OperationDetailsPalletMethod palletMethod={extra.palletMethod} />
+          <Section
+            title={t("operationDetails.extra.withdrawUnbondedAmount")}
+            value={value}
+          />
+        </>
+      );
+    }
     case "REWARD_PAYOUT": {
       return (
         <>
@@ -340,6 +356,21 @@ const UnbondAmountCell = ({ operation, currency, unit }: Props) => {
   );
 };
 
+const WithdrawUnbondAmountCell = ({ operation, currency, unit }: Props) => {
+  const amount = new BigNumber(
+    operation.extra ? operation.extra.withdrawUnbondedAmount : 0,
+  );
+
+  return (
+    <AmountCell
+      amount={amount}
+      operation={operation}
+      currency={currency}
+      unit={unit}
+    />
+  );
+};
+
 const NominateAmountCell = ({ operation }: Props) => {
   const amount = operation.extra?.validators?.length || 0;
 
@@ -394,6 +425,7 @@ const amountCell = {
   BOND: BondAmountCell,
   UNBOND: UnbondAmountCell,
   NOMINATE: NominateAmountCell,
+  WITHDRAW_UNBONDED: WithdrawUnbondAmountCell,
 };
 
 const operationStatusIcon = {
