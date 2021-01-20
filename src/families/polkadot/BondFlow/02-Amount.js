@@ -14,6 +14,8 @@ import {
 import { useSelector } from "react-redux";
 import { Trans } from "react-i18next";
 import invariant from "invariant";
+import { useTheme } from "@react-navigation/native";
+
 import type { Transaction } from "@ledgerhq/live-common/lib/types";
 import { useDebounce } from "@ledgerhq/live-common/lib/hooks/useDebounce";
 import {
@@ -22,7 +24,7 @@ import {
 } from "@ledgerhq/live-common/lib/account";
 import { getAccountBridge } from "@ledgerhq/live-common/lib/bridge";
 import { isFirstBond } from "@ledgerhq/live-common/lib/families/polkadot/logic";
-import { useTheme } from "@react-navigation/native";
+
 import { accountScreenSelector } from "../../../reducers/accounts";
 import { ScreenName } from "../../../const";
 import { TrackScreen } from "../../../analytics";
@@ -36,6 +38,7 @@ import TranslatedError from "../../../components/TranslatedError";
 import InfoModal from "../../../modals/Info";
 import Info from "../../../icons/Info";
 
+import { getFirstStatusError, hasStatusError } from "../../helpers";
 import FlowErrorBottomModal from "../components/FlowErrorBottomModal";
 import SendRowsFee from "../SendRowsFee";
 
@@ -185,8 +188,12 @@ export default function PolkadotBondAmount({ navigation, route }: Props) {
   const rewardDestination = transaction.rewardDestination || "";
   const firstBond = isFirstBond(mainAccount);
 
-  const error = amount.eq(0) || bridgePending ? null : status.errors.amount;
-  const warning = status.warnings.amount;
+  const error =
+    amount.eq(0) || bridgePending
+      ? null
+      : getFirstStatusError(status, "errors");
+  const warning = getFirstStatusError(status, "warnings");
+  const hasErrors = hasStatusError(status);
 
   return (
     <>
@@ -296,7 +303,7 @@ export default function PolkadotBondAmount({ navigation, route }: Props) {
                       />
                     }
                     onPress={onContinue}
-                    disabled={!!status.errors.amount || bridgePending}
+                    disabled={hasErrors || bridgePending}
                   />
                 </View>
               </View>
