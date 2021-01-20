@@ -1,4 +1,5 @@
 /* @flow */
+import invariant from "invariant";
 import { BigNumber } from "bignumber.js";
 import useBridgeTransaction from "@ledgerhq/live-common/lib/bridge/useBridgeTransaction";
 import React, { useCallback, useState, useEffect } from "react";
@@ -12,7 +13,8 @@ import {
 } from "react-native";
 import { useSelector } from "react-redux";
 import { Trans } from "react-i18next";
-import invariant from "invariant";
+import { useTheme } from "@react-navigation/native";
+
 import type { Transaction } from "@ledgerhq/live-common/lib/types";
 import { useDebounce } from "@ledgerhq/live-common/lib/hooks/useDebounce";
 import {
@@ -20,7 +22,7 @@ import {
   getMainAccount,
 } from "@ledgerhq/live-common/lib/account";
 import { getAccountBridge } from "@ledgerhq/live-common/lib/bridge";
-import { useTheme } from "@react-navigation/native";
+
 import { accountScreenSelector } from "../../../reducers/accounts";
 import { ScreenName } from "../../../const";
 import { TrackScreen } from "../../../analytics";
@@ -31,6 +33,7 @@ import KeyboardView from "../../../components/KeyboardView";
 import CurrencyInput from "../../../components/CurrencyInput";
 import TranslatedError from "../../../components/TranslatedError";
 
+import { getFirstStatusError, hasStatusError } from "../../helpers";
 import FlowErrorBottomModal from "../components/FlowErrorBottomModal";
 import SendRowsFee from "../SendRowsFee";
 
@@ -131,8 +134,12 @@ export default function PolkadotUnbondAmount({ navigation, route }: Props) {
   const { amount } = status;
   const unit = getAccountUnit(account);
 
-  const error = amount.eq(0) || bridgePending ? null : status.errors.amount;
-  const warning = status.warnings.amount;
+  const error =
+    amount.eq(0) || bridgePending
+      ? null
+      : getFirstStatusError(status, "errors");
+  const warning = getFirstStatusError(status, "warning");
+  const hasErrors = hasStatusError(status);
 
   return (
     <>
@@ -227,7 +234,7 @@ export default function PolkadotUnbondAmount({ navigation, route }: Props) {
                       />
                     }
                     onPress={onContinue}
-                    disabled={!!status.errors.amount || bridgePending}
+                    disabled={hasErrors || bridgePending}
                   />
                 </View>
               </View>

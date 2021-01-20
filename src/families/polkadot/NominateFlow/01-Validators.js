@@ -8,17 +8,16 @@ import {
   SectionList,
   Linking,
 } from "react-native";
-
 import SafeAreaView from "react-native-safe-area-view";
 import { Trans, useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import { useTheme } from "@react-navigation/native";
 import { Polkadot as PolkadotIdenticon } from "@polkadot/reactnative-identicon/icons";
 
 import type {
   Transaction,
   PolkadotValidator,
 } from "@ledgerhq/live-common/lib/families/polkadot/types";
-
 import { getAccountBridge } from "@ledgerhq/live-common/lib/bridge";
 import { getMainAccount } from "@ledgerhq/live-common/lib/account";
 import {
@@ -28,13 +27,11 @@ import {
 import useBridgeTransaction from "@ledgerhq/live-common/lib/bridge/useBridgeTransaction";
 import { MAX_NOMINATIONS } from "@ledgerhq/live-common/lib/families/polkadot/logic";
 import { PolkadotValidatorsRequired } from "@ledgerhq/live-common/lib/families/polkadot/errors";
-
 import {
   usePolkadotPreloadData,
   useSortedValidators,
 } from "@ledgerhq/live-common/lib/families/polkadot/react";
 
-import { useTheme } from "@react-navigation/native";
 import { accountScreenSelector } from "../../../reducers/accounts";
 import { NavigatorName, ScreenName } from "../../../const";
 import Button from "../../../components/Button";
@@ -44,19 +41,13 @@ import WarningBox from "../../../components/WarningBox";
 import TranslatedError from "../../../components/TranslatedError";
 import Check from "../../../icons/Check";
 
+import { getFirstStatusError } from "../../helpers";
+
 import FlowErrorBottomModal from "../components/FlowErrorBottomModal";
 import NominationDrawer from "../components/NominationDrawer";
 import SendRowsFee from "../SendRowsFee";
 import ValidatorItem from "./ValidatorItem";
 import { getDrawerInfo } from "./drawerInfo";
-
-// returns the first error
-function getStatusError(status, type = "errors"): ?Error {
-  if (!status || !status[type]) return null;
-  const firstKey = Object.keys(status[type])[0];
-
-  return firstKey ? status[type][firstKey] : null;
-}
 
 type RouteParams = {
   accountId: string,
@@ -286,8 +277,8 @@ function NominateSelectValidator({ navigation, route }: Props) {
     [validators, onSelect, onOpenDrawer],
   );
 
-  const error = getStatusError(status, "errors");
-  const warning = getStatusError(status, "warnings");
+  const error = getFirstStatusError(status, "errors");
+  const warning = getFirstStatusError(status, "warnings");
   const maxSelected = validators.length === MAX_NOMINATIONS;
   const maybeChill = error instanceof PolkadotValidatorsRequired;
   const ignoreError =
