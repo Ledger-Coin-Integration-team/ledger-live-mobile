@@ -76,7 +76,7 @@ function OperationDetailsExtra({
       const value = formatCurrencyUnit(
         account.unit,
         BigNumber(extra.transferAmount),
-        { showCode: true, discreet },
+        { showCode: true, discreet, disableRounding: true },
       );
       return (
         <>
@@ -106,7 +106,7 @@ function OperationDetailsExtra({
       const value = formatCurrencyUnit(
         account.unit,
         BigNumber(extra.bondedAmount),
-        { showCode: true, discreet },
+        { showCode: true, discreet, disableRounding: true },
       );
       return (
         <>
@@ -122,7 +122,7 @@ function OperationDetailsExtra({
       const value = formatCurrencyUnit(
         account.unit,
         BigNumber(extra.unbondedAmount),
-        { showCode: true, discreet },
+        { showCode: true, discreet, disableRounding: true },
       );
       return (
         <>
@@ -138,7 +138,7 @@ function OperationDetailsExtra({
       const value = formatCurrencyUnit(
         account.unit,
         BigNumber(extra.withdrawUnbondedAmount),
-        { showCode: true, discreet },
+        { showCode: true, discreet, disableRounding: true },
       );
       return (
         <>
