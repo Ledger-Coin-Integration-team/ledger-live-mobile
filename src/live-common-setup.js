@@ -46,7 +46,6 @@ setSupportedCurrencies([
   "ethereum_ropsten",
   "cosmos",
   "algorand",
-  "polkadot",
 ]);
 
 if (Config.VERBOSE) {
