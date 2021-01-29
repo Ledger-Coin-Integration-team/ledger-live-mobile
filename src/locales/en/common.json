@@ -3050,7 +3050,7 @@
       "emptyState": {
         "title": "Earn rewards",
         "description": "You can earn rewards by bonding assets and then nominating your validator(s).",
-        "info": "How nominations works",
+        "info": "How nominations work",
         "cta": "Earn rewards"
       },
       "header": "Nominations",
@@ -3160,7 +3160,7 @@
             "Nominate using your Ledger device",
             "Assets will be available again, 28 days after unbonding"
           ],
-          "help": "How nominations works",
+          "help": "How nominations work",
           "warning": "Choose your validators wisely: part of your bonded assets may be irrevocably lost if a validator does not behave appropriately."
         },
         "amount": {
