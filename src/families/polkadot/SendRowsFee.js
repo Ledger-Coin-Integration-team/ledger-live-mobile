@@ -24,7 +24,7 @@ type Props = {
 export default function PolkadotFeeRow({ account, transaction }: Props) {
   const { colors } = useTheme();
   const extraInfoFees = useCallback(() => {
-    Linking.openURL(urls.feesMoreInfo);
+    Linking.openURL(urls.feesPolkadot);
   }, []);
 
   const fees = transaction.fees ? transaction.fees : null;

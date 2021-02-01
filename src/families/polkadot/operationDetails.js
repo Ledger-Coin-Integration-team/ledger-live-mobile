@@ -26,6 +26,7 @@ import CurrencyUnitValue from "../../components/CurrencyUnitValue";
 import CounterValue from "../../components/CounterValue";
 import Section from "../../screens/OperationDetails/Section";
 import { discreetModeSelector } from "../../reducers/settings";
+import { urls } from "../../config/urls";
 
 import BondIcon from "../../icons/LinkIcon";
 import UnbondIcon from "../../icons/Undelegate";
@@ -38,11 +39,9 @@ import OperationStatusWrapper from "../../icons/OperationStatusIcon/Wrapper";
 
 import NominationInfo from "./components/NominationInfo";
 
-const helpURL = "https://support.ledger.com/hc/en-us/articles/FIXME";
-
 function getURLWhatIsThis(op: Operation): ?string {
   if (op.type !== "IN" && op.type !== "OUT") {
-    return helpURL;
+    return urls.polkadotStaking;
   }
   return undefined;
 }
