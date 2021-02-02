@@ -339,7 +339,7 @@ function NominateSelectValidator({ navigation, route }: Props) {
       <View
         style={[
           styles.footer,
-          { borderTopColor: colors.lightFog, backgroundColor: colors.white },
+          { borderTopColor: colors.lightFog, backgroundColor: colors.card },
         ]}
       >
         <View style={styles.paddingBottom}>
