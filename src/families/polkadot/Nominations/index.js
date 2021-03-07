@@ -32,7 +32,7 @@ import WarningBox from "../../../components/WarningBox";
 
 import CollapsibleList from "../components/CollapsibleList";
 import NominationDrawer from "../components/NominationDrawer";
-import { NominateAction, RebondAction } from "./Actions";
+import { NominateAction, RebondAction, SetControllerAction } from "./Actions";
 import { getDrawerInfo } from "./drawerInfo";
 import NominationRow from "./NominationRow";
 import UnlockingRow from "./UnlockingRow";
@@ -146,6 +146,16 @@ export default function Nominations({ account }: Props) {
     onNavigate({
       route: NavigatorName.PolkadotNominateFlow,
       screen: ScreenName.PolkadotNominateSelectValidators,
+    });
+  }, [onNavigate]);
+
+  const onSetController = useCallback(() => {
+    onNavigate({
+      route: NavigatorName.PolkadotSimpleOperationFlow,
+      screen: ScreenName.PolkadotSimpleOperationStarted,
+      params: {
+        mode: "setController",
+      },
     });
   }, [onNavigate]);
 
@@ -272,20 +282,33 @@ export default function Nominations({ account }: Props) {
 
   if (hasExternalController(account)) {
     return (
-      <ExternalControllerUnsupportedWarning
-        address={polkadotResources?.controller}
-        onOpenExplorer={onOpenExplorer}
-        onLearnMore={onLearnMore}
-      />
+      <View style={styles.root}>
+        <AccountSectionLabel
+          RightComponent={
+            <SetControllerAction
+              disabled={electionOpen}
+              electionOpen={electionOpen}
+              onPress={onSetController}
+            />
+          }
+        />
+        <ExternalControllerUnsupportedWarning
+          address={polkadotResources?.controller}
+          onOpenExplorer={onOpenExplorer}
+          onLearnMore={onLearnMore}
+        />
+      </View>
     );
   }
   if (hasExternalStash(account)) {
     return (
-      <ExternalStashUnsupportedWarning
-        address={polkadotResources?.stash}
-        onOpenExplorer={onOpenExplorer}
-        onLearnMore={onLearnMore}
-      />
+      <View style={styles.root}>
+        <ExternalStashUnsupportedWarning
+          address={polkadotResources?.stash}
+          onOpenExplorer={onOpenExplorer}
+          onLearnMore={onLearnMore}
+        />
+      </View>
     );
   }
 
