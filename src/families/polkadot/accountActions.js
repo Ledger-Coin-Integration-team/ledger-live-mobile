@@ -17,6 +17,7 @@ import BondIcon from "../../icons/LinkIcon";
 import UnbondIcon from "../../icons/Undelegate";
 import WithdrawUnbondedIcon from "../../icons/Coins";
 import NominateIcon from "../../icons/Vote";
+import RewardIcon from "../../icons/ClaimReward";
 import ChillIcon from "../../icons/VoteNay";
 import { NavigatorName, ScreenName } from "../../const";
 
@@ -40,6 +41,7 @@ const getActions = ({ account }: { account: Account }) => {
     "WITHDRAW_UNBONDED",
   );
 
+  const claimRewardEnabled = !electionOpen && canNominate(account);
   const nominationEnabled = !electionOpen && canNominate(account);
   const chillEnabled =
     !electionOpen && canNominate(account) && nominations?.length;
@@ -96,6 +98,19 @@ const getActions = ({ account }: { account: Account }) => {
         <Trans i18nKey="polkadot.manage.withdrawUnbonded.description" />
       ),
       Icon: WithdrawUnbondedIcon,
+    },
+    {
+      disabled: !claimRewardEnabled,
+      navigationParams: [
+        NavigatorName.PolkadotClaimRewardFlow,
+        {
+          screen: ScreenName.PolkadotClaimRewardSelect,
+          params: { accountId },
+        },
+      ],
+      label: <Trans i18nKey="polkadot.manage.claimReward.title" />,
+      description: <Trans i18nKey="polkadot.manage.claimReward.description" />,
+      Icon: RewardIcon,
     },
     {
       disabled: !nominationEnabled,

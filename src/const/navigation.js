@@ -210,6 +210,11 @@ export const ScreenName = {
   PolkadotNominateConnectDevice: "PolkadotNominateConnectDevice",
   PolkadotNominateValidationError: "PolkadotNominateValidationError",
   PolkadotNominateValidationSuccess: "PolkadotNominateValidationSuccess",
+  PolkadotClaimRewardSelect: "PolkadotClaimRewardSelect",
+  PolkadotClaimRewardSelectDevice: "PolkadotClaimRewardSelectDevice",
+  PolkadotClaimRewardConnectDevice: "PolkadotClaimRewardConnectDevice",
+  PolkadotClaimRewardValidationError: "PolkadotClaimRewardValidationError",
+  PolkadotClaimRewardValidationSuccess: "PolkadotClaimRewardValidationSuccess",
   PolkadotSimpleOperationStarted: "PolkadotSimpleOperationStarted",
   PolkadotSimpleOperationSelectDevice: "PolkadotSimpleOperationSelectDevice",
   PolkadotSimpleOperationConnectDevice: "PolkadotSimpleOperationConnectDevice",
@@ -328,6 +333,7 @@ export const NavigatorName = {
   PolkadotUnbondFlow: "PolkadotUnbondFlow",
   PolkadotRebondFlow: "PolkadotRebondFlow",
   PolkadotNominateFlow: "PolkadotNominateFlow",
+  PolkadotClaimRewardFlow: "PolkadotClaimRewardFlow",
   PolkadotSimpleOperationFlow: "PolkadotSimpleOperationFlow",
 
   // Tab

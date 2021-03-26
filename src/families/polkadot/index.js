@@ -3,6 +3,7 @@ import * as PolkadotBondFlow from "./BondFlow";
 import * as PolkadotRebondFlow from "./RebondFlow";
 import * as PolkadotUnbondFlow from "./UnbondFlow";
 import * as PolkadotNominateFlow from "./NominateFlow";
+import * as PolkadotClaimRewardFlow from "./ClaimRewardFlow";
 import * as PolkadotSimpleOperationFlow from "./SimpleOperationFlow";
 
 export {
@@ -10,5 +11,6 @@ export {
   PolkadotRebondFlow,
   PolkadotUnbondFlow,
   PolkadotNominateFlow,
+  PolkadotClaimRewardFlow,
   PolkadotSimpleOperationFlow,
 };

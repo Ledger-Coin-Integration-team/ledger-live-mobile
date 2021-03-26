@@ -1330,7 +1330,7 @@
       "rewards": "Earned rewards",
       "bondedAmount": "Bonded Amount",
       "unbondedAmount": "Unbonded Amount",
-      "withdrawUnbondedAmount": "Withdraw Unbonded Amount",
+      "withdrawUnbondedAmount": "Withdrawn Amount",
       "palletMethod": "Method",
       "transferAmount": "Transfer Amount",
       "validatorsCount": "Validators ({{number}})"
@@ -3022,6 +3022,7 @@
     "unlockingBalance": "Unbonding balance",
     "unlockedBalance": "Unbonded balance",
     "networkFees": "Network fees are automatically set by the Polkadot consensus, you won't be able to review them on your device",
+    "era": "Era",
     "info": {
       "available": {
         "title": "DOT available",
@@ -3084,7 +3085,7 @@
     },
     "unlockings": {
       "header": "Unbonding",
-      "withdrawUnbonded": "Withdraw Unbonded",
+      "withdrawUnbonded": "Withdraw",
       "rebond": "Rebond"
     },
     "manage": {
@@ -3097,8 +3098,12 @@
         "title": "Unbond",
         "description": "To make a bonded amount available again, first you need to unbond it. You can withdraw it after the 28-day unbonding period."
       },
+      "claimReward": {
+        "title": "Claim Rewards",
+        "description": "You can see and claim your pending rewards of the last 7 days."
+      },
       "withdrawUnbonded": {
-        "title": "Withdraw Unbonded",
+        "title": "Withdraw",
         "description": "To retrieve an unbonded amount back to the available balance, you need to withdraw it manually."
       },
       "nominate": {
@@ -3108,6 +3113,27 @@
       "chill": {
         "title": "Clear nominations",
         "description": "Remove all nominations. You will stop earning rewards. Your bonded amount remains bonded."
+      }
+    },
+    "claimReward": {
+      "header": "Rewards",
+      "info": "See and claim your pending rewards",
+      "action": "Claim",
+      "stepperHeader": {
+        "select": "Select reward",
+        "selectDevice": "Select device",
+        "connectDevice": "Connect device",
+        "stepRange": "Step {{currentStep}} of {{totalSteps}}"
+      },
+      "steps": {
+        "selectReward": {
+          "info": "You can claim rewards for up to 7 days",
+          "loading": {
+            "info": "Loading your rewards...",
+            "description": "This could take up to 20 seconds"
+          },
+          "noResults": "You have no pending reward over the last 7 days"
+        }
       }
     },
     "nominate": {
@@ -3232,10 +3258,13 @@
         }
       }
     },
+    "rewards": {
+      "claim": "Claim"
+    },
     "simpleOperation": {
       "modes": {
         "withdrawUnbonded": {
-          "title": "Withdraw unbonded",
+          "title": "Withdraw",
           "description": "After the 28-day unbonding period you can withdraw unbonded assets.",
           "info": "You can then withdraw unbonded assets to your available balance."
         },
