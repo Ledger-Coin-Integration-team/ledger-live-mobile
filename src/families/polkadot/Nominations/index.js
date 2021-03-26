@@ -3,7 +3,7 @@ import isAfter from "date-fns/isAfter";
 
 import React, { useCallback, useState, useMemo } from "react";
 import { View, StyleSheet, Linking } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useTheme } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { Polkadot as PolkadotIdenticon } from "@polkadot/reactnative-identicon/icons";
 
@@ -25,10 +25,13 @@ import type { PolkadotNomination } from "@ledgerhq/live-common/lib/families/polk
 
 import { ScreenName, NavigatorName } from "../../../const";
 import AccountDelegationInfo from "../../../components/AccountDelegationInfo";
-import IlluRewards from "../../../icons/images/Rewards";
-import { urls } from "../../../config/urls";
 import AccountSectionLabel from "../../../components/AccountSectionLabel";
 import WarningBox from "../../../components/WarningBox";
+import LText from "../../../components/LText";
+import Button from "../../../components/Button";
+
+import { urls } from "../../../config/urls";
+import IlluRewards from "../../../icons/images/Rewards";
 
 import CollapsibleList from "../components/CollapsibleList";
 import NominationDrawer from "../components/NominationDrawer";
@@ -50,6 +53,7 @@ export default function Nominations({ account }: Props) {
   const mainAccount = getMainAccount(account);
 
   const navigation = useNavigation();
+  const { colors } = useTheme();
 
   const { staking, validators } = usePolkadotPreloadData();
 
@@ -141,6 +145,13 @@ export default function Nominations({ account }: Props) {
           screen: ScreenName.PolkadotBondStarted,
         });
   }, [account, onNavigate]);
+
+  const onClaimReward = useCallback(() => {
+    onNavigate({
+      route: NavigatorName.PolkadotClaimRewardFlow,
+      screen: ScreenName.PolkadotClaimRewardSelect,
+    });
+  }, [onNavigate]);
 
   const onNominate = useCallback(() => {
     onNavigate({
@@ -291,6 +302,27 @@ export default function Nominations({ account }: Props) {
 
   return (
     <View style={styles.root}>
+      {electionOpen && (
+        <WarningBox>{t("polkadot.info.electionOpen.description")}</WarningBox>
+      )}
+      <View style={styles.wrapper}>
+        <AccountSectionLabel name={t("polkadot.claimReward.header")} />
+        <View style={[styles.rewardSection, { backgroundColor: colors.card }]}>
+          <View style={styles.labelSection}>
+            <LText semiBold color="grey">
+              {t("polkadot.claimReward.info")}
+            </LText>
+          </View>
+          <Button
+            containerStyle={styles.collectButton}
+            type="primary"
+            event=""
+            disabled={electionOpen}
+            onPress={onClaimReward}
+            title={t("polkadot.claimReward.action")}
+          />
+        </View>
+      </View>
       <NominationDrawer
         isOpen={drawerInfo && drawerInfo.length > 0}
         onClose={onCloseDrawer}
@@ -306,9 +338,6 @@ export default function Nominations({ account }: Props) {
         data={drawerInfo}
         isNominated
       />
-      {electionOpen && (
-        <WarningBox>{t("polkadot.info.electionOpen.description")}</WarningBox>
-      )}
       {!hasBondedBalance && hasPendingBondOperation && (
         <WarningBox>
           {t("polkadot.nomination.hasPendingBondOperation")}
@@ -385,5 +414,28 @@ const styles = StyleSheet.create({
   illustration: { alignSelf: "center", marginBottom: 16 },
   wrapper: {
     marginBottom: 16,
+  },
+  rewardSection: {
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    borderRadius: 4,
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 16,
+  },
+  collectButton: {
+    flexBasis: "auto",
+    flexGrow: 0.1,
+  },
+  labelSection: {
+    flex: 1,
+    flexDirection: "column",
+    alignItems: "flex-start",
+    justifyContent: "center",
+  },
+  title: {
+    fontSize: 14,
+    lineHeight: 18,
+    textAlign: "left",
   },
 });
