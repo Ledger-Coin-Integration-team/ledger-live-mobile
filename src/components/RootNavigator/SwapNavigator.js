@@ -34,9 +34,7 @@ export default function SwapNavigator() {
         component={SwapProviders}
         options={{
           headerStyle: styles.headerNoShadow,
-          headerTitle: () => (
-            <StepHeader title={t("transfer.swap.landing.header")} />
-          ),
+          title: t("transfer.swap.landing.header"),
         }}
       />
       <Stack.Screen
@@ -44,9 +42,7 @@ export default function SwapNavigator() {
         component={WebPlatformPlayer}
         options={{
           headerStyle: styles.headerNoShadow,
-          headerTitle: () => (
-            <StepHeader title={t("transfer.swap.landing.header")} />
-          ),
+          title: t("transfer.swap.paraswap"), // FIXME: hardcoded paraswap for now
         }}
       />
       <Stack.Screen
@@ -54,9 +50,7 @@ export default function SwapNavigator() {
         component={SwapFormOrHistory}
         options={{
           headerStyle: styles.headerNoShadow,
-          headerTitle: () => (
-            <StepHeader title={t("transfer.swap.landing.header")} />
-          ),
+          title: t("transfer.swap.landing.header"),
         }}
       />
       <Stack.Screen
