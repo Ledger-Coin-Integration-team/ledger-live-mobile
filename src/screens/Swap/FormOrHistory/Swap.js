@@ -2,25 +2,29 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import { StyleSheet, View, ActivityIndicator } from "react-native";
-import { getProviders } from "@ledgerhq/live-common/lib/exchange/swap";
-import { SwapNoAvailableProviders } from "@ledgerhq/live-common/lib/errors";
 import { useSelector, useDispatch } from "react-redux";
 import SafeAreaView from "react-native-safe-area-view";
+import { useTheme } from "@react-navigation/native";
+
 import type {
   Account,
   AccountLike,
 } from "@ledgerhq/live-common/lib/types/account";
-import { useTheme } from "@react-navigation/native";
 import {
   hasAcceptedSwapKYCSelector,
   swapProvidersSelector,
-} from "../../reducers/settings";
-import { setSwapProviders } from "../../actions/settings";
-import MissingOrOutdatedSwapApp from "./MissingOrOutdatedSwapApp";
+} from "../../../reducers/settings";
+
+import { getProviders } from "@ledgerhq/live-common/lib/exchange/swap";
+import { SwapNoAvailableProviders } from "@ledgerhq/live-common/lib/errors";
+
+import { setSwapProviders } from "../../../actions/settings";
+
+import MissingOrOutdatedSwapApp from "../MissingOrOutdatedSwapApp";
+import Connect from "../Connect";
 import Landing from "./Landing";
 import NotAvailable from "./NotAvailable";
 import Form from "./Form";
-import Connect from "./Connect";
 
 const Swap = ({
   defaultAccount,

@@ -7,14 +7,16 @@ import SafeAreaView from "react-native-safe-area-view";
 import IconAD from "react-native-vector-icons/dist/AntDesign";
 import { SwapGenericAPIError } from "@ledgerhq/live-common/lib/errors";
 import { useTheme } from "@react-navigation/native";
+
+import Button from "../../../../../components/Button";
+import { ScreenName } from "../../../../../const";
+import CountdownTimer from "../../../../../components/CountdownTimer";
+import { Track, TrackScreen } from "../../../../../analytics";
+
+import Confirmation from "../../Confirmation";
 import type { SwapRouteParams } from "..";
 import DisclaimerModal from "../DisclaimerModal";
-import Button from "../../../../components/Button";
-import Confirmation from "../../Confirmation";
 import SummaryBody from "./SummaryBody";
-import { ScreenName } from "../../../../const";
-import CountdownTimer from "../../../../components/CountdownTimer";
-import { Track, TrackScreen } from "../../../../analytics";
 
 const forceInset = { bottom: "always" };
 
