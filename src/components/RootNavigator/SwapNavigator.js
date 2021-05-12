@@ -15,10 +15,10 @@ import { BackButton } from "../../screens/OperationDetails";
 import SwapPendingOperation from "../../screens/Swap/FormOrHistory/Form/PendingOperation";
 import SwapFormSelectCrypto from "../../screens/Swap/FormOrHistory/Form/SelectAccount/01-SelectCrypto";
 import SwapFormSelectAccount from "../../screens/Swap/FormOrHistory/Form/SelectAccount/02-SelectAccount";
-import WebPlatformPlayer from "../../components/WebPlatformPlayer";
 import { getStackNavigatorConfig } from "../../navigation/navigatorConfig";
-import StepHeader from "../StepHeader";
 import styles from "../../navigation/styles";
+import StepHeader from "../StepHeader";
+import WebPlatformPlayer from "../WebPlatformPlayer";
 
 export default function SwapNavigator() {
   const { t } = useTranslation();

@@ -10,14 +10,13 @@ import type {
   Account,
   AccountLike,
 } from "@ledgerhq/live-common/lib/types/account";
+import { getProviders } from "@ledgerhq/live-common/lib/exchange/swap";
+import { SwapNoAvailableProviders } from "@ledgerhq/live-common/lib/errors";
+
 import {
   hasAcceptedSwapKYCSelector,
   swapProvidersSelector,
 } from "../../../reducers/settings";
-
-import { getProviders } from "@ledgerhq/live-common/lib/exchange/swap";
-import { SwapNoAvailableProviders } from "@ledgerhq/live-common/lib/errors";
-
 import { setSwapProviders } from "../../../actions/settings";
 
 import MissingOrOutdatedSwapApp from "../MissingOrOutdatedSwapApp";
