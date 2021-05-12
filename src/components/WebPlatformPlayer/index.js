@@ -56,11 +56,12 @@ type Props = {
   manifest: Manifest,
 };
 
-const WebPlatformPlayer = ({ manifest }: Props) => {
-  const theme = useTheme();
+const WebPlatformPlayer = ({ route }: { route: { params: Props } }) => {
+  const manifest = route.params.manifest;
   const targetRef: { current: null | WebView } = useRef(null);
   const accounts = useSelector(accountsSelector);
   const currencies = useMemo(() => listCryptoCurrencies(), []);
+  const theme = useTheme();
 
   // eslint-disable-next-line no-unused-vars
   const [loadDate, setLoadDate] = useState(Date.now());
