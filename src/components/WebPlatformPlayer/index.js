@@ -56,6 +56,26 @@ type Props = {
   manifest: Manifest,
 };
 
+const ReloadButton = ({
+  onReload,
+  loading,
+}: {
+  onReload: Function,
+  loading: boolean,
+}) => {
+  const { colors } = useTheme();
+
+  return (
+    <TouchableOpacity
+      style={styles.buttons}
+      disabled={loading}
+      onPress={() => !loading && onReload()}
+    >
+      <UpdateIcon size={18} color={colors.grey} />
+    </TouchableOpacity>
+  );
+};
+
 const WebPlatformPlayer = ({ route }: { route: { params: Props } }) => {
   const manifest = route.params.manifest;
   const targetRef: { current: null | WebView } = useRef(null);
@@ -328,6 +348,14 @@ const WebPlatformPlayer = ({ route }: { route: { params: Props } }) => {
     setWidgetLoaded(false);
   }, []);
 
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <ReloadButton onReload={handleReload} loading={!widgetLoaded} />
+      ),
+    });
+  }, [navigation, widgetLoaded]);
+
   useEffect(() => {
     let timeout;
     if (!widgetLoaded) {
@@ -404,6 +432,9 @@ const styles = StyleSheet.create({
     flex: 0,
     width: "100%",
     height: "100%",
+  },
+  buttons: {
+    padding: 16,
   },
 });
 
